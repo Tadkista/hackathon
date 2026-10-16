@@ -11,7 +11,7 @@ export default function NotificationsModal({ isOpen, onClose, onNavigate }) {
       time: '15 min temu',
       icon: 'warning',
       color: 'text-error bg-error-container',
-      actionTab: 'explore',
+      actionTab: 'parking',
       actionText: 'Sprawdź objazd'
     },
     {

@@ -1,11 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import Header from './components/Header.jsx';
 import BottomNav from './components/BottomNav.jsx';
 import Sidebar from './components/Sidebar.jsx';
 import HomeScreen from './components/HomeScreen.jsx';
 import VotesScreen from './components/VotesScreen.jsx';
 import TicketsScreen from './components/TicketsScreen.jsx';
-import ExploreScreen from './components/ExploreScreen.jsx';
+import ParkingScreen from './components/ParkingScreen.jsx';
 import ProfileScreen from './components/ProfileScreen.jsx';
 import NotificationsModal from './components/NotificationsModal.jsx';
 
@@ -15,7 +15,9 @@ export default function App() {
   const [isVoteModalOpen, setIsVoteModalOpen] = useState(false);
 
   const handleNavigate = (tab) => {
-    setCurrentTab(tab);
+    // Map legacy 'explore' tab to 'parking'
+    const target = tab === 'explore' ? 'parking' : tab;
+    setCurrentTab(target);
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
@@ -51,17 +53,17 @@ export default function App() {
             onTriggerVoteModal={handleTriggerVoteModal}
           />
         )}
+        {currentTab === 'parking' && (
+          <ParkingScreen />
+        )}
+        {currentTab === 'tickets' && (
+          <TicketsScreen />
+        )}
         {currentTab === 'votes' && (
           <VotesScreen
             isVoteModalOpen={isVoteModalOpen}
             setIsVoteModalOpen={setIsVoteModalOpen}
           />
-        )}
-        {currentTab === 'tickets' && (
-          <TicketsScreen />
-        )}
-        {currentTab === 'explore' && (
-          <ExploreScreen />
         )}
         {currentTab === 'profile' && (
           <ProfileScreen

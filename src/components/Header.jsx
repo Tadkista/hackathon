@@ -6,9 +6,9 @@ export default function Header({ currentTab, onNavigate, onOpenNotifications, un
 
   const tabTitles = {
     home: 'Główna',
-    votes: 'Budżet i Głosowanie',
+    parking: 'Parkowanie i Mapa SPP',
     tickets: 'Bilety i Karta',
-    explore: 'Odkrywaj miasto',
+    votes: 'Budżet i Inwestycje',
     profile: 'Mój Profil'
   };
 

@@ -83,21 +83,32 @@ export default function VotesScreen({ isVoteModalOpen, setIsVoteModalOpen }) {
 
       {/* Tabs */}
       <div className="pb-1">
-        <div className="flex p-1 bg-surface-container rounded-xl gap-1 max-w-md">
+        <div className="flex p-1 bg-surface-container rounded-2xl gap-1 max-w-xl overflow-x-auto scrollbar-none">
           <button
             onClick={() => setActiveTab('glosowania')}
-            className={`tab-btn flex-1 py-2 px-3 rounded-lg text-sm transition-all cursor-pointer ${
+            className={`tab-btn px-3.5 py-2 rounded-xl text-xs sm:text-sm transition-all cursor-pointer whitespace-nowrap ${
               activeTab === 'glosowania'
                 ? 'bg-surface-container-lowest text-primary shadow-xs font-semibold'
                 : 'text-secondary hover:text-on-surface font-medium'
             }`}
             type="button"
           >
-            Głosowania
+            Głosowania BO
+          </button>
+          <button
+            onClick={() => setActiveTab('inwestycje')}
+            className={`tab-btn px-3.5 py-2 rounded-xl text-xs sm:text-sm transition-all cursor-pointer whitespace-nowrap ${
+              activeTab === 'inwestycje'
+                ? 'bg-surface-container-lowest text-primary shadow-xs font-semibold'
+                : 'text-secondary hover:text-on-surface font-medium'
+            }`}
+            type="button"
+          >
+            Inwestycje 2025
           </button>
           <button
             onClick={() => setActiveTab('konsultacje')}
-            className={`tab-btn flex-1 py-2 px-3 rounded-lg text-sm transition-all cursor-pointer ${
+            className={`tab-btn px-3.5 py-2 rounded-xl text-xs sm:text-sm transition-all cursor-pointer whitespace-nowrap ${
               activeTab === 'konsultacje'
                 ? 'bg-surface-container-lowest text-primary shadow-xs font-semibold'
                 : 'text-secondary hover:text-on-surface font-medium'
@@ -108,7 +119,7 @@ export default function VotesScreen({ isVoteModalOpen, setIsVoteModalOpen }) {
           </button>
           <button
             onClick={() => setActiveTab('zgloszenia')}
-            className={`tab-btn flex-1 py-2 px-3 rounded-lg text-sm transition-all cursor-pointer relative ${
+            className={`tab-btn px-3.5 py-2 rounded-xl text-xs sm:text-sm transition-all cursor-pointer relative whitespace-nowrap ${
               activeTab === 'zgloszenia'
                 ? 'bg-surface-container-lowest text-primary shadow-xs font-semibold'
                 : 'text-secondary hover:text-on-surface font-medium'
@@ -288,7 +299,186 @@ export default function VotesScreen({ isVoteModalOpen, setIsVoteModalOpen }) {
           </div>
         )}
 
-        {(activeTab === 'konsultacje' || activeTab === 'all' || activeTab === 'glosowania') && (
+        {/* Inwestycje Miejskie & Transparentny Budżet Tab */}
+        {activeTab === 'inwestycje' && (
+          <div className="flex flex-col space-y-6">
+            <div className="flex items-center justify-between">
+              <div>
+                <span className="text-xs text-secondary uppercase tracking-wider font-semibold">
+                  Transparentne Miasto
+                </span>
+                <h2 className="text-lg font-bold text-on-surface">
+                  Inwestycje i budżet Torunia 2025
+                </h2>
+              </div>
+              <div className="w-10 h-10 rounded-xl bg-surface-container flex items-center justify-center text-primary">
+                <span className="material-symbols-outlined text-[22px]">account_balance</span>
+              </div>
+            </div>
+
+            {/* Budget Overview KPI Banner */}
+            <div className="p-5 rounded-2xl bg-surface-container-lowest border border-outline-variant/60 shadow-card flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+              <div>
+                <span className="text-xs text-secondary font-medium">Planowane nakłady inwestycyjne w 2025 r.:</span>
+                <div className="text-2xl sm:text-3xl font-bold text-primary mt-0.5">482 450 000 zł</div>
+                <p className="text-xs text-secondary mt-1">
+                  Uchwała Budżetowa Rady Miasta Torunia • 64 aktywne zadania strategiczne
+                </p>
+              </div>
+              <div className="flex items-center gap-2 self-start sm:self-auto">
+                <button
+                  onClick={() => alert('Pobieranie oficjalnego sprawozdania z wykonania budżetu m. Torunia (PDF z Biuletynu BIP)...')}
+                  className="px-3.5 py-2 rounded-xl bg-surface-container hover:bg-surface-container-high text-on-surface text-xs font-semibold flex items-center gap-1.5 transition-colors cursor-pointer"
+                >
+                  <span className="material-symbols-outlined text-[16px]">picture_as_pdf</span>
+                  <span>Raport BIP</span>
+                </button>
+              </div>
+            </div>
+
+            {/* Key Investment Projects */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              {/* Project 1 */}
+              <div className="p-5 rounded-2xl bg-surface-container-lowest border border-outline-variant/60 shadow-card flex flex-col justify-between space-y-3">
+                <div>
+                  <div className="flex items-center justify-between mb-2">
+                    <span className="px-2 py-0.5 rounded-md bg-rose-50 dark:bg-rose-950/40 text-primary text-[11px] font-bold">
+                      Komunikacja szynowa
+                    </span>
+                    <span className="text-xs font-semibold text-secondary">214 mln zł</span>
+                  </div>
+                  <h3 className="font-bold text-base text-on-surface">
+                    Budowa nowej trasy tramwajowej na osiedle Jar
+                  </h3>
+                  <p className="text-secondary text-xs mt-1">
+                    Trasa o długości 5,5 km toru pojedynczego wraz z węzłem przesiadkowym i zielonym torowiskiem.
+                  </p>
+                </div>
+                <div className="space-y-1.5 pt-2 border-t border-outline-variant/40">
+                  <div className="flex justify-between text-xs">
+                    <span className="text-secondary">Zaawansowanie prac:</span>
+                    <span className="font-bold text-on-surface">78%</span>
+                  </div>
+                  <div className="w-full h-2 rounded-full bg-surface-container overflow-hidden">
+                    <div className="h-full bg-primary rounded-full" style={{ width: '78%' }}></div>
+                  </div>
+                  <span className="text-[11px] text-secondary">Planowane oddanie: IV kwartał 2025</span>
+                </div>
+              </div>
+
+              {/* Project 2 */}
+              <div className="p-5 rounded-2xl bg-surface-container-lowest border border-outline-variant/60 shadow-card flex flex-col justify-between space-y-3">
+                <div>
+                  <div className="flex items-center justify-between mb-2">
+                    <span className="px-2 py-0.5 rounded-md bg-emerald-50 dark:bg-emerald-950/40 text-emerald-700 dark:text-emerald-400 text-[11px] font-bold">
+                      Rewitalizacja &amp; Bulwary
+                    </span>
+                    <span className="text-xs font-semibold text-secondary">46 mln zł</span>
+                  </div>
+                  <h3 className="font-bold text-base text-on-surface">
+                    Rewitalizacja Bulwaru Filadelfijskiego
+                  </h3>
+                  <p className="text-secondary text-xs mt-1">
+                    Promenada nadrzeczna, schody terenowe, zieleń nadrzeczna i oświetlenie historyczne wzdłuż Wisły.
+                  </p>
+                </div>
+                <div className="space-y-1.5 pt-2 border-t border-outline-variant/40">
+                  <div className="flex justify-between text-xs">
+                    <span className="text-secondary">Zaawansowanie prac:</span>
+                    <span className="font-bold text-emerald-600 dark:text-emerald-400">92%</span>
+                  </div>
+                  <div className="w-full h-2 rounded-full bg-surface-container overflow-hidden">
+                    <div className="h-full bg-emerald-600 rounded-full" style={{ width: '92%' }}></div>
+                  </div>
+                  <span className="text-[11px] text-secondary">Etap odbiorów technicznych</span>
+                </div>
+              </div>
+
+              {/* Project 3 */}
+              <div className="p-5 rounded-2xl bg-surface-container-lowest border border-outline-variant/60 shadow-card flex flex-col justify-between space-y-3">
+                <div>
+                  <div className="flex items-center justify-between mb-2">
+                    <span className="px-2 py-0.5 rounded-md bg-blue-50 dark:bg-blue-950/40 text-blue-700 dark:text-blue-400 text-[11px] font-bold">
+                      Edukacja &amp; Sport
+                    </span>
+                    <span className="text-xs font-semibold text-secondary">76 mln zł</span>
+                  </div>
+                  <h3 className="font-bold text-base text-on-surface">
+                    Budowa Szkoły Podstawowej przy ul. Strzałowej
+                  </h3>
+                  <p className="text-secondary text-xs mt-1">
+                    Nowoczesny kompleks oświatowy na lewobrzeżu z basenem, salami gimnastycznymi i przedszkolem.
+                  </p>
+                </div>
+                <div className="space-y-1.5 pt-2 border-t border-outline-variant/40">
+                  <div className="flex justify-between text-xs">
+                    <span className="text-secondary">Zaawansowanie prac:</span>
+                    <span className="font-bold text-on-surface">44%</span>
+                  </div>
+                  <div className="w-full h-2 rounded-full bg-surface-container overflow-hidden">
+                    <div className="h-full bg-primary rounded-full" style={{ width: '44%' }}></div>
+                  </div>
+                  <span className="text-[11px] text-secondary">Stan surowy otwarty</span>
+                </div>
+              </div>
+
+              {/* Project 4 */}
+              <div className="p-5 rounded-2xl bg-surface-container-lowest border border-outline-variant/60 shadow-card flex flex-col justify-between space-y-3">
+                <div>
+                  <div className="flex items-center justify-between mb-2">
+                    <span className="px-2 py-0.5 rounded-md bg-amber-50 dark:bg-amber-950/40 text-amber-700 dark:text-amber-400 text-[11px] font-bold">
+                      Kultura &amp; Teatr
+                    </span>
+                    <span className="text-xs font-semibold text-secondary">38 mln zł</span>
+                  </div>
+                  <h3 className="font-bold text-base text-on-surface">
+                    Europejskie Centrum Filmowe Camerimage
+                  </h3>
+                  <p className="text-secondary text-xs mt-1">
+                    Budowa studia filmowego i przestrzeni wystawienniczych na toruńskich Jordankach.
+                  </p>
+                </div>
+                <div className="space-y-1.5 pt-2 border-t border-outline-variant/40">
+                  <div className="flex justify-between text-xs">
+                    <span className="text-secondary">Zaawansowanie prac:</span>
+                    <span className="font-bold text-on-surface">31%</span>
+                  </div>
+                  <div className="w-full h-2 rounded-full bg-surface-container overflow-hidden">
+                    <div className="h-full bg-primary rounded-full" style={{ width: '31%' }}></div>
+                  </div>
+                  <span className="text-[11px] text-secondary">Prace fundamentowe i konstrukcyjne</span>
+                </div>
+              </div>
+            </div>
+
+            {/* Budget Structure Percentages */}
+            <div className="p-5 rounded-2xl bg-surface-container-lowest border border-outline-variant/60 shadow-card flex flex-col space-y-3">
+              <span className="text-xs font-bold text-on-surface uppercase tracking-wider">
+                Struktura wydatków majątkowych Torunia 2025
+              </span>
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 text-center">
+                <div className="p-3 rounded-xl bg-surface-container-low">
+                  <span className="text-xs text-secondary block">Infrastruktura i drogi</span>
+                  <span className="text-lg font-bold text-primary">34%</span>
+                </div>
+                <div className="p-3 rounded-xl bg-surface-container-low">
+                  <span className="text-xs text-secondary block">Transport zbiorowy</span>
+                  <span className="text-lg font-bold text-on-surface">26%</span>
+                </div>
+                <div className="p-3 rounded-xl bg-surface-container-low">
+                  <span className="text-xs text-secondary block">Oświata i wychowanie</span>
+                  <span className="text-lg font-bold text-on-surface">22%</span>
+                </div>
+                <div className="p-3 rounded-xl bg-surface-container-low">
+                  <span className="text-xs text-secondary block">Zieleń i ekologia</span>
+                  <span className="text-lg font-bold text-emerald-600">18%</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {(activeTab === 'konsultacje') && (
           <div className="flex flex-col gap-space-sm">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-1.5">

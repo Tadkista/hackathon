@@ -125,7 +125,7 @@ export default function HomeScreen({ onNavigate, onTriggerVoteModal }) {
 
               {/* City Map & Parking */}
               <button
-                onClick={() => onNavigate('explore')}
+                onClick={() => onNavigate('parking')}
                 className="group flex flex-col justify-between p-4 rounded-2xl bg-surface-container-lowest border border-outline-variant/60 shadow-card hover:shadow-card-hover transition-all text-left cursor-pointer active:scale-[0.98]"
               >
                 <div className="flex items-center justify-between w-full">
@@ -138,10 +138,10 @@ export default function HomeScreen({ onNavigate, onTriggerVoteModal }) {
                 </div>
                 <div className="mt-5">
                   <span className="font-semibold text-sm sm:text-base text-on-surface block leading-snug">
-                    Strefa SPP
+                    Parkowanie &amp; Mapa
                   </span>
                   <span className="text-[11px] text-secondary block mt-0.5">
-                    Wolne miejsca
+                    Wolne miejsca SPP
                   </span>
                 </div>
               </button>
@@ -239,10 +239,10 @@ export default function HomeScreen({ onNavigate, onTriggerVoteModal }) {
             <div className="flex items-center justify-between">
               <h2 className="text-base sm:text-lg font-bold text-on-surface">Aktualności &amp; Wydarzenia</h2>
               <button
-                onClick={() => onNavigate('explore')}
+                onClick={() => onNavigate('votes')}
                 className="text-xs text-primary font-semibold hover:underline flex items-center gap-0.5 cursor-pointer"
               >
-                <span>Wszystkie</span>
+                <span>Inwestycje</span>
                 <span className="material-symbols-outlined text-[16px]">chevron_right</span>
               </button>
             </div>
@@ -250,7 +250,7 @@ export default function HomeScreen({ onNavigate, onTriggerVoteModal }) {
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               {/* News 1 */}
               <div
-                onClick={() => onNavigate('explore')}
+                onClick={() => onNavigate('votes')}
                 className="p-4 rounded-2xl bg-surface-container-lowest border border-outline-variant/60 shadow-card hover:shadow-card-hover transition-all flex flex-col justify-between cursor-pointer group"
               >
                 <div className="w-full h-36 rounded-xl overflow-hidden bg-surface-container mb-3.5">
@@ -278,7 +278,7 @@ export default function HomeScreen({ onNavigate, onTriggerVoteModal }) {
 
               {/* News 2 */}
               <div
-                onClick={() => onNavigate('explore')}
+                onClick={() => alert('Święto Miasta Torunia 2025:\nProgram koncertów plenerowych na Rynku Nowomiejskim oraz bezpłatne wejściówki na koncerty teatrów światła będą dostępne w czerwcu.')}
                 className="p-4 rounded-2xl bg-surface-container-lowest border border-outline-variant/60 shadow-card hover:shadow-card-hover transition-all flex flex-col justify-between cursor-pointer group"
               >
                 <div className="w-full h-36 rounded-xl overflow-hidden bg-surface-container mb-3.5">
@@ -353,10 +353,10 @@ export default function HomeScreen({ onNavigate, onTriggerVoteModal }) {
                   Wymiana oświetlenia dziś od godz. 21:00. Zwężenie do jednego pasa.
                 </p>
                 <button
-                  onClick={() => onNavigate('explore')}
+                  onClick={() => onNavigate('parking')}
                   className="mt-2 text-[11px] font-semibold text-amber-900 dark:text-amber-300 hover:underline self-start flex items-center gap-0.5 cursor-pointer"
                 >
-                  <span>Mapa objazdów</span>
+                  <span>Mapa objazdów &amp; parkowanie</span>
                   <span className="material-symbols-outlined text-[13px]">arrow_forward</span>
                 </button>
               </div>

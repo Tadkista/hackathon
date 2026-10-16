@@ -170,7 +170,7 @@ export default function ProfileScreen({ onNavigate }) {
 
           {/* Stat 3 */}
           <button
-            onClick={() => onNavigate('explore')}
+            onClick={() => onNavigate('votes')}
             className="bg-surface-container-lowest rounded-xl p-space-sm shadow-sm flex flex-col justify-between hover:shadow-md transition-shadow text-left cursor-pointer"
           >
             <div className="w-7 h-7 rounded-lg bg-tertiary-fixed flex items-center justify-center text-tertiary mb-2">
@@ -196,7 +196,7 @@ export default function ProfileScreen({ onNavigate }) {
         <div className="bg-surface-container-lowest rounded-xl shadow-sm overflow-hidden flex flex-col">
           {/* Item 1 */}
           <button
-            onClick={() => onNavigate('explore')}
+            onClick={() => alert('Zapisane wydarzenia kulturalne w Toruniu (4):\n• Festiwal Światła Bella Skyway\n• Teatr im. Wilama Horzycy (Premiera)\n• Koncert na Rynku Staromiejskim\n• Noc Muzeów w Ratuszu Staromiejskim')}
             className="w-full p-space-md flex items-center justify-between text-left hover:bg-surface-container-low transition-colors cursor-pointer"
           >
             <div className="flex items-center gap-space-md min-w-0">

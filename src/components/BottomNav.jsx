@@ -3,9 +3,9 @@ import React from 'react';
 export default function BottomNav({ currentTab, onNavigate }) {
   const navItems = [
     { id: 'home', label: 'Główna', icon: 'home' },
-    { id: 'votes', label: 'Głos', icon: 'how_to_vote' },
+    { id: 'parking', label: 'Parking', icon: 'local_parking' },
     { id: 'tickets', label: 'Bilety', icon: 'confirmation_number' },
-    { id: 'explore', label: 'Odkrywaj', icon: 'explore' },
+    { id: 'votes', label: 'Budżet', icon: 'how_to_vote' },
     { id: 'profile', label: 'Profil', icon: 'person' },
   ];
 

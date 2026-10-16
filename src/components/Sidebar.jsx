@@ -6,9 +6,9 @@ export default function Sidebar({ currentTab, onNavigate, onOpenNotifications })
 
   const navItems = [
     { id: 'home', label: 'Strona główna', icon: 'home' },
+    { id: 'parking', label: 'Parkowanie i Mapa', icon: 'local_parking' },
     { id: 'tickets', label: 'Bilety i Karta', icon: 'confirmation_number' },
-    { id: 'votes', label: 'Budżet i Głosowanie', icon: 'how_to_vote' },
-    { id: 'explore', label: 'Odkrywaj miasto', icon: 'explore' },
+    { id: 'votes', label: 'Budżet i Inwestycje', icon: 'how_to_vote' },
     { id: 'profile', label: 'Mój Profil', icon: 'person' },
   ];
 
