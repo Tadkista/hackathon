@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+
+<html lang="pl"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" name="viewport"/><meta content="mobile_tab" name="shell-type"/><title>MójToruń</title><link href="https://fonts.googleapis.com" rel="preconnect"/><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config = { darkMode: "class", theme: { extend: { colors: { "on-secondary-fixed-variant": "#3f465c", "surface": "#f8f9ff", "on-tertiary-fixed": "#002114", "on-secondary-container": "#5c647a", "surface-container-highest": "#d3e4fe", "outline": "#8b7171", "on-error": "#ffffff", "tertiary-fixed": "#85f8c4", "tertiary-container": "#005439", "surface-container-high": "#dce9ff", "on-background": "#0b1c30", "primary": "#6b0119", "background": "#f8f9ff", "secondary-container": "#dae2fd", "surface-container": "#e5eeff", "surface-bright": "#f8f9ff", "surface-container-low": "#eff4ff", "on-tertiary-container": "#58cd9b", "tertiary-fixed-dim": "#68dba9", "on-primary-fixed": "#40000b", "surface-container-lowest": "#ffffff", "primary-container": "#8b1e2d", "on-primary-container": "#ff9da0", "secondary-fixed": "#dae2fd", "outline-variant": "#debfbf", "inverse-primary": "#ffb3b4", "secondary-fixed-dim": "#bec6e0", "on-primary": "#ffffff", "error": "#ba1a1a", "surface-dim": "#cbdbf5", "on-tertiary-fixed-variant": "#005137", "on-surface-variant": "#574142", "tertiary": "#003b27", "on-tertiary": "#ffffff", "on-primary-fixed-variant": "#881c2b", "on-surface": "#0b1c30", "on-secondary-fixed": "#131b2e", "error-container": "#ffdad6", "primary-fixed": "#ffdada", "primary-fixed-dim": "#ffb3b4", "surface-tint": "#a93441", "inverse-surface": "#213145", "on-error-container": "#93000a", "surface-variant": "#d3e4fe", "inverse-on-surface": "#eaf1ff", "secondary": "#565e74", "on-secondary": "#ffffff" }, borderRadius: { "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px" }, spacing: { "margin": "1rem", "margin-desktop": "3rem", "space-md": "1rem", "space-lg": "1.5rem", "space-sm": "0.5rem", "gutter-desktop": "1.5rem", "gutter": "1rem", "space-xl": "2rem", "margin-tablet": "2rem", "space-xs": "0.25rem" }, fontFamily: { "label-md": ["Inter"], "headline-sm": ["Inter"], "body-lg": ["Inter"], "title-md": ["Inter"], "title-lg": ["Inter"], "headline-md": ["Inter"], "body-sm": ["Inter"], "label-sm": ["Inter"], "display-lg": ["Inter"], "label-lg": ["Inter"], "headline-lg": ["Inter"], "body-md": ["Inter"], "display-lg-mobile": ["Inter"], "headline-lg-mobile": ["Inter"] }, fontSize: { "label-md": ["12px", { "lineHeight": "16px", "letterSpacing": "0.01em", "fontWeight": "500" }], "headline-sm": ["18px", { "lineHeight": "24px", "fontWeight": "600" }], "body-lg": ["16px", { "lineHeight": "24px", "fontWeight": "400" }], "title-md": ["15px", { "lineHeight": "20px", "fontWeight": "500" }], "title-lg": ["16px", { "lineHeight": "22px", "fontWeight": "600" }], "headline-md": ["22px", { "lineHeight": "28px", "letterSpacing": "-0.01em", "fontWeight": "600" }], "body-sm": ["13px", { "lineHeight": "18px", "fontWeight": "400" }], "label-sm": ["11px", { "lineHeight": "14px", "letterSpacing": "0.04em", "fontWeight": "600" }], "display-lg": ["40px", { "lineHeight": "48px", "letterSpacing": "-0.02em", "fontWeight": "700" }], "label-lg": ["14px", { "lineHeight": "18px", "fontWeight": "500" }], "headline-lg": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.015em", "fontWeight": "600" }], "body-md": ["14px", { "lineHeight": "20px", "fontWeight": "400" }], "display-lg-mobile": ["30px", { "lineHeight": "38px", "letterSpacing": "-0.02em", "fontWeight": "700" }], "headline-lg-mobile": ["24px", { "lineHeight": "32px", "letterSpacing": "-0.015em", "fontWeight": "600" }] } } } };</script><style>@layer base{html,body{width:100vw;margin:0;padding:0;min-height:100vh;}body{overscroll-behavior-y:none;-webkit-tap-highlight-color:transparent;}.pb-safe{padding-bottom:calc(env(safe-area-inset-bottom,0px) + 0.25rem);}.pt-safe{padding-top:env(safe-area-inset-top,0px);}}::-webkit-scrollbar{display:none;}</style></head><body class="bg-surface text-on-surface font-body-md antialiased flex flex-col min-h-screen"><header class="fixed top-0 w-full z-50 pt-safe bg-surface-container-lowest/80 backdrop-blur-xl shadow-[0_1px_8px_rgba(11,28,48,0.04)]"><div class="h-16 px-margin flex items-center justify-between gap-space-sm"><a href="ekran_główny.html" class="flex items-center gap-space-sm hover:opacity-90 transition-opacity"><img alt="Logo MójToruń" class="h-8 w-auto object-contain" src="https://lh3.googleusercontent.com/aida/AEtjO1XbbDUDijFFVjYry5j7-RPfXDcGGsfPxaoNp1Yq5-L1Zoa7bQkASm0j-1NoRsEBWOUrM-Y-wSawLrPRyy-IAXtDTRh-trd2qCUVAYocP74BckJ0-iq8vvSuC756id5GPDKPXaFnv-iF_9pPulj56iwMDRRdyA3irXXzV--Kxx4RO-nevTkfJr8a8JnWUC-wjfpJtT5rroJAcrahwuUNh7HWzk8db2norc-42_rweRuQJ4m6eDBA6niT-w8"/><div class="flex flex-col"><div class="flex items-center gap-space-xs"><span class="font-title-lg text-title-lg text-on-surface tracking-tight leading-none">MójToruń</span><span class="px-1.5 py-0.5 rounded-full bg-primary-fixed text-on-primary-fixed-variant font-label-sm text-label-sm leading-none">Toruń</span></div><span class="font-label-sm text-label-sm text-secondary truncate mt-0.5">Bilety</span></div></a><div class="flex items-center gap-space-xs"><button aria-label="Powiadomienia miejskie" class="relative w-11 h-11 flex items-center justify-center rounded-full text-secondary hover:text-on-surface transition-colors" type="button"><span class="material-symbols-outlined text-[24px]">notifications</span><span class="absolute top-2.5 right-2.5 w-2 h-2 rounded-full bg-primary ring-2 ring-surface-container-lowest"></span></button><a href="profil.html" aria-label="Profil mieszkańca" class="w-11 h-11 flex items-center justify-center rounded-full hover:ring-2 hover:ring-primary/20 transition-all"><img alt="Profile" class="w-8 h-8 rounded-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBKpu-CxsyYFROnKC97ZISDGnAVNZJSMO-8gzdhVX_hJsHeoNzLMhxb_HuGomq6MuXzDWJsYFO02qtqSykSyAfyiDForQCPK7jJUwBYKRRmVP9b89KyQIkOanKnTcPBzrWG1ojpKD2XMg0fKxxJd2pRE1AHV-7TFgpUhQPzXf2L1-cI2uokJMq9outTy9noRn3_tnowuOuQBcZhyYyuK1DLMFrIQNe8nORieBDcAGPx34bVSyrAB-VQ"/></a></div></div></header><main class="flex-1 w-full pt-16 pb-24 bg-surface flex flex-col relative"><div class="flex flex-col w-full pb-8">
+<!-- Status Toast / Civic Bar -->
+<div class="px-margin pt-space-sm mb-space-sm">
+<div class="bg-surface-container-low rounded-xl p-space-sm flex items-center justify-between shadow-sm">
+<div class="flex items-center gap-space-sm min-w-0">
+<span class="w-2.5 h-2.5 rounded-full bg-tertiary-container animate-pulse shrink-0"></span>
+<p class="font-label-sm text-label-sm text-secondary truncate">System biletowy MZK: Sieć aktywna • Ważność PIT do 30.04.2025</p>
+</div>
+<span class="font-label-sm text-label-sm text-primary font-semibold shrink-0 cursor-pointer">Szczegóły</span>
+</div>
+</div>
+<!-- 1. Główny moduł: Cyfrowa Karta Mieszkańca Torunia (Premium Card) -->
+<section class="px-margin mb-space-lg">
+<div class="relative overflow-hidden rounded-xl bg-gradient-to-br from-primary via-primary-container to-[#4a0812] text-on-primary shadow-xl p-space-md">
+<!-- Gothic watermark & municipal geometric accent -->
+<div class="absolute -right-8 -bottom-10 w-44 h-44 opacity-10 pointer-events-none">
+<svg class="w-full h-full fill-current" viewbox="0 0 100 100">
+<path d="M50 0 L58 35 L93 35 L65 55 L76 90 L50 70 L24 90 L35 55 L7 35 L42 35 Z"></path>
+<circle cx="50" cy="50" fill="none" r="46" stroke="currentColor" stroke-width="4"></circle>
+<path d="M50 10 L50 90 M10 50 L90 50" stroke="currentColor" stroke-width="2"></path>
+</svg>
+</div>
+<!-- Top Row: Civic Brand & Status -->
+<div class="relative z-10 flex items-start justify-between mb-space-md">
+<div class="flex items-center gap-2">
+<div class="w-9 h-9 rounded-lg bg-surface-container-lowest/15 backdrop-blur-md flex items-center justify-center shadow-inner">
+<span class="material-symbols-outlined text-surface-container-lowest text-[22px]">account_balance</span>
+</div>
+<div>
+<div class="flex items-center gap-1.5">
+<span class="font-title-lg text-title-lg leading-tight tracking-tight">Karta Torunianina</span>
+<span class="px-2 py-0.5 rounded-full bg-surface-container-lowest/20 backdrop-blur-sm text-[10px] font-semibold uppercase tracking-wider text-surface-container-lowest">Mieszkaniec</span>
+</div>
+<p class="font-label-sm text-label-sm text-primary-fixed-dim">Oficjalny Miejski Identyfikator</p>
+</div>
+</div>
+<div class="flex items-center gap-1 bg-tertiary-fixed text-on-tertiary-fixed px-2 py-1 rounded-full text-label-sm font-label-sm shadow-sm">
+<span class="material-symbols-outlined text-[14px]">verified</span>
+<span>PIT Zweryfikowany</span>
+</div>
+</div>
+<!-- Resident Info & Big QR Panel -->
+<div class="relative z-10 grid grid-cols-12 gap-space-sm items-center bg-surface-container-lowest/10 backdrop-blur-md rounded-xl p-3 shadow-inner">
+<!-- Text metadata -->
+<div class="col-span-7 flex flex-col justify-between min-w-0 pr-1">
+<div>
+<span class="font-label-sm text-label-sm text-primary-fixed block uppercase tracking-wider">Imię i nazwisko</span>
+<h2 class="font-headline-sm text-headline-sm text-surface-container-lowest truncate tracking-tight">Aleksandra Wiśniewska</h2>
+</div>
+<div class="mt-2.5">
+<span class="font-label-sm text-label-sm text-primary-fixed block">Numer identyfikatora</span>
+<p class="font-title-md text-title-md font-mono text-surface-container-lowest tracking-wide">TRN-2024-88492</p>
+</div>
+<div class="mt-2.5 inline-flex items-center gap-1.5 bg-surface-container-lowest/15 rounded-lg px-2 py-1 self-start">
+<span class="material-symbols-outlined text-[15px] text-tertiary-fixed">group</span>
+<span class="font-label-sm text-label-sm font-semibold text-surface-container-lowest">KDR Toruń: -50%</span>
+</div>
+</div>
+<!-- Dynamic High-contrast QR with animated security ticker -->
+<div class="col-span-5 flex flex-col items-center">
+<div class="bg-surface-container-lowest p-2 rounded-xl shadow-md w-full max-w-[118px] flex flex-col items-center">
+<!-- Simulated Crisp SVG QR Code -->
+<svg class="w-full h-auto text-on-surface" fill="currentColor" viewbox="0 0 100 100">
+<!-- Top-left position block -->
+<rect height="28" width="28" x="5" y="5"></rect>
+<rect fill="white" height="20" width="20" x="9" y="9"></rect>
+<rect height="12" width="12" x="13" y="13"></rect>
+<!-- Top-right position block -->
+<rect height="28" width="28" x="67" y="5"></rect>
+<rect fill="white" height="20" width="20" x="71" y="9"></rect>
+<rect height="12" width="12" x="75" y="13"></rect>
+<!-- Bottom-left position block -->
+<rect height="28" width="28" x="5" y="67"></rect>
+<rect fill="white" height="20" width="20" x="9" y="71"></rect>
+<rect height="12" width="12" x="13" y="75"></rect>
+<!-- Simulated modules pattern -->
+<rect height="6" width="6" x="38" y="10"></rect>
+<rect height="6" width="12" x="48" y="10"></rect>
+<rect height="6" width="12" x="38" y="22"></rect>
+<rect height="10" width="6" x="54" y="22"></rect>
+<rect height="8" width="8" x="10" y="38"></rect>
+<rect height="16" width="6" x="24" y="42"></rect>
+<rect height="10" width="10" x="36" y="36"></rect>
+<rect height="8" width="8" x="50" y="40"></rect>
+<rect height="6" width="12" x="66" y="38"></rect>
+<rect height="14" width="8" x="82" y="40"></rect>
+<rect height="6" width="16" x="42" y="52"></rect>
+<rect height="8" width="8" x="62" y="50"></rect>
+<rect height="6" width="14" x="38" y="66"></rect>
+<rect height="14" width="8" x="56" y="64"></rect>
+<rect height="6" width="10" x="68" y="66"></rect>
+<rect height="16" width="8" x="82" y="60"></rect>
+<rect height="14" width="6" x="40" y="78"></rect>
+<rect height="8" width="12" x="50" y="82"></rect>
+<rect height="6" width="14" x="66" y="78"></rect>
+<rect height="10" width="8" x="84" y="82"></rect>
+</svg>
+<div class="mt-1 w-full text-center">
+<span class="font-label-sm text-[9px] font-semibold text-secondary block tracking-tight uppercase">Skanuj kontrolerem</span>
+</div>
+</div>
+<!-- Live pulse timestamp -->
+<div class="flex items-center gap-1 mt-1.5 text-center">
+<span class="w-1.5 h-1.5 rounded-full bg-tertiary-fixed animate-ping"></span>
+<span class="font-label-sm text-[10px] text-surface-container-lowest font-mono tracking-tight" id="liveTimestamp">Ważny: dzisiaj, 14:32:05</span>
+</div>
+</div>
+</div>
+<!-- Action buttons on card -->
+<div class="relative z-10 flex items-center justify-between mt-3 pt-2 text-surface-container-lowest">
+<button class="flex items-center gap-1 font-label-md text-label-md bg-surface-container-lowest/20 hover:bg-surface-container-lowest/30 transition-colors px-3 py-1.5 rounded-lg" type="button">
+<span class="material-symbols-outlined text-[16px]">qr_code_scanner</span>
+<span>Powiększ QR</span>
+</button>
+<button class="flex items-center gap-1 font-label-md text-label-md text-surface-container-lowest/90 hover:text-surface-container-lowest transition-colors" type="button">
+<span class="material-symbols-outlined text-[16px]">info</span>
+<span>Katalog uprawnień</span>
+</button>
+</div>
+</div>
+</section>
+<!-- 3. Mój aktywny bilet (Promoted position for urgent commuter access) -->
+<section class="px-margin mb-space-lg">
+<div class="bg-surface-container-lowest rounded-xl p-space-md shadow-sm border border-transparent">
+<div class="flex items-center justify-between mb-space-sm">
+<div class="flex items-center gap-2">
+<span class="w-8 h-8 rounded-lg bg-tertiary-fixed flex items-center justify-center text-on-tertiary-fixed">
+<span class="material-symbols-outlined text-[20px]" style="font-variation-settings: 'FILL' 1;">directions_bus</span>
+</span>
+<div>
+<h3 class="font-title-lg text-title-lg text-on-surface">Mój aktywny bilet MZK</h3>
+<p class="font-body-sm text-body-sm text-secondary">30-minutowy miejski (Autobus / Tramwaj)</p>
+</div>
+</div>
+<span class="px-2.5 py-1 rounded-full bg-tertiary-fixed text-on-tertiary-fixed font-label-sm text-label-sm font-semibold flex items-center gap-1">
+<span class="w-1.5 h-1.5 rounded-full bg-tertiary animate-pulse"></span>
+          Aktywny
+        </span>
+</div>
+<!-- Countdown Banner -->
+<div class="bg-surface-container-low rounded-xl p-3 flex flex-col gap-2 mb-3">
+<div class="flex items-center justify-between">
+<span class="font-label-md text-label-md text-secondary">Czas ważności:</span>
+<span class="font-headline-sm text-headline-sm text-tertiary-container font-mono font-bold tracking-tight" id="countdownDisplay">Pozostało: 18 min 42 sek</span>
+</div>
+<!-- Progress bar -->
+<div class="w-full bg-surface-container h-2 rounded-full overflow-hidden">
+<div class="bg-tertiary-container h-full rounded-full transition-all duration-1000" style="width: 62%;"></div>
+</div>
+<div class="flex items-center justify-between text-secondary font-label-sm text-label-sm">
+<span>Skasowano: 14:13 (Linia 10)</span>
+<span>Ważny do: 14:43</span>
+</div>
+</div>
+<!-- Code & Security stamp -->
+<div class="flex items-center justify-between bg-surface-container-lowest p-2.5 rounded-lg shadow-sm">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-secondary text-[20px]">pin</span>
+<div>
+<span class="font-label-sm text-label-sm text-secondary block">Kod kontroli biletowej</span>
+<span class="font-title-md text-title-md font-mono text-on-surface tracking-wider font-semibold">MZK-892-PL</span>
+</div>
+</div>
+<button class="px-3 py-1.5 bg-surface-container text-on-surface font-label-md text-label-md rounded-lg hover:bg-surface-container-high transition-colors" type="button">
+          Pokaż kontrolerowi
+        </button>
+</div>
+</div>
+</section>
+<!-- 2. Szybki zakup biletów komunikacji miejskiej (MZK Toruń) -->
+<section class="px-margin mb-space-lg">
+<div class="flex items-center justify-between mb-space-sm">
+<div>
+<h2 class="font-headline-sm text-headline-sm text-on-surface">Kup bilet MZK Toruń</h2>
+<p class="font-body-sm text-body-sm text-secondary">Toruńska Karta Miejska • Błyskawiczny zakup</p>
+</div>
+<button class="font-label-md text-label-md text-primary font-semibold flex items-center gap-0.5" type="button">
+        Cennik MZK
+        <span class="material-symbols-outlined text-[16px]">chevron_right</span>
+</button>
+</div>
+<!-- Category Tabs -->
+<div class="flex items-center bg-surface-container-low p-1 rounded-xl mb-space-md text-center">
+<button class="flex-1 py-2 rounded-lg bg-surface-container-lowest shadow-sm font-label-md text-label-md text-primary font-semibold transition-all" type="button">
+        Czasowe
+      </button>
+<button class="flex-1 py-2 rounded-lg font-label-md text-label-md text-secondary hover:text-on-surface transition-all" type="button">
+        Jednorazowe
+      </button>
+<button class="flex-1 py-2 rounded-lg font-label-md text-label-md text-secondary hover:text-on-surface transition-all" type="button">
+        Okresowe / Miesięczne
+      </button>
+</div>
+<!-- Ticket Carousel/Stack -->
+<div class="flex flex-col gap-space-sm">
+<!-- Fast Buy Card 1: 30-minutowy (Featured) -->
+<div class="bg-surface-container-lowest rounded-xl p-space-md shadow-sm relative overflow-hidden">
+<div class="flex items-start justify-between gap-2 mb-2">
+<div class="flex items-center gap-2">
+<span class="w-7 h-7 rounded-full bg-primary-fixed flex items-center justify-center text-primary">
+<span class="material-symbols-outlined text-[18px]">schedule</span>
+</span>
+<div>
+<div class="flex items-center gap-1.5">
+<h3 class="font-title-lg text-title-lg text-on-surface">Bilet 30-minutowy miejski</h3>
+<span class="px-2 py-0.5 rounded-full bg-primary-fixed text-primary font-label-sm text-label-sm font-semibold">Popularny</span>
+</div>
+<p class="font-body-sm text-body-sm text-secondary">Autobusy i tramwaje w I strefie Toruń</p>
+</div>
+</div>
+<div class="text-right shrink-0">
+<span class="font-headline-sm text-headline-sm text-on-surface font-bold">3,80 zł</span>
+<span class="font-label-sm text-label-sm text-secondary block">Ulgowy: 1,90 zł</span>
+</div>
+</div>
+<!-- Tariff Selector Switch -->
+<div class="flex items-center justify-between gap-2 pt-2 pb-3">
+<div class="flex items-center gap-1 bg-surface-container-low p-1 rounded-lg">
+<button class="px-3 py-1 rounded bg-surface-container-lowest text-on-surface font-label-sm text-label-sm font-medium shadow-xs" type="button">Normalny (3,80 zł)</button>
+<button class="px-3 py-1 rounded text-secondary font-label-sm text-label-sm hover:text-on-surface" type="button">Ulgowy (1,90 zł)</button>
+</div>
+<span class="font-label-sm text-label-sm text-tertiary-container font-medium flex items-center gap-0.5">
+<span class="material-symbols-outlined text-[14px]">check</span>
+            KDR Aktywna
+          </span>
+</div>
+<!-- Purchase Button -->
+<button class="w-full h-11 bg-primary text-on-primary font-label-lg text-label-lg rounded-lg font-semibold flex items-center justify-center gap-2 active:bg-primary-container shadow-sm hover:opacity-95 transition-all" type="button">
+<span class="material-symbols-outlined text-[20px]">bolt</span>
+<span>Kup 1 kliknięciem (BLIK / Karta)</span>
+</button>
+</div>
+<!-- Ticket Card 2: 90-minutowy sieciowy -->
+<div class="bg-surface-container-lowest rounded-xl p-space-md shadow-sm flex items-center justify-between gap-3">
+<div class="flex items-center gap-3 min-w-0">
+<span class="w-9 h-9 rounded-full bg-secondary-container flex items-center justify-center text-on-secondary-container shrink-0">
+<span class="material-symbols-outlined text-[20px]">hub</span>
+</span>
+<div class="min-w-0">
+<h4 class="font-title-md text-title-md text-on-surface truncate">Bilet 90-minutowy sieciowy</h4>
+<p class="font-body-sm text-body-sm text-secondary truncate">Wszystkie linie dzienne i nocne</p>
+</div>
+</div>
+<div class="flex items-center gap-3 shrink-0">
+<div class="text-right">
+<span class="font-title-lg text-title-lg text-on-surface font-bold">6,80 zł</span>
+<span class="font-label-sm text-label-sm text-secondary block">Ulgowy: 3,40 zł</span>
+</div>
+<button class="w-10 h-10 rounded-lg bg-surface-container text-on-surface flex items-center justify-center hover:bg-surface-container-high transition-colors" type="button">
+<span class="material-symbols-outlined text-[20px]">add_shopping_cart</span>
+</button>
+</div>
+</div>
+<!-- Ticket Card 3: 24-godzinny (Kompaktowy) -->
+<div class="bg-surface-container-lowest rounded-xl p-space-md shadow-sm flex items-center justify-between gap-3">
+<div class="flex items-center gap-3 min-w-0">
+<span class="w-9 h-9 rounded-full bg-surface-container flex items-center justify-center text-secondary shrink-0">
+<span class="material-symbols-outlined text-[20px]">all_inclusive</span>
+</span>
+<div class="min-w-0">
+<h4 class="font-title-md text-title-md text-on-surface truncate">Bilet dobowy (24h)</h4>
+<p class="font-body-sm text-body-sm text-secondary truncate">Dowolna liczba przesiadek</p>
+</div>
+</div>
+<div class="flex items-center gap-3 shrink-0">
+<div class="text-right">
+<span class="font-title-lg text-title-lg text-on-surface font-bold">12,00 zł</span>
+<span class="font-label-sm text-label-sm text-secondary block">Ulgowy: 6,00 zł</span>
+</div>
+<button class="w-10 h-10 rounded-lg bg-surface-container text-on-surface flex items-center justify-center hover:bg-surface-container-high transition-colors" type="button">
+<span class="material-symbols-outlined text-[20px]">add_shopping_cart</span>
+</button>
+</div>
+</div>
+</div>
+</section>
+<!-- 4. Moje zniżki i benefity mieszkańca -->
+<section class="px-margin mb-space-lg">
+<div class="flex items-center justify-between mb-space-sm">
+<div>
+<h2 class="font-headline-sm text-headline-sm text-on-surface">Korzyści Karty Torunianina</h2>
+<p class="font-body-sm text-body-sm text-secondary">Zniżki miejskie po okazaniu weryfikacji</p>
+</div>
+<a class="font-label-md text-label-md text-primary font-semibold" href="#">Wszystkie (28)</a>
+</div>
+<div class="grid grid-cols-2 gap-space-sm">
+<!-- Benefit 1 -->
+<div class="bg-surface-container-lowest rounded-xl p-3 shadow-sm flex flex-col justify-between">
+<div class="relative w-full h-24 rounded-lg overflow-hidden mb-2 bg-surface-container">
+<img class="w-full h-full object-cover" data-alt="Historic classical interior of Wilam Horzyca Theatre in Torun with velvet crimson seats, gilded balcony decor, and soft warm lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAtSSyqsHnWQAIi7JCf8QLxH9401WSP_bTqddzattJQ4xyZTHby84bMTZlH4tLT7tu0X3aAx7O4pf5gqHBbZ3XGsRbm9fJMwPI1Qm1CiEchQsk8gtpepJ5joZC2re82pntQyhmUBPYptswaXjFi4xmWcq56Ixna_W6ZNPfBCVjtpPzlIv5yp3irTyVaI3t-wlpweHsZQtSL-ZJ7afDjFJXLxobHYYn_d5PTQgKfOcc_LVWbALeFEpYY"/>
+<span class="absolute top-1.5 left-1.5 px-2 py-0.5 rounded-full bg-primary text-on-primary font-label-sm text-[11px] font-bold shadow-sm">-20%</span>
+</div>
+<div>
+<h4 class="font-title-md text-title-md text-on-surface line-clamp-1">Teatr im. Wilama Horzycy</h4>
+<p class="font-body-sm text-body-sm text-secondary mt-0.5">Bilety na spektakle własne</p>
+</div>
+<button class="mt-2.5 w-full py-1.5 rounded-lg bg-surface-container-low text-primary font-label-md text-label-md hover:bg-surface-container transition-colors text-center font-medium" type="button">
+          Wykorzystaj kod
+        </button>
+</div>
+<!-- Benefit 2 -->
+<div class="bg-surface-container-lowest rounded-xl p-3 shadow-sm flex flex-col justify-between">
+<div class="relative w-full h-24 rounded-lg overflow-hidden mb-2 bg-surface-container">
+<img class="w-full h-full object-cover" data-alt="Modern indoor municipal swimming pool facility in Torun with turquoise clear water, sunlit architectural glass walls and lanes" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA-tzEYuVCe7vPH0iD0aVTFKl_eAG9TH42ZCmiGfEmUbnJGku_NAa2GMkJ3OSZo9r4B-jC2P_SQOtG3dx5MlqfZWdaAQMB6OVlBjWEyv2wbnJH4oUtieXAAjx2-Ze_KBig1HrE-T0lBM-rG5mkZRmJeyzeLQzEPM65e8tdst9ojEMfuLPNNcaviIZHTEvWhsu8qzb3pVwKcpnA349pjiZ0TzSYxC8-5quwiaq2htXx83e176egtK5XG"/>
+<span class="absolute top-1.5 left-1.5 px-2 py-0.5 rounded-full bg-primary text-on-primary font-label-sm text-[11px] font-bold shadow-sm">-15%</span>
+</div>
+<div>
+<h4 class="font-title-md text-title-md text-on-surface line-clamp-1">Toruńskie Baseny Miejskie</h4>
+<p class="font-body-sm text-body-sm text-secondary mt-0.5">Strefa rekreacji i sauna</p>
+</div>
+<button class="mt-2.5 w-full py-1.5 rounded-lg bg-surface-container-low text-primary font-label-md text-label-md hover:bg-surface-container transition-colors text-center font-medium" type="button">
+          Okaż kartę w kasie
+        </button>
+</div>
+<!-- Benefit 3 -->
+<div class="bg-surface-container-lowest rounded-xl p-3 shadow-sm flex flex-col justify-between">
+<div class="relative w-full h-24 rounded-lg overflow-hidden mb-2 bg-surface-container">
+<img class="w-full h-full object-cover" data-alt="Modern interactive science center in Torun, Mlyn Wiedzy, with futuristic science exhibitions, historic industrial brick accents, and blue ambient lights" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC5JTCZDB4Vi_T-x3-aQDXJG4as1eG7l1CIijWry0D-ZDs_s6XkSXZtQO22g882ETKm9CZUt6b956vnOdgMkV_Va5unfIWkLu-XohKxFfhaSFgrhlNswFQITw0sKXcS_6jjp5U7almSoHopI-wfYzqnWgTSxRr9IZfmL-RqIM3K0FweSmaFh0-_usmMVHOuK6yMDpu5tyQ1WYFvJidAlPekpDWloexRHUdd2_Paht3M3U619zVs3Wqc"/>
+<span class="absolute top-1.5 left-1.5 px-2 py-0.5 rounded-full bg-primary text-on-primary font-label-sm text-[11px] font-bold shadow-sm">-25%</span>
+</div>
+<div>
+<h4 class="font-title-md text-title-md text-on-surface line-clamp-1">Młyn Wiedzy</h4>
+<p class="font-body-sm text-body-sm text-secondary mt-0.5">Wystawy stałe i warsztaty</p>
+</div>
+<button class="mt-2.5 w-full py-1.5 rounded-lg bg-surface-container-low text-primary font-label-md text-label-md hover:bg-surface-container transition-colors text-center font-medium" type="button">
+          Rezerwuj online
+        </button>
+</div>
+<!-- Benefit 4: Civic Special Announcement -->
+<div class="bg-gradient-to-br from-tertiary to-tertiary-container rounded-xl p-3 text-on-tertiary shadow-sm flex flex-col justify-between">
+<div>
+<div class="flex items-center justify-between mb-1.5">
+<span class="w-6 h-6 rounded-full bg-surface-container-lowest/20 flex items-center justify-center">
+<span class="material-symbols-outlined text-[15px] text-tertiary-fixed">eco</span>
+</span>
+<span class="px-2 py-0.5 rounded-full bg-tertiary-fixed text-on-tertiary-fixed font-label-sm text-[10px] font-bold uppercase">Bezpłatnie</span>
+</div>
+<h4 class="font-title-md text-title-md text-on-tertiary leading-snug">Dzień bez Samochodu</h4>
+<p class="font-body-sm text-body-sm text-on-tertiary/80 mt-1">Darmowe przejazdy MZK z dowodem rejestracyjnym.</p>
+</div>
+<div class="mt-3 pt-2 border-t border-surface-container-lowest/15 flex items-center justify-between text-tertiary-fixed font-label-sm text-label-sm">
+<span>22 września</span>
+<span class="material-symbols-outlined text-[16px]">arrow_forward</span>
+</div>
+</div>
+</div>
+</section>
+<!-- 5. Historia transakcji i biletów -->
+<section class="px-margin">
+<div class="flex items-center justify-between mb-space-sm">
+<h2 class="font-headline-sm text-headline-sm text-on-surface">Ostatnie transakcje</h2>
+<button class="font-label-md text-label-md text-secondary hover:text-on-surface transition-colors flex items-center gap-1" type="button">
+<span class="material-symbols-outlined text-[16px]">tune</span>
+<span>Filtry</span>
+</button>
+</div>
+<div class="bg-surface-container-lowest rounded-xl shadow-sm divide-y divide-surface-container">
+<!-- Item 1 -->
+<div class="p-space-md flex items-center justify-between gap-3">
+<div class="flex items-center gap-3 min-w-0">
+<div class="w-10 h-10 rounded-full bg-surface-container flex items-center justify-center text-primary shrink-0">
+<span class="material-symbols-outlined text-[20px]">confirmation_number</span>
+</div>
+<div class="min-w-0">
+<h4 class="font-title-md text-title-md text-on-surface truncate">Bilet 30-minutowy MZK</h4>
+<p class="font-body-sm text-body-sm text-secondary truncate">Dzisiaj, 14:13 • Linia 10 • BLIK</p>
+</div>
+</div>
+<div class="flex items-center gap-2 shrink-0">
+<div class="text-right">
+<span class="font-title-md text-title-md text-on-surface font-semibold block">-3,80 zł</span>
+<span class="font-label-sm text-label-sm text-tertiary-container">Opłacono</span>
+</div>
+<button class="w-8 h-8 rounded-lg bg-surface-container-low text-secondary hover:text-on-surface flex items-center justify-center transition-colors" title="Pobierz bilet PDF" type="button">
+<span class="material-symbols-outlined text-[18px]">download</span>
+</button>
+</div>
+</div>
+<!-- Item 2 -->
+<div class="p-space-md flex items-center justify-between gap-3">
+<div class="flex items-center gap-3 min-w-0">
+<div class="w-10 h-10 rounded-full bg-surface-container flex items-center justify-center text-primary shrink-0">
+<span class="material-symbols-outlined text-[20px]">theater_comedy</span>
+</div>
+<div class="min-w-0">
+<h4 class="font-title-md text-title-md text-on-surface truncate">Teatr Horzycy (2x Bilet)</h4>
+<p class="font-body-sm text-body-sm text-secondary truncate">18 maja 2024 • Zniżka Karta Torunianina</p>
+</div>
+</div>
+<div class="flex items-center gap-2 shrink-0">
+<div class="text-right">
+<span class="font-title-md text-title-md text-on-surface font-semibold block">-96,00 zł</span>
+<span class="font-label-sm text-label-sm text-tertiary-container">Zniżka -20%</span>
+</div>
+<button class="w-8 h-8 rounded-lg bg-surface-container-low text-secondary hover:text-on-surface flex items-center justify-center transition-colors" title="Pobierz bilet PDF" type="button">
+<span class="material-symbols-outlined text-[18px]">download</span>
+</button>
+</div>
+</div>
+<!-- Item 3 -->
+<div class="p-space-md flex items-center justify-between gap-3">
+<div class="flex items-center gap-3 min-w-0">
+<div class="w-10 h-10 rounded-full bg-surface-container flex items-center justify-center text-primary shrink-0">
+<span class="material-symbols-outlined text-[20px]">badge</span>
+</div>
+<div class="min-w-0">
+<h4 class="font-title-md text-title-md text-on-surface truncate">Bilet Miesięczny Sieciowy</h4>
+<p class="font-body-sm text-body-sm text-secondary truncate">01.05 - 31.05 • Karta Dużej Rodziny</p>
+</div>
+</div>
+<div class="flex items-center gap-2 shrink-0">
+<div class="text-right">
+<span class="font-title-md text-title-md text-on-surface font-semibold block">-52,00 zł</span>
+<span class="font-label-sm text-label-sm text-secondary">Zarchiwizowany</span>
+</div>
+<button class="w-8 h-8 rounded-lg bg-surface-container-low text-secondary hover:text-on-surface flex items-center justify-center transition-colors" title="Pobierz fakturę VAT" type="button">
+<span class="material-symbols-outlined text-[18px]">picture_as_pdf</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Bottom Municipal Guarantee Notice -->
+<div class="mt-space-md flex items-center justify-center gap-2 text-secondary">
+<span class="material-symbols-outlined text-[16px]">verified_user</span>
+<span class="font-label-sm text-label-sm">Oficjalny system Urzędu Miasta Torunia i MZK</span>
+</div>
+</section>
+</div>
+<script>
+  // Live dynamic clock updater for controller security verification
+  function updateResidentCardTicker() {
+    const timeEl = document.getElementById('liveTimestamp');
+    if (!timeEl) return;
+    const now = new Date();
+    const hours = String(now.getHours()).padStart(2, '0');
+    const minutes = String(now.getMinutes()).padStart(2, '0');
+    const seconds = String(now.getSeconds()).padStart(2, '0');
+    timeEl.textContent = `Ważny: dzisiaj, ${hours}:${minutes}:${seconds}`;
+  }
+
+  // Active ticket countdown simulation
+  let remainingSeconds = 18 * 60 + 42;
+  function updateTicketCountdown() {
+    const countdownEl = document.getElementById('countdownDisplay');
+    if (!countdownEl || remainingSeconds <= 0) return;
+    remainingSeconds--;
+    const m = Math.floor(remainingSeconds / 60);
+    const s = remainingSeconds % 60;
+    countdownEl.textContent = `Pozostało: ${m} min ${String(s).padStart(2, '0')} sek`;
+  }
+
+  setInterval(updateResidentCardTicker, 1000);
+  setInterval(updateTicketCountdown, 1000);
+</script></main><nav class="fixed bottom-0 w-full z-50 pb-safe bg-surface-container-lowest/90 backdrop-blur-xl shadow-[0_-4px_16px_rgba(11,28,48,0.06)]" data-active-classes="text-primary-container font-semibold"><div class="h-16 px-space-xs flex items-center justify-around"><a class="flex flex-col items-center justify-center min-w-[56px] h-14 text-secondary hover:text-on-surface transition-colors" data-path="glowna" href="ekran_główny.html"><span class="material-symbols-outlined text-[24px] mb-0.5">home</span><span class="font-label-sm text-label-sm leading-none">Główna</span></a><a class="flex flex-col items-center justify-center min-w-[56px] h-14 text-secondary hover:text-on-surface transition-colors" data-path="glos" href="głosy.html"><span class="material-symbols-outlined text-[24px] mb-0.5">how_to_vote</span><span class="font-label-sm text-label-sm leading-none">Głos</span></a><a aria-current="page" class="flex flex-col items-center justify-center min-w-[56px] h-14 transition-colors text-primary-container font-semibold" data-path="bilety" href="karta_mieszkanca.html"><span class="material-symbols-outlined text-[24px] mb-0.5">confirmation_number</span><span class="font-label-sm text-label-sm leading-none">Bilety</span></a><a class="flex flex-col items-center justify-center min-w-[56px] h-14 text-secondary hover:text-on-surface transition-colors" data-path="odkrywaj" href="usuługi.html"><span class="material-symbols-outlined text-[24px] mb-0.5">explore</span><span class="font-label-sm text-label-sm leading-none">Odkrywaj</span></a><a class="flex flex-col items-center justify-center min-w-[56px] h-14 text-secondary hover:text-on-surface transition-colors" data-path="profil" href="profil.html"><span class="material-symbols-outlined text-[24px] mb-0.5">person</span><span class="font-label-sm text-label-sm leading-none">Profil</span></a></div></nav></body></html>

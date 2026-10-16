@@ -1,0 +1,601 @@
+import React, { useState } from 'react';
+import confetti from 'canvas-confetti';
+
+export default function VotesScreen({ isVoteModalOpen, setIsVoteModalOpen }) {
+  const [activeTab, setActiveTab] = useState('glosowania');
+  const [selectedDistrict, setSelectedDistrict] = useState('Wszystkie dzielnice');
+  const [selectedTopic, setSelectedTopic] = useState('Zieleń miejska');
+  const [hasVoted, setHasVoted] = useState(false);
+  const [isSubmittingVote, setIsSubmittingVote] = useState(false);
+  const [voteCount, setVoteCount] = useState(3240);
+  const [isReportModalOpen, setIsReportModalOpen] = useState(false);
+  const [newReportText, setNewReportText] = useState('');
+  const [reportCategory, setReportCategory] = useState('Infrastruktura');
+  const [reportSuccess, setReportSuccess] = useState(false);
+
+  const districts = [
+    'Wszystkie dzielnice',
+    'Bydgoskie Przedmieście',
+    'Mokre',
+    'Stare Miasto',
+    'Rubinkowo',
+  ];
+
+  const topics = [
+    { name: 'Zieleń miejska', color: 'bg-tertiary' },
+    { name: 'Transport & MPK', color: 'bg-secondary' },
+    { name: 'Infrastruktura', color: 'bg-primary' },
+    { name: 'Kultura & Sport', color: 'bg-secondary-container' },
+  ];
+
+  const handleConfirmVote = () => {
+    setIsSubmittingVote(true);
+    setTimeout(() => {
+      setIsSubmittingVote(false);
+      setIsVoteModalOpen(false);
+      setHasVoted(true);
+      setVoteCount((prev) => prev + 1);
+      try {
+        confetti({
+          particleCount: 100,
+          spread: 70,
+          origin: { y: 0.6 }
+        });
+      } catch (e) {
+        // Confetti fallback
+      }
+    }, 700);
+  };
+
+  const handleCreateReport = (e) => {
+    e.preventDefault();
+    if (!newReportText.trim()) return;
+    setReportSuccess(true);
+    setTimeout(() => {
+      setReportSuccess(false);
+      setIsReportModalOpen(false);
+      setNewReportText('');
+    }, 1200);
+  };
+
+  return (
+    <div className="flex flex-col w-full max-w-2xl mx-auto">
+      {/* Title & District Bar */}
+      <div className="px-margin pt-space-md pb-space-sm flex flex-col gap-space-xs">
+        <div className="flex items-center justify-between">
+          <div className="flex items-center gap-space-xs">
+            <span className="inline-flex items-center justify-center w-7 h-7 rounded-full bg-primary-fixed text-primary">
+              <span className="material-symbols-outlined text-[18px]">how_to_vote</span>
+            </span>
+            <h1 className="font-headline-sm text-headline-sm text-on-surface font-bold">
+              Partycypacja Obywatelska
+            </h1>
+          </div>
+          <div className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-surface-container-low text-secondary font-label-sm text-label-sm shadow-sm">
+            <span className="w-2 h-2 rounded-full bg-tertiary"></span>
+            <span>Twój rewir: Toruń Zachód</span>
+          </div>
+        </div>
+        <p className="font-body-sm text-body-sm text-secondary">
+          Decyduj o inwestycjach, zgłaszaj usterki i współtwórz przestrzeń Torunia.
+        </p>
+      </div>
+
+      {/* Tabs */}
+      <div className="px-margin pb-space-sm">
+        <div className="flex p-1 bg-surface-container rounded-xl gap-1">
+          <button
+            onClick={() => setActiveTab('glosowania')}
+            className={`tab-btn flex-1 py-2 px-2 rounded-lg font-label-md text-label-md text-center transition-all cursor-pointer ${
+              activeTab === 'glosowania'
+                ? 'bg-surface-container-lowest text-primary shadow-sm font-semibold'
+                : 'text-secondary hover:text-on-surface'
+            }`}
+            type="button"
+          >
+            Głosowania
+          </button>
+          <button
+            onClick={() => setActiveTab('konsultacje')}
+            className={`tab-btn flex-1 py-2 px-2 rounded-lg font-label-md text-label-md text-center transition-all cursor-pointer ${
+              activeTab === 'konsultacje'
+                ? 'bg-surface-container-lowest text-primary shadow-sm font-semibold'
+                : 'text-secondary hover:text-on-surface'
+            }`}
+            type="button"
+          >
+            Konsultacje
+          </button>
+          <button
+            onClick={() => setActiveTab('zgloszenia')}
+            className={`tab-btn flex-1 py-2 px-2 rounded-lg font-label-md text-label-md text-center transition-all cursor-pointer relative ${
+              activeTab === 'zgloszenia'
+                ? 'bg-surface-container-lowest text-primary shadow-sm font-semibold'
+                : 'text-secondary hover:text-on-surface'
+            }`}
+            type="button"
+          >
+            Zgłoszenia
+            <span className="inline-flex items-center justify-center w-4 h-4 rounded-full bg-primary-container text-on-primary font-label-sm text-[10px] ml-0.5 font-bold">
+              3
+            </span>
+          </button>
+        </div>
+      </div>
+
+      {/* Filters (Rejon & Temat) */}
+      <div className="flex flex-col gap-space-xs pb-space-sm">
+        <div className="flex items-center gap-2 overflow-x-auto px-margin scrollbar-none py-1">
+          <span className="font-label-sm text-label-sm text-secondary uppercase tracking-wider shrink-0 flex items-center gap-1 font-semibold">
+            <span className="material-symbols-outlined text-[14px]">location_on</span>
+            Rejon:
+          </span>
+          {districts.map((d) => (
+            <button
+              key={d}
+              onClick={() => setSelectedDistrict(d)}
+              className={`shrink-0 px-3 py-1 rounded-full font-label-sm text-label-sm transition-colors cursor-pointer ${
+                selectedDistrict === d
+                  ? 'bg-primary-container text-on-primary font-medium'
+                  : 'bg-surface-container text-secondary hover:text-on-surface'
+              }`}
+            >
+              {d}
+            </button>
+          ))}
+        </div>
+
+        <div className="flex items-center gap-2 overflow-x-auto px-margin scrollbar-none py-1">
+          <span className="font-label-sm text-label-sm text-secondary uppercase tracking-wider shrink-0 flex items-center gap-1 font-semibold">
+            <span className="material-symbols-outlined text-[14px]">category</span>
+            Temat:
+          </span>
+          {topics.map((t) => (
+            <button
+              key={t.name}
+              onClick={() => setSelectedTopic(t.name)}
+              className={`shrink-0 inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full font-label-sm text-label-sm transition-colors cursor-pointer ${
+                selectedTopic === t.name
+                  ? 'bg-surface-container-high text-on-surface font-semibold ring-1 ring-primary/20'
+                  : 'bg-surface-container text-secondary hover:text-on-surface'
+              }`}
+            >
+              <span className={`w-1.5 h-1.5 rounded-full ${t.color}`}></span>
+              {t.name}
+            </button>
+          ))}
+        </div>
+      </div>
+
+      {/* Content depending on tab */}
+      <div className="px-margin flex flex-col gap-space-lg pb-space-xl">
+        {(activeTab === 'glosowania' || activeTab === 'all') && (
+          <div className="flex flex-col gap-space-sm">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-1.5">
+                <span
+                  className="material-symbols-outlined text-primary text-[20px]"
+                  style={{ fontVariationSettings: "'FILL' 1" }}
+                >
+                  gavel
+                </span>
+                <h2 className="font-title-lg text-title-lg text-on-surface font-semibold">
+                  Oficjalne głosowanie
+                </h2>
+              </div>
+              <span className="px-2 py-0.5 rounded-full bg-primary-fixed text-on-primary-fixed-variant font-label-sm text-label-sm font-semibold">
+                Głos wiążący
+              </span>
+            </div>
+
+            {/* Voting Card */}
+            <div className="bg-surface-container-lowest rounded-xl shadow-md overflow-hidden transition-all duration-200">
+              <div className="relative w-full h-44">
+                <img
+                  className="w-full h-full object-cover"
+                  alt="Park na Bydgoskim Przedmieściu"
+                  src="https://lh3.googleusercontent.com/aida-public/AB6AXuDMBPL8uoyIlqWhodDtyeS0YTgZ5VRSq9rUcjRxB8odlBA7EPTHSCU6Oe7ouLw3j9fNkernUdLRxjY3obsuNXVMfu-sPBcnSsCoWCZ-qF5spb9_-hU1Wyp_is0yXiW23q7MEco_l8ngI_kLzw_ED4a7sbYgCULJmgUvMq8_OGR_dJq-eDfAckjLSHgqM7Hnfa2bjdflfDY8O50Fux2-gJm5hz7XAFeW2JdyLyeqjmB-L7_8QRAetaqd"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-on-background/80 via-transparent to-black/20"></div>
+                <div className="absolute top-3 left-3 flex flex-wrap gap-1.5">
+                  <span className="px-2.5 py-1 rounded-full bg-primary-container text-on-primary font-label-sm text-label-sm shadow-sm flex items-center gap-1">
+                    <span className="material-symbols-outlined text-[14px]">verified</span>
+                    Budżet Obywatelski 2025
+                  </span>
+                </div>
+                <div className="absolute bottom-3 left-3 right-3 flex items-center justify-between text-surface-container-lowest">
+                  <span className="font-label-sm text-label-sm bg-black/40 backdrop-blur-md px-2 py-0.5 rounded">
+                    Ważne do 30.06 (pozostało 14 dni)
+                  </span>
+                  <span className="font-title-md text-title-md text-surface-container-lowest font-semibold">
+                    450 000 PLN
+                  </span>
+                </div>
+              </div>
+
+              <div className="p-4 flex flex-col gap-3">
+                <div className="flex items-center gap-2 text-secondary font-label-sm text-label-sm">
+                  <span className="flex items-center gap-0.5 text-primary-container font-medium">
+                    <span className="material-symbols-outlined text-[16px]">pin_drop</span>
+                    Bydgoskie Przedmieście
+                  </span>
+                  <span>•</span>
+                  <span className="flex items-center gap-0.5">
+                    <span className="material-symbols-outlined text-[16px]">park</span>
+                    Ekologia i rekreacja
+                  </span>
+                </div>
+
+                <h3 className="font-headline-sm text-headline-sm text-on-surface leading-snug font-bold">
+                  Modernizacja Parku na Bydgoskim Przedmieściu – strefa rekreacji i bioróżnorodności
+                </h3>
+                <p className="font-body-sm text-body-sm text-secondary line-clamp-2">
+                  Projekt obejmuje rekultywację stawu, instalację naturalnych łąk kwietnych, strefę cichego relaksu z hamakami oraz energooszczędne oświetlenie parkowe przyjazne nietoperzom.
+                </p>
+
+                <div className="bg-surface-container-low rounded-lg p-3 flex flex-col gap-1.5">
+                  <div className="flex justify-between items-center font-label-sm text-label-sm">
+                    <span className="text-on-surface font-medium flex items-center gap-1">
+                      <span className="material-symbols-outlined text-[15px] text-tertiary">group</span>
+                      Poparcie torunian:
+                    </span>
+                    <span className="font-semibold text-on-surface">
+                      {voteCount.toLocaleString()} głosów (68% progu)
+                    </span>
+                  </div>
+                  <div className="w-full bg-surface-container-high rounded-full h-2 overflow-hidden">
+                    <div className="bg-primary-container h-2 rounded-full" style={{ width: '68%' }}></div>
+                  </div>
+                  <div className="flex items-center justify-between text-[11px] text-secondary font-label-sm">
+                    <span>Weryfikacja PESEL / Karta Torunianina</span>
+                    <span>1 mieszkaniec = 1 głos</span>
+                  </div>
+                </div>
+
+                <div className="flex gap-2 pt-1">
+                  <button
+                    onClick={() => {
+                      if (!hasVoted) setIsVoteModalOpen(true);
+                    }}
+                    disabled={hasVoted}
+                    className={`flex-1 h-11 rounded-lg font-title-md text-title-md flex items-center justify-center gap-1.5 shadow-sm active:scale-[0.98] transition-transform cursor-pointer font-semibold ${
+                      hasVoted
+                        ? 'bg-tertiary text-on-tertiary cursor-default'
+                        : 'bg-primary-container text-on-primary hover:bg-primary'
+                    }`}
+                    type="button"
+                  >
+                    <span className="material-symbols-outlined text-[18px]">
+                      {hasVoted ? 'check' : 'how_to_vote'}
+                    </span>
+                    {hasVoted ? 'Głos oddany' : 'Zagłosuj teraz'}
+                  </button>
+
+                  <button
+                    onClick={() =>
+                      alert('Kosztorys projektu:\n• Rekultywacja stawu: 180 000 zł\n• Oświetlenie parkowe LED: 120 000 zł\n• Ławki, hamaki i mała architektura: 90 000 zł\n• Łąki kwietne i nasadzenia: 60 000 zł\nSuma: 450 000 zł')
+                    }
+                    className="px-3.5 h-11 bg-surface-container-low hover:bg-surface-container text-on-surface rounded-lg font-title-md text-title-md flex items-center justify-center gap-1 transition-colors cursor-pointer"
+                    title="Szczegóły i kosztorys"
+                    type="button"
+                  >
+                    <span className="material-symbols-outlined text-[18px] text-secondary">description</span>
+                    <span className="hidden sm:inline">Kosztorys</span>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {(activeTab === 'konsultacje' || activeTab === 'all' || activeTab === 'glosowania') && (
+          <div className="flex flex-col gap-space-sm">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-1.5">
+                <span className="material-symbols-outlined text-secondary text-[20px]">forum</span>
+                <h2 className="font-title-lg text-title-lg text-on-surface font-semibold">Konsultacje społeczne</h2>
+              </div>
+              <span className="px-2 py-0.5 rounded-full bg-surface-container text-secondary font-label-sm text-label-sm">
+                Opinia doradcza
+              </span>
+            </div>
+
+            <div className="bg-surface-container-lowest rounded-xl p-4 shadow-sm flex flex-col gap-3 transition-all">
+              <div className="flex items-start justify-between gap-2">
+                <div className="flex items-center gap-1.5">
+                  <span className="px-2 py-0.5 rounded-full bg-secondary-container text-on-secondary-container font-label-sm text-label-sm flex items-center gap-1 font-medium">
+                    <span className="material-symbols-outlined text-[14px]">directions_bus</span>
+                    Wydział Gospodarki Komunalnej
+                  </span>
+                </div>
+                <span className="text-secondary font-label-sm text-label-sm shrink-0">Pozostało 8 dni</span>
+              </div>
+              <div>
+                <h3 className="font-title-lg text-title-lg text-on-surface font-semibold leading-tight">
+                  Nowy układ linii autobusowych po otwarciu trasy tramwajowej na Jar
+                </h3>
+                <p className="font-body-sm text-body-sm text-secondary mt-1">
+                  Zgłoś preferowane częstotliwości kursów oraz proponowane korekty przystanków przesiadkowych na północy miasta.
+                </p>
+              </div>
+              <div className="flex items-center justify-between pt-1">
+                <div className="flex items-center gap-2">
+                  <div className="flex -space-x-1.5 overflow-hidden">
+                    <div className="inline-block h-6 w-6 rounded-full bg-primary-fixed text-primary flex items-center justify-center font-label-sm text-[10px] font-bold">
+                      AK
+                    </div>
+                    <div className="inline-block h-6 w-6 rounded-full bg-secondary-container text-on-secondary-container flex items-center justify-center font-label-sm text-[10px] font-bold">
+                      ML
+                    </div>
+                    <div className="inline-block h-6 w-6 rounded-full bg-surface-container text-secondary flex items-center justify-center font-label-sm text-[10px]">
+                      +82
+                    </div>
+                  </div>
+                  <span className="font-label-sm text-label-sm text-secondary">842 odpowiedzi</span>
+                </div>
+                <button
+                  onClick={() => alert('Ankieta konsultacyjna dot. linii MZK Jar:\nFormularz otwiera się w miejskim systemie konsultacji.')}
+                  className="h-9 px-3.5 bg-surface-container-high hover:bg-surface-container text-on-surface rounded-lg font-label-lg text-label-lg flex items-center gap-1.5 transition-colors cursor-pointer font-medium"
+                  type="button"
+                >
+                  <span>Wyraź opinię</span>
+                  <span className="font-label-sm text-label-sm text-secondary">(~3 min)</span>
+                  <span className="material-symbols-outlined text-[16px]">arrow_forward</span>
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {(activeTab === 'zgloszenia' || activeTab === 'all' || activeTab === 'glosowania') && (
+          <div className="flex flex-col gap-space-sm">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-1.5">
+                <span className="material-symbols-outlined text-tertiary-container text-[20px]">assignment_turned_in</span>
+                <h2 className="font-title-lg text-title-lg text-on-surface font-semibold">Moje ostatnie zgłoszenie</h2>
+              </div>
+              <span className="font-label-md text-label-md text-primary font-medium flex items-center gap-0.5">
+                Wszystkie (3)
+                <span className="material-symbols-outlined text-[16px]">chevron_right</span>
+              </span>
+            </div>
+
+            <div className="bg-surface-container-lowest rounded-xl p-4 shadow-sm flex flex-col gap-3">
+              <div className="flex items-start justify-between gap-3">
+                <div className="flex flex-col">
+                  <div className="flex items-center gap-2 mb-1">
+                    <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-tertiary-fixed text-on-tertiary-fixed font-label-sm text-label-sm font-semibold">
+                      <span className="w-1.5 h-1.5 rounded-full bg-tertiary"></span>
+                      W realizacji przez MZD
+                    </span>
+                    <span className="text-secondary font-label-sm text-label-sm">Wczoraj, 14:20</span>
+                  </div>
+                  <h4 className="font-title-md text-title-md text-on-surface font-semibold">
+                    Uzupełnienie doświetlenia przejścia dla pieszych ul. Grudziądzka
+                  </h4>
+                </div>
+                <div className="w-12 h-12 rounded-lg bg-surface-container shrink-0 overflow-hidden relative">
+                  <img
+                    className="w-full h-full object-cover"
+                    alt="Przejście dla pieszych ul. Grudziądzka"
+                    src="https://lh3.googleusercontent.com/aida-public/AB6AXuBuPq_kLEMOFOCrH4Hadlv1wlxr_iKkSIu4IU8wpc29VWDziQbhKNpVJYGk_RrdxyqH7UpRjkxBAjO-xGtJ9bylKLq6CgSTmV-_ocWUhbWA738eIgTQO0kzc-6GfKIN9GMQCvVbEqoCwRGnlQkYYHSiZIwRxcEaEvlZRVxqeWI87GxKalcWF-yFxaGEeZS4MNvd0ozM_ITr3RpaPMOto2M1LRECEN24S-E6tQDPTla6ygu4g4hndYlO"
+                  />
+                </div>
+              </div>
+              <div className="bg-surface-container-low rounded-lg p-2.5 flex items-center justify-between gap-2">
+                <div className="flex items-center gap-2 text-secondary font-body-sm text-body-sm">
+                  <span className="material-symbols-outlined text-secondary text-[18px]">build_circle</span>
+                  <span>
+                    Zaplanowano montaż opraw LED: <strong className="text-on-surface font-medium">do 25 lipca</strong>
+                  </span>
+                </div>
+                <button
+                  onClick={() => alert('Dziennik prac zgłoszenia #TRN-ZGL-4912:\n• 15.10: Przyjęcie zgłoszenia\n• 16.10: Wizja lokalna MZD\n• Status: Zakup opraw doświetlających')}
+                  className="text-primary font-label-sm text-label-sm font-semibold hover:underline flex items-center cursor-pointer"
+                  type="button"
+                >
+                  Dziennik prac
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* Civic Alert Banner */}
+        <div className="bg-gradient-to-br from-primary to-primary-container text-on-primary rounded-2xl p-4 shadow-lg flex flex-col gap-3 relative overflow-hidden">
+          <div className="absolute -right-4 -bottom-4 w-28 h-28 bg-white/10 rounded-full blur-xl pointer-events-none"></div>
+          <div className="flex items-start justify-between relative z-10">
+            <div className="flex flex-col gap-0.5">
+              <div className="flex items-center gap-1.5">
+                <span className="material-symbols-outlined text-[20px] text-on-primary-container">campaign</span>
+                <span className="font-label-sm text-label-sm uppercase tracking-wider text-on-primary-container font-semibold">
+                  Alert Miejski
+                </span>
+              </div>
+              <h3 className="font-headline-sm text-headline-sm text-on-primary font-bold">
+                Widzisz usterkę lub masz pomysł?
+              </h3>
+              <p className="font-body-sm text-body-sm text-on-primary-container">
+                Opisz problem, dodaj zdjęcie i współrzędne GPS. System natychmiast przekaże sprawę odpowiedniemu wydziałowi UM Torunia.
+              </p>
+            </div>
+          </div>
+          <div className="flex flex-col sm:flex-row gap-2 pt-1 relative z-10">
+            <button
+              onClick={() => setIsReportModalOpen(true)}
+              className="h-11 px-4 bg-surface-container-lowest text-primary rounded-lg font-title-md text-title-md font-semibold flex items-center justify-center gap-2 shadow hover:bg-surface-container transition-all active:scale-[0.98] cursor-pointer"
+              type="button"
+            >
+              <span className="material-symbols-outlined text-[20px]">add_location_alt</span>
+              Zgłoś nowy problem lub pomysł
+            </button>
+            <button
+              onClick={() => alert('Otwieram mapę zgłoszeń mieszkańców Torunia...')}
+              className="h-11 px-3 bg-white/10 hover:bg-white/15 text-on-primary rounded-lg font-label-lg text-label-lg flex items-center justify-center gap-1.5 backdrop-blur-sm transition-colors cursor-pointer"
+              type="button"
+            >
+              <span className="material-symbols-outlined text-[18px]">map</span>
+              Mapa zgłoszeń w okolicy
+            </button>
+          </div>
+        </div>
+
+        <div className="flex items-center justify-center gap-2 py-2 text-secondary font-label-sm text-label-sm text-center">
+          <span className="material-symbols-outlined text-[16px] text-tertiary">security</span>
+          <span>Głosowania zabezpieczone podpisem miejskim Profilu Torunianina</span>
+        </div>
+      </div>
+
+      {/* Vote Confirmation Modal */}
+      {isVoteModalOpen && (
+        <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center bg-inverse-surface/40 backdrop-blur-sm p-0 sm:p-4 animate-fadeIn">
+          <div className="bg-surface-container-lowest w-full max-w-md rounded-t-2xl sm:rounded-2xl p-5 shadow-2xl flex flex-col gap-4">
+            <div className="w-12 h-1 bg-surface-container-high rounded-full mx-auto sm:hidden"></div>
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-2">
+                <div className="w-8 h-8 rounded-full bg-primary-fixed text-primary flex items-center justify-center">
+                  <span className="material-symbols-outlined text-[18px]">verified_user</span>
+                </div>
+                <span className="font-title-lg text-title-lg text-on-surface font-semibold">Potwierdź swój głos</span>
+              </div>
+              <button
+                onClick={() => setIsVoteModalOpen(false)}
+                className="w-8 h-8 rounded-full bg-surface-container flex items-center justify-center text-secondary hover:text-on-surface cursor-pointer"
+                type="button"
+              >
+                <span className="material-symbols-outlined text-[18px]">close</span>
+              </button>
+            </div>
+
+            <div className="bg-surface-container-low rounded-xl p-3 flex flex-col gap-1.5">
+              <span className="font-label-sm text-label-sm text-secondary">Wybrany projekt (Budżet Obywatelski 2025):</span>
+              <span className="font-title-md text-title-md text-on-surface font-semibold leading-snug">
+                Modernizacja Parku na Bydgoskim Przedmieściu
+              </span>
+              <span className="text-tertiary font-label-sm text-label-sm font-medium flex items-center gap-1 mt-1">
+                <span className="material-symbols-outlined text-[16px]">check_circle</span>
+                Twoja Karta Torunianina jest aktywna i uprawniona
+              </span>
+            </div>
+
+            <p className="font-body-sm text-body-sm text-secondary">
+              Pamiętaj: oddany głos ma charakter ostateczny i zostanie zarejestrowany w Miejskim Systemie Partycypacji.
+            </p>
+
+            <div className="flex gap-2">
+              <button
+                onClick={() => setIsVoteModalOpen(false)}
+                className="flex-1 h-11 rounded-lg bg-surface-container text-on-surface font-title-md text-title-md hover:bg-surface-container-high transition-colors cursor-pointer"
+                type="button"
+              >
+                Wróć
+              </button>
+              <button
+                onClick={handleConfirmVote}
+                disabled={isSubmittingVote}
+                className="flex-1 h-11 rounded-lg bg-primary-container text-on-primary font-title-md text-title-md shadow-sm font-semibold flex items-center justify-center gap-2 hover:bg-primary transition-colors cursor-pointer"
+                type="button"
+              >
+                {isSubmittingVote ? (
+                  <>
+                    <span className="material-symbols-outlined text-[18px] animate-spin">refresh</span>
+                    <span>Rejestracja...</span>
+                  </>
+                ) : (
+                  'Oddaję głos'
+                )}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* New Report Modal */}
+      {isReportModalOpen && (
+        <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center bg-inverse-surface/40 backdrop-blur-sm p-0 sm:p-4 animate-fadeIn">
+          <div className="bg-surface-container-lowest w-full max-w-md rounded-t-2xl sm:rounded-2xl p-5 shadow-2xl flex flex-col gap-4">
+            <div className="w-12 h-1 bg-surface-container-high rounded-full mx-auto sm:hidden"></div>
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-2">
+                <span className="material-symbols-outlined text-primary text-[22px]">add_location_alt</span>
+                <h3 className="font-title-lg text-title-lg text-on-surface font-semibold">Zgłoś usterkę lub pomysł</h3>
+              </div>
+              <button
+                onClick={() => setIsReportModalOpen(false)}
+                className="w-8 h-8 rounded-full bg-surface-container flex items-center justify-center text-secondary hover:text-on-surface cursor-pointer"
+              >
+                <span className="material-symbols-outlined text-[18px]">close</span>
+              </button>
+            </div>
+
+            {reportSuccess ? (
+              <div className="p-6 text-center flex flex-col items-center justify-center gap-2">
+                <div className="w-12 h-12 rounded-full bg-tertiary-fixed text-tertiary flex items-center justify-center">
+                  <span className="material-symbols-outlined text-[28px]">task_alt</span>
+                </div>
+                <h4 className="font-title-lg font-bold text-on-surface">Zgłoszenie przyjęte!</h4>
+                <p className="font-body-sm text-secondary">
+                  Nadano numer zgłoszenia: TRN-{Math.floor(1000 + Math.random() * 9000)}. Wydział merytoryczny UM Torunia został powiadomiony.
+                </p>
+              </div>
+            ) : (
+              <form onSubmit={handleCreateReport} className="flex flex-col gap-3">
+                <div>
+                  <label className="font-label-sm text-label-sm text-secondary block mb-1">
+                    Kategoria sprawy
+                  </label>
+                  <select
+                    value={reportCategory}
+                    onChange={(e) => setReportCategory(e.target.value)}
+                    className="w-full p-2.5 rounded-lg bg-surface-container-low text-on-surface border border-surface-container text-body-md focus:outline-none focus:ring-2 focus:ring-primary/20"
+                  >
+                    <option value="Infrastruktura">Drogi i chodniki (MZD)</option>
+                    <option value="Oświetlenie">Oświetlenie miejskie</option>
+                    <option value="Zieleń">Zieleń i parki miejskie</option>
+                    <option value="Czystość">Czystość i odpady komunalne</option>
+                    <option value="Komunikacja">Komunikacja miejska (MZK)</option>
+                  </select>
+                </div>
+
+                <div>
+                  <label className="font-label-sm text-label-sm text-secondary block mb-1">
+                    Opis usterki lub inicjatywy
+                  </label>
+                  <textarea
+                    rows={3}
+                    value={newReportText}
+                    onChange={(e) => setNewReportText(e.target.value)}
+                    placeholder="Np. Uszkodzona nawierzchnia chodnika przy ul. Szerokiej 12..."
+                    className="w-full p-2.5 rounded-lg bg-surface-container-low text-on-surface border border-surface-container text-body-md focus:outline-none focus:ring-2 focus:ring-primary/20"
+                    required
+                  ></textarea>
+                </div>
+
+                <div className="flex items-center gap-2 text-secondary font-label-sm text-label-sm p-2 rounded-lg bg-surface-container-low">
+                  <span className="material-symbols-outlined text-[18px] text-primary">my_location</span>
+                  <span>Lokalizacja GPS zostanie dołączona automatycznie (Toruń, Centrum)</span>
+                </div>
+
+                <div className="flex gap-2 pt-2">
+                  <button
+                    type="button"
+                    onClick={() => setIsReportModalOpen(false)}
+                    className="flex-1 h-11 rounded-lg bg-surface-container text-on-surface font-title-md font-medium"
+                  >
+                    Anuluj
+                  </button>
+                  <button
+                    type="submit"
+                    className="flex-1 h-11 rounded-lg bg-primary text-on-primary font-title-md font-semibold shadow-sm hover:opacity-95"
+                  >
+                    Wyślij zgłoszenie
+                  </button>
+                </div>
+              </form>
+            )}
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
