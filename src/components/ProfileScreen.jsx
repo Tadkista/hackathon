@@ -29,10 +29,23 @@ export default function ProfileScreen({ onNavigate }) {
   ];
 
   return (
-    <div className="flex flex-col w-full pb-8 max-w-2xl mx-auto">
-      {/* Citizen Identity Card */}
-      <div className="px-margin pt-space-md">
-        <div className="bg-surface-container-lowest rounded-2xl shadow-sm p-space-md flex flex-col gap-space-md relative overflow-hidden">
+    <div className="flex flex-col w-full pb-10 space-y-6 max-w-7xl mx-auto">
+      {/* Title Header */}
+      <div className="flex flex-col pt-1 pb-1">
+        <h1 className="text-2xl sm:text-3xl font-bold text-on-surface tracking-tight">
+          Profil Mieszkańca
+        </h1>
+        <p className="text-secondary text-body-sm mt-0.5">
+          Zarządzaj tożsamością miejską, ustawieniami konta oraz historią aktywności w Toruniu.
+        </p>
+      </div>
+
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-7">
+        {/* Left Column: Citizen Identity & Activity Stats */}
+        <div className="lg:col-span-5 flex flex-col space-y-6">
+          {/* Citizen Identity Card */}
+          <div>
+            <div className="bg-surface-container-lowest rounded-2xl shadow-card border border-outline-variant/60 p-space-md flex flex-col gap-space-md relative overflow-hidden">
           {/* Decorative Civic Tint Accent */}
           <div className="absolute -right-10 -top-10 w-32 h-32 rounded-full bg-primary-fixed/30 pointer-events-none blur-2xl"></div>
 
@@ -108,7 +121,7 @@ export default function ProfileScreen({ onNavigate }) {
       </div>
 
       {/* Civic Impact Stats (Bento Ribbon) */}
-      <div className="px-margin pt-space-lg">
+      <div>
         <div className="flex items-center justify-between mb-space-sm">
           <span className="font-title-lg text-title-lg text-on-surface font-bold">
             Aktywność obywatelska
@@ -176,7 +189,7 @@ export default function ProfileScreen({ onNavigate }) {
       </div>
 
       {/* Section: Moje zasoby miejskie */}
-      <div className="px-margin pt-space-lg">
+      <div>
         <h2 className="font-title-lg text-title-lg text-on-surface font-bold mb-space-sm">
           Moje zasoby miejskie
         </h2>
@@ -261,13 +274,16 @@ export default function ProfileScreen({ onNavigate }) {
           </button>
         </div>
       </div>
+    </div>
 
+    {/* Right Column: Settings, Notifications & Security */}
+    <div className="lg:col-span-7 flex flex-col space-y-6">
       {/* Section: Ustawienia preferencji i powiadomień */}
-      <div className="px-margin pt-space-lg">
+      <div>
         <h2 className="font-title-lg text-title-lg text-on-surface font-bold mb-space-sm">
           Centrum powiadomień i kanały
         </h2>
-        <div className="bg-surface-container-lowest rounded-xl shadow-sm p-space-md flex flex-col gap-space-md">
+        <div className="bg-surface-container-lowest rounded-xl shadow-card border border-outline-variant/60 p-space-md flex flex-col gap-space-md">
           <div>
             <span className="font-label-md text-label-md text-secondary block mb-space-xs font-semibold">
               Tematy alertów miejskich w Toruniu
@@ -334,11 +350,11 @@ export default function ProfileScreen({ onNavigate }) {
       </div>
 
       {/* Security & Settings */}
-      <div className="px-margin pt-space-lg">
+      <div>
         <h2 className="font-title-lg text-title-lg text-on-surface font-bold mb-space-sm">
           Bezpieczeństwo i kontakt
         </h2>
-        <div className="bg-surface-container-lowest rounded-xl shadow-sm overflow-hidden flex flex-col">
+        <div className="bg-surface-container-lowest rounded-xl shadow-card border border-outline-variant/60 overflow-hidden flex flex-col">
           {/* Dark Mode Toggle */}
           <div className="p-space-md flex items-center justify-between">
             <div className="flex items-center gap-space-md">
@@ -452,7 +468,7 @@ export default function ProfileScreen({ onNavigate }) {
       </div>
 
       {/* Logout and Version Footer */}
-      <div className="px-margin pt-space-xl flex flex-col items-center gap-space-md">
+      <div className="flex flex-col items-center gap-space-md pt-2">
         <button
           onClick={() => {
             if (confirm('Czy na pewno chcesz wylogować się z konta mieszkańca Torunia?')) {
@@ -478,6 +494,8 @@ export default function ProfileScreen({ onNavigate }) {
           </span>
         </div>
       </div>
+    </div>
+  </div>
 
       {/* District Selector Modal */}
       {isChangingDistrict && (

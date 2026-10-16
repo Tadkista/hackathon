@@ -45,7 +45,7 @@ export default function TicketsScreen({ onOpenQrModal }) {
   };
 
   return (
-    <div className="flex flex-col w-full pb-8 max-w-2xl mx-auto">
+    <div className="flex flex-col w-full pb-10 max-w-7xl mx-auto space-y-6">
       {/* Toast Notification */}
       {purchaseToast && (
         <div className="fixed top-20 left-1/2 -translate-x-1/2 z-50 bg-tertiary text-on-tertiary px-4 py-3 rounded-xl shadow-xl flex items-center gap-2 text-label-md animate-bounce">
@@ -54,9 +54,22 @@ export default function TicketsScreen({ onOpenQrModal }) {
         </div>
       )}
 
-      {/* Status Toast / Civic Bar */}
-      <div className="px-margin pt-space-sm mb-space-sm">
-        <div className="bg-surface-container-low rounded-xl p-space-sm flex items-center justify-between shadow-sm">
+      {/* Title Header */}
+      <div className="flex flex-col pt-1 pb-1">
+        <h1 className="text-2xl sm:text-3xl font-bold text-on-surface tracking-tight">
+          Bilety MZK i Karta Mieszkańca
+        </h1>
+        <p className="text-secondary text-body-sm mt-0.5">
+          Toruńska Karta Miejska, cyfrowy portfel uprawnień oraz zakup biletów online.
+        </p>
+      </div>
+
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-7">
+        {/* Left Column: Resident Card & Active Ticket */}
+        <div className="lg:col-span-5 flex flex-col space-y-6">
+          {/* Status Toast / Civic Bar */}
+          <div className="mb-1">
+            <div className="bg-surface-container-low rounded-xl p-space-sm flex items-center justify-between shadow-sm">
           <div className="flex items-center gap-space-sm min-w-0">
             <span className="w-2.5 h-2.5 rounded-full bg-tertiary-container animate-pulse shrink-0"></span>
             <p className="font-label-sm text-label-sm text-secondary truncate">
@@ -73,7 +86,7 @@ export default function TicketsScreen({ onOpenQrModal }) {
       </div>
 
       {/* 1. Główny moduł: Cyfrowa Karta Mieszkańca Torunia */}
-      <section className="px-margin mb-space-lg">
+      <section>
         <div className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-primary via-primary-container to-[#4a0812] text-on-primary shadow-xl p-space-md">
           {/* Gothic watermark */}
           <div className="absolute -right-8 -bottom-10 w-44 h-44 opacity-10 pointer-events-none">
@@ -217,7 +230,7 @@ export default function TicketsScreen({ onOpenQrModal }) {
       </section>
 
       {/* 2. Mój aktywny bilet */}
-      <section className="px-margin mb-space-lg">
+      <section>
         <div className="bg-surface-container-lowest rounded-xl p-space-md shadow-sm border border-transparent">
           <div className="flex items-center justify-between mb-space-sm">
             <div className="flex items-center gap-2">
@@ -288,9 +301,12 @@ export default function TicketsScreen({ onOpenQrModal }) {
           </div>
         </div>
       </section>
+    </div>
 
+    {/* Right Column: Ticket Purchase & Benefits & History */}
+    <div className="lg:col-span-7 flex flex-col space-y-6">
       {/* 3. Szybki zakup biletów komunikacji miejskiej */}
-      <section className="px-margin mb-space-lg">
+      <section>
         <div className="flex items-center justify-between mb-space-sm">
           <div>
             <h2 className="font-headline-sm text-headline-sm text-on-surface font-bold">
@@ -491,7 +507,7 @@ export default function TicketsScreen({ onOpenQrModal }) {
       </section>
 
       {/* 4. Moje zniżki i benefity */}
-      <section className="px-margin mb-space-lg">
+      <section>
         <div className="flex items-center justify-between mb-space-sm">
           <div>
             <h2 className="font-headline-sm text-headline-sm text-on-surface font-bold">
@@ -567,7 +583,7 @@ export default function TicketsScreen({ onOpenQrModal }) {
       </section>
 
       {/* 5. Historia biletów i opłat */}
-      <section className="px-margin mb-space-lg">
+      <section>
         <h2 className="font-headline-sm text-headline-sm text-on-surface font-bold mb-space-sm">
           Historia biletów i transakcji
         </h2>
@@ -650,6 +666,8 @@ export default function TicketsScreen({ onOpenQrModal }) {
           </span>
         </div>
       </section>
+    </div>
+  </div>
 
       {/* QR Code Inspection Modal */}
       {isQrModalOpen && (

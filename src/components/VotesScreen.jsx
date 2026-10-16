@@ -59,37 +59,37 @@ export default function VotesScreen({ isVoteModalOpen, setIsVoteModalOpen }) {
   };
 
   return (
-    <div className="flex flex-col w-full max-w-2xl mx-auto">
+    <div className="flex flex-col w-full max-w-7xl mx-auto space-y-6 pb-10">
       {/* Title & District Bar */}
-      <div className="px-margin pt-space-md pb-space-sm flex flex-col gap-space-xs">
-        <div className="flex items-center justify-between">
-          <div className="flex items-center gap-space-xs">
-            <span className="inline-flex items-center justify-center w-7 h-7 rounded-full bg-primary-fixed text-primary">
-              <span className="material-symbols-outlined text-[18px]">how_to_vote</span>
+      <div className="flex flex-col gap-1 pt-1 pb-1">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+          <div className="flex items-center gap-2">
+            <span className="inline-flex items-center justify-center w-8 h-8 rounded-xl bg-rose-50 dark:bg-rose-950/40 text-primary">
+              <span className="material-symbols-outlined text-[20px]">how_to_vote</span>
             </span>
-            <h1 className="font-headline-sm text-headline-sm text-on-surface font-bold">
+            <h1 className="text-2xl sm:text-3xl font-bold text-on-surface tracking-tight">
               Partycypacja Obywatelska
             </h1>
           </div>
-          <div className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-surface-container-low text-secondary font-label-sm text-label-sm shadow-sm">
-            <span className="w-2 h-2 rounded-full bg-tertiary"></span>
+          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-surface-container-low text-secondary text-xs font-medium self-start sm:self-auto border border-outline-variant/60">
+            <span className="w-2 h-2 rounded-full bg-emerald-500"></span>
             <span>Twój rewir: Toruń Zachód</span>
           </div>
         </div>
-        <p className="font-body-sm text-body-sm text-secondary">
+        <p className="text-secondary text-body-sm mt-0.5">
           Decyduj o inwestycjach, zgłaszaj usterki i współtwórz przestrzeń Torunia.
         </p>
       </div>
 
       {/* Tabs */}
-      <div className="px-margin pb-space-sm">
-        <div className="flex p-1 bg-surface-container rounded-xl gap-1">
+      <div className="pb-1">
+        <div className="flex p-1 bg-surface-container rounded-xl gap-1 max-w-md">
           <button
             onClick={() => setActiveTab('glosowania')}
-            className={`tab-btn flex-1 py-2 px-2 rounded-lg font-label-md text-label-md text-center transition-all cursor-pointer ${
+            className={`tab-btn flex-1 py-2 px-3 rounded-lg text-sm transition-all cursor-pointer ${
               activeTab === 'glosowania'
-                ? 'bg-surface-container-lowest text-primary shadow-sm font-semibold'
-                : 'text-secondary hover:text-on-surface'
+                ? 'bg-surface-container-lowest text-primary shadow-xs font-semibold'
+                : 'text-secondary hover:text-on-surface font-medium'
             }`}
             type="button"
           >
@@ -97,10 +97,10 @@ export default function VotesScreen({ isVoteModalOpen, setIsVoteModalOpen }) {
           </button>
           <button
             onClick={() => setActiveTab('konsultacje')}
-            className={`tab-btn flex-1 py-2 px-2 rounded-lg font-label-md text-label-md text-center transition-all cursor-pointer ${
+            className={`tab-btn flex-1 py-2 px-3 rounded-lg text-sm transition-all cursor-pointer ${
               activeTab === 'konsultacje'
-                ? 'bg-surface-container-lowest text-primary shadow-sm font-semibold'
-                : 'text-secondary hover:text-on-surface'
+                ? 'bg-surface-container-lowest text-primary shadow-xs font-semibold'
+                : 'text-secondary hover:text-on-surface font-medium'
             }`}
             type="button"
           >
@@ -108,15 +108,15 @@ export default function VotesScreen({ isVoteModalOpen, setIsVoteModalOpen }) {
           </button>
           <button
             onClick={() => setActiveTab('zgloszenia')}
-            className={`tab-btn flex-1 py-2 px-2 rounded-lg font-label-md text-label-md text-center transition-all cursor-pointer relative ${
+            className={`tab-btn flex-1 py-2 px-3 rounded-lg text-sm transition-all cursor-pointer relative ${
               activeTab === 'zgloszenia'
-                ? 'bg-surface-container-lowest text-primary shadow-sm font-semibold'
-                : 'text-secondary hover:text-on-surface'
+                ? 'bg-surface-container-lowest text-primary shadow-xs font-semibold'
+                : 'text-secondary hover:text-on-surface font-medium'
             }`}
             type="button"
           >
             Zgłoszenia
-            <span className="inline-flex items-center justify-center w-4 h-4 rounded-full bg-primary-container text-on-primary font-label-sm text-[10px] ml-0.5 font-bold">
+            <span className="inline-flex items-center justify-center w-4 h-4 rounded-full bg-primary text-white text-[10px] ml-1 font-bold">
               3
             </span>
           </button>
@@ -124,9 +124,9 @@ export default function VotesScreen({ isVoteModalOpen, setIsVoteModalOpen }) {
       </div>
 
       {/* Filters (Rejon & Temat) */}
-      <div className="flex flex-col gap-space-xs pb-space-sm">
-        <div className="flex items-center gap-2 overflow-x-auto px-margin scrollbar-none py-1">
-          <span className="font-label-sm text-label-sm text-secondary uppercase tracking-wider shrink-0 flex items-center gap-1 font-semibold">
+      <div className="flex flex-col gap-2 pb-2">
+        <div className="flex items-center gap-2 overflow-x-auto scrollbar-none py-1">
+          <span className="text-xs text-secondary uppercase tracking-wider shrink-0 flex items-center gap-1 font-semibold">
             <span className="material-symbols-outlined text-[14px]">location_on</span>
             Rejon:
           </span>
@@ -134,9 +134,9 @@ export default function VotesScreen({ isVoteModalOpen, setIsVoteModalOpen }) {
             <button
               key={d}
               onClick={() => setSelectedDistrict(d)}
-              className={`shrink-0 px-3 py-1 rounded-full font-label-sm text-label-sm transition-colors cursor-pointer ${
+              className={`shrink-0 px-3 py-1 rounded-full text-xs transition-colors cursor-pointer ${
                 selectedDistrict === d
-                  ? 'bg-primary-container text-on-primary font-medium'
+                  ? 'bg-primary text-white font-medium'
                   : 'bg-surface-container text-secondary hover:text-on-surface'
               }`}
             >
@@ -145,8 +145,8 @@ export default function VotesScreen({ isVoteModalOpen, setIsVoteModalOpen }) {
           ))}
         </div>
 
-        <div className="flex items-center gap-2 overflow-x-auto px-margin scrollbar-none py-1">
-          <span className="font-label-sm text-label-sm text-secondary uppercase tracking-wider shrink-0 flex items-center gap-1 font-semibold">
+        <div className="flex items-center gap-2 overflow-x-auto scrollbar-none py-1">
+          <span className="text-xs text-secondary uppercase tracking-wider shrink-0 flex items-center gap-1 font-semibold">
             <span className="material-symbols-outlined text-[14px]">category</span>
             Temat:
           </span>
@@ -154,7 +154,7 @@ export default function VotesScreen({ isVoteModalOpen, setIsVoteModalOpen }) {
             <button
               key={t.name}
               onClick={() => setSelectedTopic(t.name)}
-              className={`shrink-0 inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full font-label-sm text-label-sm transition-colors cursor-pointer ${
+              className={`shrink-0 inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs transition-colors cursor-pointer ${
                 selectedTopic === t.name
                   ? 'bg-surface-container-high text-on-surface font-semibold ring-1 ring-primary/20'
                   : 'bg-surface-container text-secondary hover:text-on-surface'
@@ -168,7 +168,7 @@ export default function VotesScreen({ isVoteModalOpen, setIsVoteModalOpen }) {
       </div>
 
       {/* Content depending on tab */}
-      <div className="px-margin flex flex-col gap-space-lg pb-space-xl">
+      <div className="flex flex-col space-y-6">
         {(activeTab === 'glosowania' || activeTab === 'all') && (
           <div className="flex flex-col gap-space-sm">
             <div className="flex items-center justify-between">

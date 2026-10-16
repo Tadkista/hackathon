@@ -26,9 +26,19 @@ export default function ExploreScreen() {
   };
 
   return (
-    <div className="flex flex-col w-full px-margin pb-space-xl space-y-space-lg max-w-2xl mx-auto">
+    <div className="flex flex-col w-full pb-10 space-y-6 max-w-7xl mx-auto">
+      {/* Title Header */}
+      <div className="flex flex-col pt-1 pb-1">
+        <h1 className="text-2xl sm:text-3xl font-bold text-on-surface tracking-tight">
+          Odkrywaj Toruń
+        </h1>
+        <p className="text-secondary text-body-sm mt-0.5">
+          Wydarzenia kulturalne, strefy parkowania SPP, inwestycje i inicjatywy miejskie.
+        </p>
+      </div>
+
       {/* Sekcja Wyszukiwania z Filtrami */}
-      <section className="w-full pt-space-xs">
+      <section className="w-full pt-1">
         <div className="flex items-center gap-space-sm">
           <div className="relative flex-1">
             <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-secondary">
@@ -66,7 +76,7 @@ export default function ExploreScreen() {
             Wszystkie (12)
           </button>
         </div>
-        <div className="flex gap-space-sm overflow-x-auto pb-1 -mx-margin px-margin no-scrollbar">
+        <div className="flex gap-2.5 overflow-x-auto pb-1 no-scrollbar">
           {categories.map((c) => {
             const isSel = selectedCategory === c.id;
             return (

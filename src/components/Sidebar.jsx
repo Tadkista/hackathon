@@ -5,59 +5,67 @@ export default function Sidebar({ currentTab, onNavigate, onOpenNotifications })
   const { isDark, toggleTheme } = useTheme();
 
   const navItems = [
-    { id: 'home', label: 'Główna', icon: 'home' },
-    { id: 'votes', label: 'Głos', icon: 'how_to_vote' },
-    { id: 'tickets', label: 'Bilety', icon: 'confirmation_number' },
-    { id: 'explore', label: 'Odkrywaj', icon: 'explore' },
-    { id: 'profile', label: 'Profil', icon: 'person' },
+    { id: 'home', label: 'Strona główna', icon: 'home' },
+    { id: 'tickets', label: 'Bilety i Karta', icon: 'confirmation_number' },
+    { id: 'votes', label: 'Budżet i Głosowanie', icon: 'how_to_vote' },
+    { id: 'explore', label: 'Odkrywaj miasto', icon: 'explore' },
+    { id: 'profile', label: 'Mój Profil', icon: 'person' },
   ];
 
   return (
-    <aside className="desktop-sidebar bg-surface-container-lowest border-r border-surface-container">
-      {/* Brand */}
-      <div className="p-5 flex items-center gap-3 border-b border-surface-container">
+    <aside className="desktop-sidebar bg-surface-container-lowest border-r border-outline-variant/60 shadow-sm">
+      {/* Brand Header */}
+      <div className="p-6 flex items-center gap-3.5 border-b border-outline-variant/60">
         <img
-          alt="Logo MójToruń"
-          className="h-9 w-auto object-contain"
+          alt="Herb Torunia"
+          className="h-10 w-auto object-contain"
           src="https://lh3.googleusercontent.com/aida/AEtjO1XbbDUDijFFVjYry5j7-RPfXDcGGsfPxaoNp1Yq5-L1Zoa7bQkASm0j-1NoRsEBWOUrM-Y-wSawLrPRyy-IAXtDTRh-trd2qCUVAYocP74BckJ0-iq8vvSuC756id5GPDKPXaFnv-iF_9pPulj56iwMDRRdyA3irXXzV--Kxx4RO-nevTkfJr8a8JnWUC-wjfpJtT5rroJAcrahwuUNh7HWzk8db2norc-42_rweRuQJ4m6eDBA6niT-w8"
         />
         <div className="flex flex-col">
-          <span className="font-title-lg text-title-lg text-on-surface tracking-tight font-semibold leading-none">
-            MójToruń
-          </span>
-          <span className="font-label-sm text-label-sm text-secondary mt-0.5">
+          <div className="flex items-center gap-1.5">
+            <span className="text-lg font-bold text-on-surface tracking-tight leading-none">
+              MójToruń
+            </span>
+            <span className="px-1.5 py-0.5 rounded text-[10px] font-bold bg-rose-100 text-primary dark:bg-rose-950/60 dark:text-rose-300">
+              MIASTO
+            </span>
+          </div>
+          <span className="text-xs text-secondary mt-1 font-medium">
             Portal Mieszkańca
           </span>
         </div>
       </div>
 
-      {/* Navigation */}
-      <nav className="flex-1 px-3 py-4 flex flex-col gap-1">
+      {/* Navigation List */}
+      <nav className="flex-1 px-3.5 py-5 flex flex-col space-y-1.5">
+        <span className="px-3 pb-1 text-[11px] font-bold text-secondary uppercase tracking-wider">
+          Menu główne
+        </span>
         {navItems.map((item) => {
           const isActive = currentTab === item.id;
           return (
             <button
               key={item.id}
               onClick={() => onNavigate(item.id)}
-              className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all cursor-pointer text-left group ${
+              className={`w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl transition-all cursor-pointer text-left group ${
                 isActive
-                  ? 'bg-primary-container text-on-primary font-semibold shadow-sm'
-                  : 'text-on-surface hover:bg-surface-container-low'
+                  ? 'bg-rose-50 text-primary dark:bg-rose-950/40 dark:text-rose-300 font-semibold shadow-xs ring-1 ring-primary/10 dark:ring-rose-500/20'
+                  : 'text-on-surface hover:bg-surface-container-low hover:text-primary transition-colors'
               }`}
             >
               <span
-                className={`material-symbols-outlined text-[22px] transition-transform ${
-                  isActive ? 'scale-110' : 'group-hover:scale-105'
+                className={`material-symbols-outlined text-[21px] transition-transform ${
+                  isActive ? 'scale-105 text-primary dark:text-rose-300' : 'text-secondary group-hover:text-primary'
                 }`}
                 style={isActive ? { fontVariationSettings: "'FILL' 1" } : {}}
               >
                 {item.icon}
               </span>
-              <span className="font-label-lg text-label-lg">
+              <span className="text-sm font-medium">
                 {item.label}
               </span>
               {item.id === 'votes' && (
-                <span className="ml-auto px-2 py-0.5 rounded-full bg-primary text-on-primary font-label-sm text-[10px] font-bold">
+                <span className="ml-auto px-2 py-0.5 rounded-full bg-primary text-white font-bold text-[10px]">
                   3
                 </span>
               )}
@@ -66,37 +74,41 @@ export default function Sidebar({ currentTab, onNavigate, onOpenNotifications })
         })}
       </nav>
 
-      {/* Bottom Section */}
-      <div className="px-3 pb-4 flex flex-col gap-2 border-t border-surface-container pt-3">
-        {/* Notifications */}
+      {/* Bottom User & Preferences */}
+      <div className="px-3.5 pb-5 flex flex-col space-y-2 border-t border-outline-variant/60 pt-4">
+        {/* Notifications Shortcut */}
         <button
           onClick={onOpenNotifications}
-          className="w-full flex items-center gap-3 px-4 py-2.5 rounded-xl text-on-surface hover:bg-surface-container-low transition-all cursor-pointer text-left"
+          className="w-full flex items-center gap-3 px-3.5 py-2 rounded-xl text-on-surface hover:bg-surface-container-low transition-all cursor-pointer text-left group"
         >
-          <span className="material-symbols-outlined text-[22px] text-secondary">notifications</span>
-          <span className="font-label-lg text-label-lg text-secondary">Powiadomienia</span>
-          <span className="ml-auto w-2.5 h-2.5 rounded-full bg-primary animate-pulse"></span>
+          <span className="material-symbols-outlined text-[20px] text-secondary group-hover:text-primary">
+            notifications
+          </span>
+          <span className="text-xs text-secondary font-medium group-hover:text-on-surface">
+            Powiadomienia
+          </span>
+          <span className="ml-auto w-2 h-2 rounded-full bg-primary animate-pulse"></span>
         </button>
 
         {/* Theme Toggle */}
         <button
           onClick={toggleTheme}
-          className="w-full flex items-center gap-3 px-4 py-2.5 rounded-xl text-on-surface hover:bg-surface-container-low transition-all cursor-pointer text-left"
+          className="w-full flex items-center gap-3 px-3.5 py-2 rounded-xl text-on-surface hover:bg-surface-container-low transition-all cursor-pointer text-left group"
         >
-          <span className="material-symbols-outlined text-[22px] text-secondary">
+          <span className="material-symbols-outlined text-[20px] text-secondary group-hover:text-primary">
             {isDark ? 'light_mode' : 'dark_mode'}
           </span>
-          <span className="font-label-lg text-label-lg text-secondary">
+          <span className="text-xs text-secondary font-medium group-hover:text-on-surface">
             {isDark ? 'Motyw jasny' : 'Motyw ciemny'}
           </span>
           <div className="ml-auto">
             <div
-              className={`w-10 h-6 rounded-full transition-colors relative p-0.5 ${
-                isDark ? 'bg-primary-container' : 'bg-surface-container-high'
+              className={`w-9 h-5 rounded-full transition-colors relative p-0.5 ${
+                isDark ? 'bg-primary' : 'bg-surface-container-high'
               }`}
             >
               <div
-                className={`w-5 h-5 rounded-full bg-white transition-transform shadow-sm ${
+                className={`w-4 h-4 rounded-full bg-white transition-transform shadow-xs ${
                   isDark ? 'translate-x-4' : 'translate-x-0'
                 }`}
               ></div>
@@ -104,22 +116,25 @@ export default function Sidebar({ currentTab, onNavigate, onOpenNotifications })
           </div>
         </button>
 
-        {/* User card */}
+        {/* Resident profile preview */}
         <button
           onClick={() => onNavigate('profile')}
-          className="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl hover:bg-surface-container-low transition-all cursor-pointer text-left mt-1"
+          className="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl hover:bg-surface-container-low border border-transparent hover:border-outline-variant/60 transition-all cursor-pointer text-left mt-2"
         >
-          <img
-            alt="Profil Aleksandry"
-            className="w-9 h-9 rounded-full object-cover shadow-sm"
-            src="https://lh3.googleusercontent.com/aida-public/AB6AXuBKpu-CxsyYFROnKC97ZISDGnAVNZJSMO-8gzdhVX_hJsHeoNzLMhxb_HuGomq6MuXzDWJsYFO02qtqSykSyAfyiDForQCPK7jJUwBYKRRmVP9b89KyQIkOanKnTcPBzrWG1ojpKD2XMg0fKxxJd2pRE1AHV-7TFgpUhQPzXf2L1-cI2uokJMq9outTy9noRn3_tnowuOuQBcZhyYyuK1DLMFrIQNe8nORieBDcAGPx34bVSyrAB-VQ"
-          />
-          <div className="flex flex-col min-w-0">
-            <span className="font-label-lg text-label-lg text-on-surface font-semibold truncate">
+          <div className="relative">
+            <img
+              alt="Profil Aleksandry"
+              className="w-9 h-9 rounded-full object-cover shadow-xs ring-1 ring-outline-variant"
+              src="https://lh3.googleusercontent.com/aida-public/AB6AXuBKpu-CxsyYFROnKC97ZISDGnAVNZJSMO-8gzdhVX_hJsHeoNzLMhxb_HuGomq6MuXzDWJsYFO02qtqSykSyAfyiDForQCPK7jJUwBYKRRmVP9b89KyQIkOanKnTcPBzrWG1ojpKD2XMg0fKxxJd2pRE1AHV-7TFgpUhQPzXf2L1-cI2uokJMq9outTy9noRn3_tnowuOuQBcZhyYyuK1DLMFrIQNe8nORieBDcAGPx34bVSyrAB-VQ"
+            />
+            <span className="absolute bottom-0 right-0 w-2.5 h-2.5 rounded-full bg-emerald-500 ring-2 ring-surface-container-lowest"></span>
+          </div>
+          <div className="flex flex-col min-w-0 flex-1">
+            <span className="text-xs font-semibold text-on-surface truncate">
               Aleksandra W.
             </span>
-            <span className="font-label-sm text-label-sm text-secondary truncate">
-              Stare Miasto
+            <span className="text-[11px] text-secondary truncate">
+              Mieszkanka Torunia
             </span>
           </div>
         </button>
