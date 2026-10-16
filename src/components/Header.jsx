@@ -22,7 +22,7 @@ export default function Header({ currentTab, onNavigate, onOpenNotifications, un
           <img
             alt="Herb Torunia"
             className="h-8 w-auto object-contain"
-            src="https://lh3.googleusercontent.com/aida/AEtjO1XbbDUDijFFVjYry5j7-RPfXDcGGsfPxaoNp1Yq5-L1Zoa7bQkASm0j-1NoRsEBWOUrM-Y-wSawLrPRyy-IAXtDTRh-trd2qCUVAYocP74BckJ0-iq8vvSuC756id5GPDKPXaFnv-iF_9pPulj56iwMDRRdyA3irXXzV--Kxx4RO-nevTkfJr8a8JnWUC-wjfpJtT5rroJAcrahwuUNh7HWzk8db2norc-42_rweRuQJ4m6eDBA6niT-w8"
+            src="/herb_torunia.svg"
           />
           <div className="flex flex-col">
             <div className="flex items-center gap-1.5">

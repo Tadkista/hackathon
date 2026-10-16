@@ -254,6 +254,7 @@ const Map = forwardRef<MapRef, MapProps>(function Map(
   const [mapInstance, setMapInstance] = useState<MapLibreGL.Map | null>(null);
   const [isLoaded, setIsLoaded] = useState(false);
   const [isStyleLoaded, setIsStyleLoaded] = useState(false);
+  const [initError, setInitError] = useState(null);
   const [pendingStyle, setPendingStyle] = useState<MapStyleOption | null>(null);
   const currentStyleRef = useRef<MapStyleOption | null>(null);
   const styleSwapInFlightRef = useRef(false);
@@ -293,16 +294,22 @@ const Map = forwardRef<MapRef, MapProps>(function Map(
       resolvedTheme === "dark" ? mapStyles.dark : mapStyles.light;
     currentStyleRef.current = initialStyle;
 
-    const map = new MapLibreGL.Map({
-      container: containerRef.current,
-      style: initialStyle,
-      renderWorldCopies: false,
-      attributionControl: {
-        compact: true,
-      },
-      ...props,
-      ...viewport,
-    });
+    let map;
+    try {
+      map = new MapLibreGL.Map({
+        container: containerRef.current,
+        style: initialStyle,
+        renderWorldCopies: false,
+        attributionControl: {
+          compact: true,
+        },
+        ...props,
+        ...viewport,
+      });
+    } catch (e) {
+      setInitError(e instanceof Error ? e : new Error(String(e)));
+      return;
+    }
 
     const styleLoadHandler = () => {
       styleSwapInFlightRef.current = false;
@@ -401,6 +408,24 @@ const Map = forwardRef<MapRef, MapProps>(function Map(
     }),
     [mapInstance, isLoaded, isStyleLoaded, resolvedTheme],
   );
+
+  if (initError) {
+    return (
+      <div
+        className={cn(
+          "relative h-full w-full flex flex-col items-center justify-center gap-3 bg-surface-container rounded-2xl",
+          className,
+        )}
+      >
+        <span className="text-4xl">🗺️</span>
+        <p className="text-sm font-semibold text-on-surface">Mapa niedostępna</p>
+        <p className="text-xs text-secondary text-center max-w-xs px-4">
+          Twoja przeglądarka lub urządzenie nie obsługuje WebGL2, który jest wymagany do wyświetlenia
+          interaktywnej mapy.
+        </p>
+      </div>
+    );
+  }
 
   return (
     <MapContext.Provider value={contextValue}>
