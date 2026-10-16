@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Header from './components/Header.jsx';
 import BottomNav from './components/BottomNav.jsx';
+import Sidebar from './components/Sidebar.jsx';
 import HomeScreen from './components/HomeScreen.jsx';
 import VotesScreen from './components/VotesScreen.jsx';
 import TicketsScreen from './components/TicketsScreen.jsx';
@@ -25,16 +26,25 @@ export default function App() {
   };
 
   return (
-    <div className="bg-surface text-on-surface font-body-md antialiased flex flex-col min-h-screen">
-      {/* Top Fixed Header */}
-      <Header
+    <div className="desktop-layout bg-surface text-on-surface font-body-md antialiased min-h-screen">
+      {/* Desktop Sidebar – hidden on mobile via CSS */}
+      <Sidebar
         currentTab={currentTab}
         onNavigate={handleNavigate}
         onOpenNotifications={() => setIsNotificationsOpen(true)}
       />
 
-      {/* Main Content View with proper padding for fixed header and bottom nav */}
-      <main className="flex-1 w-full pt-16 pb-20 bg-surface flex flex-col relative">
+      {/* Top Fixed Header – hidden on desktop via CSS */}
+      <div className="desktop-header">
+        <Header
+          currentTab={currentTab}
+          onNavigate={handleNavigate}
+          onOpenNotifications={() => setIsNotificationsOpen(true)}
+        />
+      </div>
+
+      {/* Main Content View */}
+      <main className="desktop-main flex-1 w-full pt-16 pb-20 bg-surface flex flex-col relative">
         {currentTab === 'home' && (
           <HomeScreen
             onNavigate={handleNavigate}
@@ -67,11 +77,13 @@ export default function App() {
         onNavigate={handleNavigate}
       />
 
-      {/* Bottom Fixed Navigation Bar */}
-      <BottomNav
-        currentTab={currentTab}
-        onNavigate={handleNavigate}
-      />
+      {/* Bottom Fixed Navigation Bar – hidden on desktop via CSS */}
+      <div className="mobile-bottom-nav">
+        <BottomNav
+          currentTab={currentTab}
+          onNavigate={handleNavigate}
+        />
+      </div>
     </div>
   );
 }

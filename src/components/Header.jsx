@@ -1,6 +1,9 @@
 import React from 'react';
+import { useTheme } from '../ThemeContext.jsx';
 
 export default function Header({ currentTab, onNavigate, onOpenNotifications, unreadNotificationsCount = 2 }) {
+  const { isDark, toggleTheme } = useTheme();
+
   const tabTitles = {
     home: 'Główna',
     votes: 'Głos',
@@ -37,6 +40,19 @@ export default function Header({ currentTab, onNavigate, onOpenNotifications, un
         </button>
 
         <div className="flex items-center gap-space-xs">
+          {/* Theme Toggle */}
+          <button
+            onClick={toggleTheme}
+            aria-label={isDark ? 'Przełącz na tryb jasny' : 'Przełącz na tryb ciemny'}
+            className="w-11 h-11 flex items-center justify-center rounded-full text-secondary hover:text-on-surface hover:bg-surface-container transition-colors cursor-pointer focus:outline-none"
+            type="button"
+          >
+            <span className="material-symbols-outlined text-[22px]">
+              {isDark ? 'light_mode' : 'dark_mode'}
+            </span>
+          </button>
+
+          {/* Notifications */}
           <button
             onClick={onOpenNotifications}
             aria-label="Powiadomienia miejskie"

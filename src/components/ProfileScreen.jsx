@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
+import { useTheme } from '../ThemeContext.jsx';
 
 export default function ProfileScreen({ onNavigate }) {
+  const { isDark, toggleTheme } = useTheme();
   const [district, setDistrict] = useState('Stare Miasto / Mokre');
   const [isChangingDistrict, setIsChangingDistrict] = useState(false);
   const [biometricsEnabled, setBiometricsEnabled] = useState(true);
@@ -337,6 +339,39 @@ export default function ProfileScreen({ onNavigate }) {
           Bezpieczeństwo i kontakt
         </h2>
         <div className="bg-surface-container-lowest rounded-xl shadow-sm overflow-hidden flex flex-col">
+          {/* Dark Mode Toggle */}
+          <div className="p-space-md flex items-center justify-between">
+            <div className="flex items-center gap-space-md">
+              <div className="w-10 h-10 rounded-lg bg-surface-container text-secondary flex items-center justify-center shrink-0">
+                <span className="material-symbols-outlined text-[22px]">
+                  {isDark ? 'dark_mode' : 'light_mode'}
+                </span>
+              </div>
+              <div className="flex flex-col">
+                <span className="font-title-md text-title-md text-on-surface font-semibold">
+                  Motyw aplikacji
+                </span>
+                <span className="font-body-sm text-body-sm text-secondary">
+                  {isDark ? 'Ciemny' : 'Jasny'} – kliknij, by zmienić
+                </span>
+              </div>
+            </div>
+            <button
+              onClick={toggleTheme}
+              className={`w-12 h-7 rounded-full transition-colors relative p-1 cursor-pointer ${
+                isDark ? 'bg-primary-container' : 'bg-surface-container-high'
+              }`}
+            >
+              <div
+                className={`w-5 h-5 rounded-full bg-white transition-transform shadow-sm ${
+                  isDark ? 'translate-x-5' : 'translate-x-0'
+                }`}
+              ></div>
+            </button>
+          </div>
+
+          <div className="h-px bg-surface-container-high mx-space-md"></div>
+
           {/* Biometrics */}
           <div className="p-space-md flex items-center justify-between">
             <div className="flex items-center gap-space-md">
