@@ -12,12 +12,12 @@ export default defineConfig({
   },
   server: {
     host: '0.0.0.0', // Listen on all network interfaces
-    port: 5173,
+    port: 4568,
     strictPort: true,
   },
   preview: {
     host: '0.0.0.0',
-    port: 5173,
+    port: 4568,
     strictPort: true,
   }
 });

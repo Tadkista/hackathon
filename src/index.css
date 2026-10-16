@@ -40,11 +40,10 @@
 }
 
 /* ═══════════════════════════════════════════════
-   DARK MODE COLOR OVERRIDES
-   Harmonious Obsidian & Rose Gold Theme
+   UNIFORM SURFACE & TEXT HIERARCHY (NO NEON COLORS)
    ═══════════════════════════════════════════════ */
 
-/* Surface hierarchy */
+/* Dark Mode Surfaces */
 .dark .bg-surface { background-color: #090d14 !important; }
 .dark .bg-background { background-color: #090d14 !important; }
 .dark .bg-surface-container-lowest { background-color: #101623 !important; }
@@ -62,56 +61,12 @@
 .dark .bg-surface-container-lowest\/95 { background-color: rgba(16, 22, 35, 0.96) !important; }
 .dark .bg-surface\/80 { background-color: rgba(9, 13, 20, 0.85) !important; }
 
-/* Text colors */
+/* Dark Mode Text Colors - Clean Neutral Palette */
 .dark .text-on-surface { color: #f8fafc !important; }
 .dark .text-on-background { color: #f8fafc !important; }
 .dark .text-secondary { color: #94a3b8 !important; }
 .dark .text-on-surface-variant { color: #cbd5e1 !important; }
-
-/* Primary (Royal Rose/Coral in Dark Mode) */
-.dark .bg-primary { background-color: #e11d48 !important; }
-.dark .text-primary { color: #fb7185 !important; }
-.dark .bg-primary-container { background-color: #4c0519 !important; }
-.dark .text-on-primary { color: #ffffff !important; }
-.dark .text-on-primary-container { color: #fecdd3 !important; }
-.dark .bg-primary-fixed { background-color: #380c16 !important; }
-.dark .text-on-primary-fixed { color: #fecdd3 !important; }
-.dark .text-on-primary-fixed-variant { color: #fb7185 !important; }
-.dark .text-primary-container { color: #fb7185 !important; }
-.dark .bg-primary-fixed-dim { background-color: #48111d !important; }
-.dark .ring-primary { --tw-ring-color: #e11d48 !important; }
-.dark .ring-primary\/20 { --tw-ring-color: rgba(225, 29, 72, 0.25) !important; }
-
-/* Secondary */
-.dark .bg-secondary { background-color: #64748b !important; }
-.dark .text-secondary { color: #94a3b8 !important; }
-.dark .bg-secondary-container { background-color: #192338 !important; }
-.dark .text-on-secondary { color: #ffffff !important; }
-.dark .text-on-secondary-container { color: #cbd5e1 !important; }
-.dark .text-on-secondary-fixed { color: #cbd5e1 !important; }
-.dark .text-on-secondary-fixed-variant { color: #94a3b8 !important; }
-
-/* Tertiary / Eco */
-.dark .bg-tertiary { background-color: #10b981 !important; }
-.dark .text-tertiary { color: #34d399 !important; }
-.dark .bg-tertiary-container { background-color: #064e3b !important; }
-.dark .text-on-tertiary { color: #ffffff !important; }
-.dark .text-on-tertiary-container { color: #a7f3d0 !important; }
-.dark .bg-tertiary-fixed { background-color: #064e3b !important; }
-.dark .text-on-tertiary-fixed { color: #a7f3d0 !important; }
-.dark .text-tertiary-container { color: #34d399 !important; }
-.dark .text-tertiary-fixed { color: #34d399 !important; }
-
-/* Error / Alerts */
-.dark .bg-error { background-color: #ef4444 !important; }
-.dark .text-error { color: #f87171 !important; }
-.dark .bg-error-container { background-color: #450a0a !important; }
-.dark .text-on-error { color: #ffffff !important; }
-.dark .text-on-error-container { color: #fecaca !important; }
-
-/* Inverse */
-.dark .bg-inverse-surface { background-color: #f8fafc !important; }
-.dark .text-inverse-on-surface { color: #090d14 !important; }
+.dark .text-primary { color: #f8fafc !important; }
 
 /* Outlines & Borders */
 .dark .text-outline { color: #64748b !important; }
@@ -120,15 +75,18 @@
 .dark .border-surface-container-high { border-color: rgba(255, 255, 255, 0.12) !important; }
 .dark .divide-surface-container > * + * { border-color: rgba(255, 255, 255, 0.08) !important; }
 
-/* Shadows in dark mode */
+/* Rings & Shadows (neutral, no neon glow) */
+.dark .ring-primary { --tw-ring-color: rgba(255, 255, 255, 0.2) !important; }
+.dark .ring-primary\/10 { --tw-ring-color: rgba(255, 255, 255, 0.08) !important; }
+.dark .ring-primary\/20 { --tw-ring-color: rgba(255, 255, 255, 0.15) !important; }
+.dark .ring-offset-2 { --tw-ring-offset-color: #090d14 !important; }
+
 .dark .shadow-sm { box-shadow: 0 1px 3px rgba(0, 0, 0, 0.5) !important; }
 .dark .shadow-md { box-shadow: 0 4px 14px rgba(0, 0, 0, 0.6) !important; }
 .dark .shadow-lg { box-shadow: 0 8px 24px rgba(0, 0, 0, 0.65) !important; }
 .dark .shadow-xl { box-shadow: 0 12px 36px rgba(0, 0, 0, 0.7) !important; }
 
-.dark .ring-offset-2 { --tw-ring-offset-color: #090d14 !important; }
-
-/* Form inputs in dark mode */
+/* Form inputs */
 .dark select,
 .dark input,
 .dark textarea {
@@ -139,6 +97,373 @@
 .dark select option {
   background-color: #101623;
   color: #f8fafc;
+}
+
+/* ═══════════════════════════════════════════════
+   UNIFORM TILES & CARDS (WSZYSTKO MA BYĆ JEDNAKOWE)
+   All tiles on the dashboard share identical styling
+   ═══════════════════════════════════════════════ */
+
+/* 1. Quick Access 4 Tiles in Grid: ensure 100% uniformity */
+.grid.grid-cols-2.sm\:grid-cols-4 > button,
+.grid.grid-cols-2.sm\:grid-cols-4 > a {
+  background-color: #ffffff !important;
+  border: 1px solid rgba(226, 232, 240, 0.8) !important;
+  color: #0f172a !important;
+  box-shadow: 0 1px 3px rgba(15, 23, 42, 0.04), 0 4px 12px rgba(15, 23, 42, 0.03) !important;
+}
+.grid.grid-cols-2.sm\:grid-cols-4 > button:hover,
+.grid.grid-cols-2.sm\:grid-cols-4 > a:hover {
+  border-color: rgba(203, 213, 225, 0.9) !important;
+  box-shadow: 0 6px 18px rgba(15, 23, 42, 0.06) !important;
+}
+.grid.grid-cols-2.sm\:grid-cols-4 > button span.font-semibold {
+  color: #0f172a !important;
+}
+.grid.grid-cols-2.sm\:grid-cols-4 > button span.text-\[11px\],
+.grid.grid-cols-2.sm\:grid-cols-4 > button div > span:last-child {
+  color: #64748b !important;
+}
+.grid.grid-cols-2.sm\:grid-cols-4 > button .material-symbols-outlined:not(.text-\[22px\]) {
+  color: #64748b !important;
+}
+.grid.grid-cols-2.sm\:grid-cols-4 > button div.w-10.h-10 {
+  background-color: #f1f5f9 !important;
+  color: #334155 !important;
+}
+.grid.grid-cols-2.sm\:grid-cols-4 > button div.w-10.h-10 .material-symbols-outlined {
+  color: #334155 !important;
+}
+
+/* Dark Mode: Quick Access Tiles */
+.dark .grid.grid-cols-2.sm\:grid-cols-4 > button,
+.dark .grid.grid-cols-2.sm\:grid-cols-4 > a {
+  background-color: #101623 !important;
+  border-color: rgba(255, 255, 255, 0.08) !important;
+  color: #f8fafc !important;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4) !important;
+}
+.dark .grid.grid-cols-2.sm\:grid-cols-4 > button:hover,
+.dark .grid.grid-cols-2.sm\:grid-cols-4 > a:hover {
+  border-color: rgba(255, 255, 255, 0.16) !important;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.55) !important;
+}
+.dark .grid.grid-cols-2.sm\:grid-cols-4 > button span.font-semibold {
+  color: #f8fafc !important;
+}
+.dark .grid.grid-cols-2.sm\:grid-cols-4 > button span.text-\[11px\],
+.dark .grid.grid-cols-2.sm\:grid-cols-4 > button div > span:last-child {
+  color: #94a3b8 !important;
+}
+.dark .grid.grid-cols-2.sm\:grid-cols-4 > button .material-symbols-outlined:not(.text-\[22px\]) {
+  color: #94a3b8 !important;
+}
+.dark .grid.grid-cols-2.sm\:grid-cols-4 > button div.w-10.h-10 {
+  background-color: #192338 !important;
+  color: #f8fafc !important;
+}
+.dark .grid.grid-cols-2.sm\:grid-cols-4 > button div.w-10.h-10 .material-symbols-outlined {
+  color: #f8fafc !important;
+}
+
+/* 2. Resident Card / Digital Wallet Cards - Uniform Sleek Titanium Look */
+div.bg-gradient-to-br.from-primary {
+  background-image: none !important;
+  background-color: #1e293b !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+  color: #f8fafc !important;
+}
+.dark div.bg-gradient-to-br.from-primary {
+  background-image: none !important;
+  background-color: #141c2c !important;
+  border: 1px solid rgba(255, 255, 255, 0.08) !important;
+  color: #f8fafc !important;
+}
+div.bg-gradient-to-br.from-primary * {
+  color: inherit;
+}
+div.bg-gradient-to-br.from-primary span[class*="text-white/70"] {
+  color: #94a3b8 !important;
+}
+div.bg-gradient-to-br.from-primary button {
+  background-color: rgba(255, 255, 255, 0.12) !important;
+  color: #f8fafc !important;
+}
+div.bg-gradient-to-br.from-primary button:hover {
+  background-color: rgba(255, 255, 255, 0.2) !important;
+}
+
+/* 3. Card Icon Containers: neutral and uniform (no random color boxes) */
+.rounded-xl.bg-amber-500\/10,
+.rounded-xl.bg-emerald-50,
+.rounded-xl.bg-rose-50,
+span.rounded-xl[class*="bg-rose-50"] {
+  background-color: #f1f5f9 !important;
+  color: #334155 !important;
+}
+.rounded-xl.bg-amber-500\/10 .material-symbols-outlined,
+.rounded-xl.bg-emerald-50 .material-symbols-outlined,
+.rounded-xl.bg-rose-50 .material-symbols-outlined,
+span.rounded-xl[class*="bg-rose-50"] .material-symbols-outlined {
+  color: #334155 !important;
+}
+
+.dark .rounded-xl.bg-amber-500\/10,
+.dark .rounded-xl.bg-emerald-50,
+.dark .rounded-xl.bg-rose-50,
+.dark div[class*="dark:bg-emerald-950"],
+.dark span.rounded-xl[class*="dark:bg-rose-950"] {
+  background-color: #192338 !important;
+  color: #f8fafc !important;
+}
+.dark .rounded-xl.bg-amber-500\/10 .material-symbols-outlined,
+.dark .rounded-xl.bg-emerald-50 .material-symbols-outlined,
+.dark .rounded-xl.bg-rose-50 .material-symbols-outlined,
+.dark div[class*="dark:bg-emerald-950"] .material-symbols-outlined,
+.dark span.rounded-xl[class*="dark:bg-rose-950"] .material-symbols-outlined,
+.dark .rounded-xl .material-symbols-outlined.text-amber-500,
+.dark .rounded-xl .material-symbols-outlined.text-amber-600 {
+  color: #cbd5e1 !important;
+}
+
+/* ═══════════════════════════════════════════════
+   UNIFORM BUTTONS, NAVIGATION & ACTIONS
+   ═══════════════════════════════════════════════ */
+
+/* Primary Action Buttons */
+button.bg-primary:not(.grid.grid-cols-2.sm\:grid-cols-4 > button),
+a.bg-primary:not(.grid.grid-cols-2.sm\:grid-cols-4 > a) {
+  background-color: #0f172a !important;
+  color: #ffffff !important;
+}
+button.bg-primary:not(.grid.grid-cols-2.sm\:grid-cols-4 > button):hover,
+a.bg-primary:not(.grid.grid-cols-2.sm\:grid-cols-4 > a):hover {
+  background-color: #1e293b !important;
+}
+
+.dark button.bg-primary:not(.grid.grid-cols-2.sm\:grid-cols-4 > button),
+.dark a.bg-primary:not(.grid.grid-cols-2.sm\:grid-cols-4 > a),
+.dark .bg-primary {
+  background-color: #1e293b !important;
+  border: 1px solid rgba(255, 255, 255, 0.12) !important;
+  color: #f8fafc !important;
+}
+.dark button.bg-primary:not(.grid.grid-cols-2.sm\:grid-cols-4 > button):hover,
+.dark a.bg-primary:not(.grid.grid-cols-2.sm\:grid-cols-4 > a):hover,
+.dark .bg-primary:hover {
+  background-color: #283548 !important;
+}
+
+.dark .bg-primary-container { background-color: #192338 !important; }
+.dark .text-on-primary { color: #ffffff !important; }
+.dark .text-on-primary-container { color: #f8fafc !important; }
+.dark .bg-primary-fixed { background-color: #192338 !important; }
+.dark .text-on-primary-fixed { color: #f8fafc !important; }
+.dark .text-on-primary-fixed-variant { color: #cbd5e1 !important; }
+.dark .text-primary-container { color: #cbd5e1 !important; }
+.dark .bg-primary-fixed-dim { background-color: #141c2c !important; }
+
+/* Uniform Sidebar Navigation Items */
+.desktop-sidebar button.bg-rose-50,
+.desktop-sidebar button[class*="dark:bg-rose-950"] {
+  background-color: #f1f5f9 !important;
+  color: #0f172a !important;
+  box-shadow: none !important;
+}
+.desktop-sidebar button.bg-rose-50 .material-symbols-outlined,
+.desktop-sidebar button[class*="dark:bg-rose-950"] .material-symbols-outlined {
+  color: #0f172a !important;
+}
+
+.dark .desktop-sidebar button.bg-rose-50,
+.dark .desktop-sidebar button[class*="dark:bg-rose-950"] {
+  background-color: #192338 !important;
+  color: #f8fafc !important;
+  box-shadow: none !important;
+}
+.dark .desktop-sidebar button.bg-rose-50 .material-symbols-outlined,
+.dark .desktop-sidebar button[class*="dark:bg-rose-950"] .material-symbols-outlined {
+  color: #f8fafc !important;
+}
+
+/* Sidebar MIASTO Brand Tag: neutral */
+span.rounded[class*="bg-rose-100"],
+span.rounded[class*="dark:bg-rose-950"] {
+  background-color: #e2e8f0 !important;
+  color: #334155 !important;
+}
+.dark span.rounded[class*="bg-rose-100"],
+.dark span.rounded[class*="dark:bg-rose-950"] {
+  background-color: #192338 !important;
+  color: #cbd5e1 !important;
+}
+
+/* Uniform Neutral Progress Bar */
+div.h-full.bg-primary.rounded-full {
+  background-color: #334155 !important;
+}
+.dark div.h-full.bg-primary.rounded-full {
+  background-color: #475569 !important;
+}
+
+/* Secondary & Tertiary General Overrides */
+.dark .bg-secondary { background-color: #64748b !important; }
+.dark .text-secondary { color: #94a3b8 !important; }
+.dark .bg-secondary-container { background-color: #192338 !important; }
+.dark .text-on-secondary { color: #ffffff !important; }
+.dark .text-on-secondary-container { color: #cbd5e1 !important; }
+.dark .text-on-secondary-fixed { color: #cbd5e1 !important; }
+.dark .text-on-secondary-fixed-variant { color: #94a3b8 !important; }
+
+/* ═══════════════════════════════════════════════
+   INFORMATIONAL BADGES ON TILES & CARDS
+   (JEDYNIE BADGE INFORMACYJNE MAJĄ KOLORY)
+   ═══════════════════════════════════════════════ */
+
+/* 1. Green / Emerald Badges: Eco, Air Quality, Active Status */
+span.rounded-md[class*="bg-emerald-50"],
+span.rounded-md[class*="dark:bg-emerald-950"],
+span.rounded-full[class*="bg-tertiary"] {
+  background-color: rgba(16, 185, 129, 0.12) !important;
+  color: #047857 !important;
+  border: 1px solid rgba(16, 185, 129, 0.28) !important;
+}
+.dark span.rounded-md[class*="bg-emerald-50"],
+.dark span.rounded-md[class*="dark:bg-emerald-950"],
+.dark span.rounded-full[class*="bg-tertiary"] {
+  background-color: rgba(16, 185, 129, 0.18) !important;
+  color: #34d399 !important;
+  border: 1px solid rgba(16, 185, 129, 0.35) !important;
+}
+
+/* Status text on badges */
+div.flex.items-center.gap-1.text-tertiary,
+span.inline-flex.items-center.text-tertiary,
+span[class*="text-emerald-700"] {
+  color: #059669 !important;
+}
+.dark div.flex.items-center.gap-1.text-tertiary,
+.dark span.inline-flex.items-center.text-tertiary,
+.dark span[class*="dark:text-emerald-400"],
+.dark span[class*="text-tertiary-container"] {
+  color: #34d399 !important;
+}
+
+/* Status indicator dots */
+span.rounded-full.bg-tertiary,
+span.rounded-full[class*="bg-emerald-500"],
+span.rounded-full.bg-tertiary-fixed {
+  background-color: #10b981 !important;
+  border: none !important;
+}
+
+/* 2. Amber / Yellow Badges: Warnings, Traffic Alerts, Deadlines */
+div[class*="bg-amber-50/70"],
+div[class*="dark:bg-amber-950/30"] {
+  background-color: rgba(245, 158, 11, 0.08) !important;
+  border: 1px solid rgba(245, 158, 11, 0.28) !important;
+}
+div[class*="bg-amber-50/70"] span.font-semibold {
+  color: #92400e !important;
+}
+div[class*="bg-amber-50/70"] p {
+  color: #b45309 !important;
+}
+div[class*="bg-amber-50/70"] .material-symbols-outlined {
+  color: #d97706 !important;
+}
+div[class*="bg-amber-50/70"] button {
+  color: #92400e !important;
+}
+
+.dark div[class*="bg-amber-50/70"],
+.dark div[class*="dark:bg-amber-950/30"] {
+  background-color: rgba(245, 158, 11, 0.14) !important;
+  border: 1px solid rgba(245, 158, 11, 0.35) !important;
+}
+.dark div[class*="bg-amber-50/70"] span.font-semibold,
+.dark div[class*="dark:bg-amber-950/30"] span.font-semibold {
+  color: #fde68a !important;
+}
+.dark div[class*="bg-amber-50/70"] p,
+.dark div[class*="dark:bg-amber-950/30"] p {
+  color: #fef3c7 !important;
+}
+.dark div[class*="bg-amber-50/70"] .material-symbols-outlined,
+.dark div[class*="dark:bg-amber-950/30"] .material-symbols-outlined {
+  color: #fbbf24 !important;
+}
+.dark div[class*="bg-amber-50/70"] button,
+.dark div[class*="dark:bg-amber-950/30"] button {
+  color: #fbbf24 !important;
+}
+
+/* Remaining days / Countdown badges */
+span.rounded-full[class*="bg-white/20"],
+span[class*="bg-black/40"] {
+  background-color: rgba(245, 158, 11, 0.22) !important;
+  color: #fef3c7 !important;
+  border: 1px solid rgba(245, 158, 11, 0.38) !important;
+}
+
+/* 3. Category Badge: Kultura (Purple Accent) */
+span.rounded-md[class*="bg-rose-50"],
+span.rounded-md[class*="dark:bg-rose-950"] {
+  background-color: rgba(168, 85, 247, 0.12) !important;
+  color: #7e22ce !important;
+  border: 1px solid rgba(168, 85, 247, 0.25) !important;
+}
+.dark span.rounded-md[class*="bg-rose-50"],
+.dark span.rounded-md[class*="dark:bg-rose-950"] {
+  background-color: rgba(168, 85, 247, 0.18) !important;
+  color: #c084fc !important;
+  border: 1px solid rgba(168, 85, 247, 0.32) !important;
+}
+
+/* 4. Category Badge: Inwestycje / Rejon (Blue Accent) */
+span.rounded-md.bg-surface-container {
+  background-color: rgba(59, 130, 246, 0.1) !important;
+  color: #2563eb !important;
+  border: 1px solid rgba(59, 130, 246, 0.22) !important;
+}
+.dark span.rounded-md.bg-surface-container {
+  background-color: rgba(59, 130, 246, 0.16) !important;
+  color: #60a5fa !important;
+  border: 1px solid rgba(59, 130, 246, 0.3) !important;
+}
+
+/* 5. Civic Badges: PROJEKT OGÓLNOMIEJSKI, Budżet Obywatelski, Głos wiążący (Indigo Accent) */
+span.rounded-lg[class*="bg-black/60"] {
+  background-color: rgba(15, 23, 42, 0.8) !important;
+  color: #ffffff !important;
+  border: 1px solid rgba(255, 255, 255, 0.2) !important;
+}
+span.rounded-full[class*="bg-primary-fixed"],
+span.rounded-full[class*="bg-primary-container"] {
+  background-color: rgba(99, 102, 241, 0.14) !important;
+  color: #6366f1 !important;
+  border: 1px solid rgba(99, 102, 241, 0.28) !important;
+}
+.dark span.rounded-full[class*="bg-primary-fixed"],
+.dark span.rounded-full[class*="bg-primary-container"] {
+  background-color: rgba(99, 102, 241, 0.2) !important;
+  color: #a5b4fc !important;
+  border: 1px solid rgba(99, 102, 241, 0.35) !important;
+}
+span.rounded-full[class*="bg-primary-container"] .material-symbols-outlined,
+span.rounded-full[class*="bg-primary-fixed"] .material-symbols-outlined {
+  color: inherit !important;
+}
+
+/* 6. Voting Topic Badges */
+span.rounded-full.bg-primary {
+  background-color: #f59e0b !important;
+}
+span.rounded-full.bg-secondary {
+  background-color: #3b82f6 !important;
+}
+span.rounded-full.bg-secondary-container {
+  background-color: #a855f7 !important;
 }
 
 /* ═══════════════════════════════════════════════
@@ -175,7 +500,6 @@
     min-height: 100vh;
   }
 
-  /* Remove cramped max-w constraints on desktop containers */
   .desktop-main > div {
     max-width: 100% !important;
     margin: 0 !important;
