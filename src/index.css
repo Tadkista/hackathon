@@ -126,10 +126,10 @@
 }
 .grid.grid-cols-2.sm\:grid-cols-4 > button span.text-fs-11,
 .grid.grid-cols-2.sm\:grid-cols-4 > button div > span:last-child {
-  color: #64748b !important;
+  color: #526071 !important;
 }
 .grid.grid-cols-2.sm\:grid-cols-4 > button .material-symbols-outlined:not(.text-fs-22) {
-  color: #64748b !important;
+  color: #526071 !important;
 }
 .grid.grid-cols-2.sm\:grid-cols-4 > button div.w-10.h-10 {
   background-color: #f1f5f9 !important;
@@ -419,8 +419,8 @@ span.rounded-lg[class*="bg-black/60"] {
 span.rounded-full[class*="bg-primary-fixed"],
 span.rounded-full[class*="bg-primary-container"] {
   background-color: rgba(99, 102, 241, 0.14) !important;
-  color: #6366f1 !important;
-  border: 1px solid rgba(99, 102, 241, 0.28) !important;
+  color: #4338ca !important;
+  border: 1px solid rgba(99, 102, 241, 0.34) !important;
 }
 .dark span.rounded-full[class*="bg-primary-fixed"],
 .dark span.rounded-full[class*="bg-primary-container"] {
@@ -666,3 +666,44 @@ html.hc input, html.hc select, html.hc textarea, html.hc.dark input, html.hc.dar
 html.hc :focus-visible { outline: 3px solid var(--hc-fg); outline-offset: 3px; }
 html.hc a, html.hc button { text-decoration-thickness: 2px; }
 html.hc [class*='backdrop-blur'] { backdrop-filter: none !important; }
+
+/* ───────── HIGH CONTRAST: outrank the neutral global button + tile + badge rules ───────── */
+html.hc.hc.hc button.bg-primary.bg-primary.bg-primary.bg-primary,
+html.hc.hc.hc a.bg-primary.bg-primary.bg-primary.bg-primary {
+  background-color: var(--hc-fg) !important;
+  color: var(--hc-bg) !important;
+  border: 2px solid var(--hc-fg) !important;
+}
+html.hc.hc.hc button.bg-primary.bg-primary.bg-primary.bg-primary *,
+html.hc.hc.hc a.bg-primary.bg-primary.bg-primary.bg-primary * { color: var(--hc-bg) !important; }
+html.hc .grid.grid-cols-2.sm\:grid-cols-4 > button span.text-fs-11,
+html.hc .grid.grid-cols-2.sm\:grid-cols-4 > button div > span:last-child,
+html.hc .grid.grid-cols-2.sm\:grid-cols-4 > button .material-symbols-outlined:not(.text-fs-22) { color: var(--hc-mute) !important; }
+html.hc [class*="text-red-"], html.hc [class*="text-amber-"], html.hc [class*="text-blue-"],
+html.hc [class*="text-emerald-"], html.hc [class*="text-rose-"], html.hc [class*="text-green-"],
+html.hc .text-tertiary, html.hc .text-error { color: var(--hc-fg) !important; }
+html.hc span.rounded-full[class*="bg-primary-fixed"], html.hc span.rounded-full[class*="bg-primary-container"] {
+  background-color: var(--hc-bg) !important; color: var(--hc-fg) !important; border: 2px solid var(--hc-fg) !important;
+}
+
+/* badge laid over a photo: opaque plate + white text in every theme (wins over the indigo civic badge rule) */
+span[data-photo-badge].rounded-full[class*="bg-primary-container"] {
+  background-color: rgba(15, 23, 42, 0.88) !important;
+  color: #ffffff !important;
+  border: 1px solid rgba(255, 255, 255, 0.28) !important;
+}
+span[data-photo-badge].rounded-full[class*="bg-primary-container"] .material-symbols-outlined { color: #ffffff !important; }
+html.hc span[data-photo-badge].rounded-full[class*="bg-primary-container"] { background-color: #000000 !important; color: #ffffff !important; border: 2px solid #ffffff !important; }
+
+/* HIGH CONTRAST: coloured map pills keep their meaning (green / amber / red) but use darker fills so white text reaches AAA */
+html.hc .maplibregl-marker [style*="rgb(21, 128, 61)"], html.hc .maplibregl-marker .bg-emerald-700 { background-color: #14532d !important; border-color: #ffffff !important; }
+html.hc .maplibregl-marker [style*="rgb(180, 83, 9)"], html.hc .maplibregl-marker .bg-amber-700 { background-color: #78350f !important; border-color: #ffffff !important; }
+html.hc .maplibregl-marker [style*="rgb(185, 28, 28)"], html.hc .maplibregl-marker .bg-rose-700 { background-color: #7f1d1d !important; border-color: #ffffff !important; }
+
+/* HIGH CONTRAST: inline-coloured price text and blue category badges fall back to full-contrast foreground */
+html.hc li button span.text-sm.font-bold[style*="color"] { color: var(--hc-fg) !important; }
+html.hc span.rounded-md.bg-surface-container, html.hc.dark span.rounded-md.bg-surface-container { color: var(--hc-fg) !important; background-color: var(--hc-bg) !important; border: 1px solid var(--hc-fg) !important; }
+html.hc span.rounded-full[class*="bg-white/20"], html.hc span[class*="bg-black/40"] { background-color: #000000 !important; color: #ffffff !important; border: 1px solid #ffffff !important; }
+
+html.hc .text-tertiary, html.hc div.text-tertiary, html.hc span.text-tertiary, html.hc div.flex.items-center.gap-1.text-tertiary { color: var(--hc-fg) !important; }
+html.hc button span.rounded-full.bg-amber-700, html.hc.dark button span.rounded-full.bg-amber-700 { background-color: #000000 !important; color: #ffffff !important; border: 1px solid #ffffff !important; }

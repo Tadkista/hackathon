@@ -214,7 +214,7 @@ export default function TicketsScreen({ openQrRequested = false, onQrHandled }) 
               >
                 <QrGraphic className="w-full h-auto" />
                 <div className="mt-1 w-full text-center">
-                  <span className="font-label-sm text-fs-9 font-semibold text-slate-500 block tracking-tight uppercase">
+                  <span className="font-label-sm text-fs-9 font-semibold text-slate-600 block tracking-tight uppercase">
                     Skanuj kontrolerem
                   </span>
                 </div>

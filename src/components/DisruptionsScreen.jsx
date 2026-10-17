@@ -44,7 +44,7 @@ export default function DisruptionsScreen() {
         )}
       />
 
-      <div className="flex items-center gap-2 overflow-x-auto scrollbar-none py-1" role="group" aria-label="Rodzaj utrudnienia">
+      <div className="flex flex-wrap items-center gap-2 py-1" role="group" aria-label="Rodzaj utrudnienia">
         <Chip active={kind === 'all'} onClick={() => setKind('all')} count={counts.all}>Wszystkie</Chip>
         {Object.entries(DISRUPTION_KINDS).filter(([k]) => showPlanned || k !== 'planned').map(([k, v]) => (
           <Chip key={k} active={kind === k} onClick={() => setKind(k)} icon={v.icon} count={counts[k] || 0}>{v.label}</Chip>

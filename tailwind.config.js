@@ -38,7 +38,7 @@ export default {
         "on-background": "#0f172a",
         "on-surface-variant": "#475569",
 
-        "secondary": "#64748b",
+        "secondary": "#526071",
         "on-secondary": "#ffffff",
         "secondary-container": "#f1f5f9",
         "on-secondary-container": "#334155",

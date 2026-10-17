@@ -232,7 +232,7 @@ export default function HomeScreen({ onNavigate, onTriggerVoteModal, onOpenQr })
             </div>
 
             <div className="rounded-2xl bg-surface-container-lowest border border-outline-variant/60 shadow-card overflow-hidden hover:border-outline transition-all">
-              <div className="relative h-48 sm:h-56 w-full bg-surface-container overflow-hidden">
+              <div className="relative h-48 sm:h-56 w-full bg-slate-700 overflow-hidden">
                 <img
                   className="w-full h-full object-cover transform hover:scale-102 transition-transform duration-500"
                   alt="Zielone bulwary nad Wisłą"

@@ -116,7 +116,7 @@ export default function VotesScreen({ isVoteModalOpen, setIsVoteModalOpen }) {
             type="button"
           >
             Zgłoszenia
-            <span className="inline-flex items-center justify-center w-4 h-4 rounded-full bg-amber-500 text-white text-fs-10 ml-1 font-bold">
+            <span className="inline-flex items-center justify-center w-4 h-4 rounded-full bg-amber-700 text-white text-fs-10 ml-1 font-bold">
               3
             </span>
           </button>
@@ -198,7 +198,7 @@ export default function VotesScreen({ isVoteModalOpen, setIsVoteModalOpen }) {
 
             {/* Voting Card */}
             <div className="bg-surface-container-lowest rounded-xl shadow-md overflow-hidden transition-all duration-200">
-              <div className="relative w-full h-44">
+              <div className="relative w-full h-44 bg-slate-700">
                 <img
                   className="w-full h-full object-cover"
                   alt="Park na Bydgoskim Przedmieściu"
@@ -206,7 +206,7 @@ export default function VotesScreen({ isVoteModalOpen, setIsVoteModalOpen }) {
                 />
                 <div className="absolute inset-0 bg-black/30"></div>
                 <div className="absolute top-3 left-3 flex flex-wrap gap-1.5">
-                  <span className="px-2.5 py-1 rounded-full bg-primary-container text-on-primary font-label-sm text-label-sm shadow-sm flex items-center gap-1">
+                  <span data-photo-badge="" className="px-2.5 py-1 rounded-full bg-primary-container text-on-primary font-label-sm text-label-sm shadow-sm flex items-center gap-1">
                     <span aria-hidden="true" className="material-symbols-outlined text-fs-14">verified</span>
                     Budżet Obywatelski 2025
                   </span>

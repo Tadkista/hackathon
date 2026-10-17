@@ -232,7 +232,7 @@ export default function ParkingScreen() {
       {/* Search & Filter Bar */}
       <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3">
         {/* Zone Filters */}
-        <div className="flex items-center gap-1.5 overflow-x-auto scrollbar-none p-1 bg-surface-container rounded-2xl">
+        <div className="flex flex-wrap items-center gap-1.5 p-1 bg-surface-container rounded-2xl">
           <button
             onClick={() => setSelectedZone('all')}
             className={`px-3.5 py-1.5 rounded-xl text-xs font-semibold transition-all cursor-pointer ${
@@ -312,11 +312,11 @@ export default function ParkingScreen() {
 
               {filteredLots.map((lot) => {
                 const isSelected = selectedLot?.id === lot.id;
-                let colorClass = 'bg-emerald-600 text-white border-emerald-400';
+                let colorClass = 'bg-emerald-700 text-white border-emerald-400';
                 if (lot.freeSpots <= 10) {
-                  colorClass = 'bg-rose-600 text-white border-rose-400';
+                  colorClass = 'bg-rose-700 text-white border-rose-400';
                 } else if (lot.freeSpots <= 30) {
-                  colorClass = 'bg-amber-600 text-white border-amber-400';
+                  colorClass = 'bg-amber-700 text-white border-amber-400';
                 }
 
                 return (
@@ -363,7 +363,7 @@ export default function ParkingScreen() {
 
           {/* Map Legend & Tariffs hint */}
           <div className="p-4 rounded-2xl bg-surface-container-lowest border border-outline-variant/60 shadow-xs flex flex-wrap items-center justify-between gap-3 text-xs text-secondary">
-            <div className="flex items-center gap-4">
+            <div className="flex flex-wrap items-center gap-x-4 gap-y-1.5">
               <span className="font-semibold text-on-surface">Legenda obłożenia:</span>
               <span className="flex items-center gap-1.5">
                 <span className="w-2.5 h-2.5 rounded-full bg-emerald-500"></span>
@@ -405,7 +405,7 @@ export default function ParkingScreen() {
                 <div className="flex items-center justify-between">
                   <span className="text-xs text-secondary font-medium">Dostępność miejsc:</span>
                   <span className="text-sm font-bold text-on-surface">
-                    <strong className="text-lg text-emerald-600 dark:text-emerald-400">{selectedLot.freeSpots}</strong> / {selectedLot.totalSpots} wolnych
+                    <strong className="text-lg text-emerald-700 dark:text-emerald-400">{selectedLot.freeSpots}</strong> / {selectedLot.totalSpots} wolnych
                   </span>
                 </div>
                 <div className="w-full h-2.5 rounded-full bg-surface-container-high overflow-hidden">

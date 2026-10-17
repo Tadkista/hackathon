@@ -26,11 +26,10 @@ export default function FuelScreen() {
   const cheapest = list.find((s) => s.prices[fuel] === min);
   const selected = STATIONS.find((s) => s.id === selectedId) || cheapest;
 
-  const tone = (p) => {
-    if (max === min) return '#16a34a';
-    const t = (p - min) / (max - min);
-    return t < 0.34 ? '#16a34a' : t < 0.67 ? '#d97706' : '#dc2626';
-  };
+  // pill fills are dark enough for white text (>= 5:1); list text is lighter on the dark theme
+  const band = (p) => (max === min ? 0 : (p - min) / (max - min) < 0.34 ? 0 : (p - min) / (max - min) < 0.67 ? 1 : 2);
+  const tone = (p) => ['#15803d', '#b45309', '#b91c1c'][band(p)];
+  const textTone = (p) => (isDark ? ['#4ade80', '#fbbf24', '#f87171'] : ['#15803d', '#b45309', '#b91c1c'])[band(p)];
 
   return (
     <div className="flex flex-col w-full pb-10 space-y-6 max-w-7xl mx-auto">
@@ -47,7 +46,7 @@ export default function FuelScreen() {
       />
 
       <div className="flex flex-wrap items-center justify-between gap-3">
-        <div className="flex items-center gap-2 overflow-x-auto scrollbar-none py-1" role="group" aria-label="Rodzaj paliwa">
+        <div className="flex flex-wrap items-center gap-2 py-1" role="group" aria-label="Rodzaj paliwa">
           {FUEL_TYPES.map((f) => (
             <Chip key={f.id} active={fuel === f.id} onClick={() => { setFuel(f.id); setSelectedId(null); }}>{f.label}</Chip>
           ))}
@@ -72,12 +71,12 @@ export default function FuelScreen() {
           { label: 'Średnia', value: avg, icon: 'horizontal_rule', tone: 'text-on-surface' },
           { label: 'Najwyższa', value: max, icon: 'trending_up', tone: 'text-red-600 dark:text-red-400' },
         ].map((k) => (
-          <div key={k.label} className="p-4 rounded-2xl bg-surface-container-lowest border border-outline-variant/60 shadow-card">
-            <div className="flex items-center justify-between text-secondary mb-1">
-              <span className="text-fs-11 font-semibold uppercase">{k.label}</span>
-              <span aria-hidden="true" className={`material-symbols-outlined text-fs-18 ${k.tone}`}>{k.icon}</span>
+          <div key={k.label} className="p-3 sm:p-4 rounded-2xl bg-surface-container-lowest border border-outline-variant/60 shadow-card min-w-0">
+            <div className="flex items-center justify-between gap-1 text-secondary mb-1 min-w-0">
+              <span className="text-fs-11 font-semibold uppercase truncate min-w-0">{k.label}</span>
+              <span aria-hidden="true" className={`material-symbols-outlined text-fs-18 shrink-0 ${k.tone}`}>{k.icon}</span>
             </div>
-            <div className={`text-xl sm:text-2xl font-bold ${k.tone}`}>{list.length ? `${fmt(k.value)} zł` : '—'}</div>
+            <div className={`text-lg sm:text-2xl font-bold break-words ${k.tone}`}>{list.length ? `${fmt(k.value)} zł` : '—'}</div>
             <div className="text-fs-11 text-secondary">za litr</div>
           </div>
         ))}
@@ -172,7 +171,7 @@ export default function FuelScreen() {
                       <span className="block text-xs font-semibold text-on-surface truncate">{s.brand} · {s.address}</span>
                       <span className="block text-fs-11 text-secondary">{s.updated} min temu</span>
                     </span>
-                    <span className="text-sm font-bold" style={{ color: tone(s.prices[fuel]) }}>{fmt(s.prices[fuel])}</span>
+                    <span className="text-sm font-bold" style={{ color: textTone(s.prices[fuel]) }}>{fmt(s.prices[fuel])}</span>
                   </button>
                 </li>
               ))}
