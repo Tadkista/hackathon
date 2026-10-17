@@ -4,14 +4,6 @@ import { useTheme } from '../ThemeContext.jsx';
 export default function Header({ currentTab, onNavigate, onOpenNotifications, unreadNotificationsCount = 2 }) {
   const { isDark, toggleTheme } = useTheme();
 
-  const tabTitles = {
-    home: 'Główna',
-    parking: 'Parkowanie i Mapa SPP',
-    tickets: 'Bilety i Karta',
-    votes: 'Budżet i Inwestycje',
-    profile: 'Mój Profil'
-  };
-
   return (
     <header className="fixed top-0 w-full z-40 pt-safe bg-surface-container-lowest/90 backdrop-blur-xl border-b border-outline-variant/60 shadow-sm">
       <div className="h-16 px-4 flex items-center justify-between gap-3 max-w-7xl mx-auto">
@@ -29,13 +21,7 @@ export default function Header({ currentTab, onNavigate, onOpenNotifications, un
               <span className="text-base font-bold text-on-surface tracking-tight leading-none">
                 MójToruń
               </span>
-              <span className="px-1.5 py-0.2 rounded text-[10px] font-bold bg-rose-100 text-primary dark:bg-rose-950/60 dark:text-rose-300">
-                MIASTO
-              </span>
             </div>
-            <span className="text-[11px] text-secondary truncate mt-0.5 font-medium">
-              {tabTitles[currentTab] || 'Główna'}
-            </span>
           </div>
         </button>
 

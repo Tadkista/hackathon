@@ -60,30 +60,19 @@ export default function VotesScreen({ isVoteModalOpen, setIsVoteModalOpen }) {
 
   return (
     <div className="flex flex-col w-full max-w-7xl mx-auto space-y-6 pb-10">
-      {/* Title & District Bar */}
-      <div className="flex flex-col gap-1 pt-1 pb-1">
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
-          <div className="flex items-center gap-2">
-            <span className="inline-flex items-center justify-center w-8 h-8 rounded-xl bg-rose-50 dark:bg-rose-950/40 text-primary">
-              <span className="material-symbols-outlined text-[20px]">how_to_vote</span>
-            </span>
-            <h1 className="text-2xl sm:text-3xl font-bold text-on-surface tracking-tight">
-              Partycypacja Obywatelska
-            </h1>
-          </div>
-          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-surface-container-low text-secondary text-xs font-medium self-start sm:self-auto border border-outline-variant/60">
-            <span className="w-2 h-2 rounded-full bg-emerald-500"></span>
-            <span>Twój rewir: Toruń Zachód</span>
-          </div>
-        </div>
-        <p className="text-secondary text-body-sm mt-0.5">
-          Decyduj o inwestycjach, zgłaszaj usterki i współtwórz przestrzeń Torunia.
-        </p>
+      {/* Title */}
+      <div className="flex items-center gap-2 pt-1 pb-1">
+        <span className="inline-flex items-center justify-center w-8 h-8 rounded-xl bg-rose-50 dark:bg-rose-950/40 text-primary">
+          <span className="material-symbols-outlined text-[20px]">how_to_vote</span>
+        </span>
+        <h1 className="text-2xl sm:text-3xl font-bold text-on-surface tracking-tight">
+          Partycypacja Obywatelska
+        </h1>
       </div>
 
       {/* Tabs */}
-      <div className="pb-1">
-        <div className="flex p-1 bg-surface-container rounded-2xl gap-1 max-w-xl overflow-x-auto scrollbar-none">
+      <div className="pb-1 flex flex-col md:flex-row md:items-center md:justify-between gap-3">
+        <div className="inline-flex w-fit max-w-full p-1 bg-surface-container rounded-2xl gap-1 overflow-x-auto scrollbar-none">
           <button
             onClick={() => setActiveTab('glosowania')}
             className={`tab-btn px-3.5 py-2 rounded-xl text-xs sm:text-sm transition-all cursor-pointer whitespace-nowrap ${
@@ -127,11 +116,20 @@ export default function VotesScreen({ isVoteModalOpen, setIsVoteModalOpen }) {
             type="button"
           >
             Zgłoszenia
-            <span className="inline-flex items-center justify-center w-4 h-4 rounded-full bg-primary text-white text-[10px] ml-1 font-bold">
+            <span className="inline-flex items-center justify-center w-4 h-4 rounded-full bg-amber-500 text-white text-[10px] ml-1 font-bold">
               3
             </span>
           </button>
         </div>
+
+        <button
+          onClick={() => setIsReportModalOpen(true)}
+          className="h-10 px-4 rounded-xl bg-primary text-white font-semibold text-sm inline-flex items-center justify-center gap-2 self-start md:self-auto shrink-0 cursor-pointer"
+          type="button"
+        >
+          <span className="material-symbols-outlined text-[20px]">add_location_alt</span>
+          Zgłoś problem
+        </button>
       </div>
 
       {/* Filters (Rejon & Temat) */}
@@ -167,7 +165,7 @@ export default function VotesScreen({ isVoteModalOpen, setIsVoteModalOpen }) {
               onClick={() => setSelectedTopic(t.name)}
               className={`shrink-0 inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs transition-colors cursor-pointer ${
                 selectedTopic === t.name
-                  ? 'bg-surface-container-high text-on-surface font-semibold ring-1 ring-primary/20'
+                  ? 'bg-primary text-white font-medium'
                   : 'bg-surface-container text-secondary hover:text-on-surface'
               }`}
             >
@@ -207,7 +205,7 @@ export default function VotesScreen({ isVoteModalOpen, setIsVoteModalOpen }) {
                   alt="Park na Bydgoskim Przedmieściu"
                   src="https://lh3.googleusercontent.com/aida-public/AB6AXuDMBPL8uoyIlqWhodDtyeS0YTgZ5VRSq9rUcjRxB8odlBA7EPTHSCU6Oe7ouLw3j9fNkernUdLRxjY3obsuNXVMfu-sPBcnSsCoWCZ-qF5spb9_-hU1Wyp_is0yXiW23q7MEco_l8ngI_kLzw_ED4a7sbYgCULJmgUvMq8_OGR_dJq-eDfAckjLSHgqM7Hnfa2bjdflfDY8O50Fux2-gJm5hz7XAFeW2JdyLyeqjmB-L7_8QRAetaqd"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-on-background/80 via-transparent to-black/20"></div>
+                <div className="absolute inset-0 bg-black/30"></div>
                 <div className="absolute top-3 left-3 flex flex-wrap gap-1.5">
                   <span className="px-2.5 py-1 rounded-full bg-primary-container text-on-primary font-label-sm text-label-sm shadow-sm flex items-center gap-1">
                     <span className="material-symbols-outlined text-[14px]">verified</span>
@@ -255,11 +253,10 @@ export default function VotesScreen({ isVoteModalOpen, setIsVoteModalOpen }) {
                     </span>
                   </div>
                   <div className="w-full bg-surface-container-high rounded-full h-2 overflow-hidden">
-                    <div className="bg-primary-container h-2 rounded-full" style={{ width: '68%' }}></div>
+                    <div className="h-full bg-primary rounded-full" style={{ width: '68%' }}></div>
                   </div>
                   <div className="flex items-center justify-between text-[11px] text-secondary font-label-sm">
                     <span>Weryfikacja PESEL / Karta Torunianina</span>
-                    <span>1 mieszkaniec = 1 głos</span>
                   </div>
                 </div>
 
@@ -271,8 +268,8 @@ export default function VotesScreen({ isVoteModalOpen, setIsVoteModalOpen }) {
                     disabled={hasVoted}
                     className={`flex-1 h-11 rounded-lg font-title-md text-title-md flex items-center justify-center gap-1.5 shadow-sm active:scale-[0.98] transition-transform cursor-pointer font-semibold ${
                       hasVoted
-                        ? 'bg-tertiary text-on-tertiary cursor-default'
-                        : 'bg-primary-container text-on-primary hover:bg-primary'
+                        ? 'btn-voted cursor-default'
+                        : 'bg-primary text-white'
                     }`}
                     type="button"
                   >
@@ -342,9 +339,6 @@ export default function VotesScreen({ isVoteModalOpen, setIsVoteModalOpen }) {
               <div className="p-5 rounded-2xl bg-surface-container-lowest border border-outline-variant/60 shadow-card flex flex-col justify-between space-y-3">
                 <div>
                   <div className="flex items-center justify-between mb-2">
-                    <span className="px-2 py-0.5 rounded-md bg-rose-50 dark:bg-rose-950/40 text-primary text-[11px] font-bold">
-                      Komunikacja szynowa
-                    </span>
                     <span className="text-xs font-semibold text-secondary">214 mln zł</span>
                   </div>
                   <h3 className="font-bold text-base text-on-surface">
@@ -370,9 +364,6 @@ export default function VotesScreen({ isVoteModalOpen, setIsVoteModalOpen }) {
               <div className="p-5 rounded-2xl bg-surface-container-lowest border border-outline-variant/60 shadow-card flex flex-col justify-between space-y-3">
                 <div>
                   <div className="flex items-center justify-between mb-2">
-                    <span className="px-2 py-0.5 rounded-md bg-emerald-50 dark:bg-emerald-950/40 text-emerald-700 dark:text-emerald-400 text-[11px] font-bold">
-                      Rewitalizacja &amp; Bulwary
-                    </span>
                     <span className="text-xs font-semibold text-secondary">46 mln zł</span>
                   </div>
                   <h3 className="font-bold text-base text-on-surface">
@@ -398,9 +389,6 @@ export default function VotesScreen({ isVoteModalOpen, setIsVoteModalOpen }) {
               <div className="p-5 rounded-2xl bg-surface-container-lowest border border-outline-variant/60 shadow-card flex flex-col justify-between space-y-3">
                 <div>
                   <div className="flex items-center justify-between mb-2">
-                    <span className="px-2 py-0.5 rounded-md bg-blue-50 dark:bg-blue-950/40 text-blue-700 dark:text-blue-400 text-[11px] font-bold">
-                      Edukacja &amp; Sport
-                    </span>
                     <span className="text-xs font-semibold text-secondary">76 mln zł</span>
                   </div>
                   <h3 className="font-bold text-base text-on-surface">
@@ -426,9 +414,6 @@ export default function VotesScreen({ isVoteModalOpen, setIsVoteModalOpen }) {
               <div className="p-5 rounded-2xl bg-surface-container-lowest border border-outline-variant/60 shadow-card flex flex-col justify-between space-y-3">
                 <div>
                   <div className="flex items-center justify-between mb-2">
-                    <span className="px-2 py-0.5 rounded-md bg-amber-50 dark:bg-amber-950/40 text-amber-700 dark:text-amber-400 text-[11px] font-bold">
-                      Kultura &amp; Teatr
-                    </span>
                     <span className="text-xs font-semibold text-secondary">38 mln zł</span>
                   </div>
                   <h3 className="font-bold text-base text-on-surface">
@@ -452,24 +437,24 @@ export default function VotesScreen({ isVoteModalOpen, setIsVoteModalOpen }) {
             </div>
 
             {/* Budget Structure Percentages */}
-            <div className="p-5 rounded-2xl bg-surface-container-lowest border border-outline-variant/60 shadow-card flex flex-col space-y-3">
+            <div className="p-5 rounded-2xl bg-surface-container-lowest border border-outline shadow-card flex flex-col space-y-3">
               <span className="text-xs font-bold text-on-surface uppercase tracking-wider">
                 Struktura wydatków majątkowych Torunia 2025
               </span>
               <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 text-center">
-                <div className="p-3 rounded-xl bg-surface-container-low">
+                <div className="p-3 rounded-xl bg-surface-container-low border border-outline">
                   <span className="text-xs text-secondary block">Infrastruktura i drogi</span>
                   <span className="text-lg font-bold text-primary">34%</span>
                 </div>
-                <div className="p-3 rounded-xl bg-surface-container-low">
+                <div className="p-3 rounded-xl bg-surface-container-low border border-outline">
                   <span className="text-xs text-secondary block">Transport zbiorowy</span>
                   <span className="text-lg font-bold text-on-surface">26%</span>
                 </div>
-                <div className="p-3 rounded-xl bg-surface-container-low">
+                <div className="p-3 rounded-xl bg-surface-container-low border border-outline">
                   <span className="text-xs text-secondary block">Oświata i wychowanie</span>
                   <span className="text-lg font-bold text-on-surface">22%</span>
                 </div>
-                <div className="p-3 rounded-xl bg-surface-container-low">
+                <div className="p-3 rounded-xl bg-surface-container-low border border-outline">
                   <span className="text-xs text-secondary block">Zieleń i ekologia</span>
                   <span className="text-lg font-bold text-emerald-600">18%</span>
                 </div>
@@ -493,7 +478,7 @@ export default function VotesScreen({ isVoteModalOpen, setIsVoteModalOpen }) {
             <div className="bg-surface-container-lowest rounded-xl p-4 shadow-sm flex flex-col gap-3 transition-all">
               <div className="flex items-start justify-between gap-2">
                 <div className="flex items-center gap-1.5">
-                  <span className="px-2 py-0.5 rounded-full bg-secondary-container text-on-secondary-container font-label-sm text-label-sm flex items-center gap-1 font-medium">
+                  <span className="px-2 py-0.5 rounded-full bg-surface-container-high text-on-surface border border-outline font-label-sm text-label-sm flex items-center gap-1 font-semibold">
                     <span className="material-symbols-outlined text-[14px]">directions_bus</span>
                     Wydział Gospodarki Komunalnej
                   </span>
@@ -537,11 +522,11 @@ export default function VotesScreen({ isVoteModalOpen, setIsVoteModalOpen }) {
           </div>
         )}
 
-        {(activeTab === 'zgloszenia' || activeTab === 'all' || activeTab === 'glosowania') && (
+        {activeTab === 'zgloszenia' && (
           <div className="flex flex-col gap-space-sm">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-1.5">
-                <span className="material-symbols-outlined text-tertiary-container text-[20px]">assignment_turned_in</span>
+                <span className="material-symbols-outlined text-emerald-700 dark:text-emerald-400 text-[20px]">assignment_turned_in</span>
                 <h2 className="font-title-lg text-title-lg text-on-surface font-semibold">Moje ostatnie zgłoszenie</h2>
               </div>
               <span className="font-label-md text-label-md text-primary font-medium flex items-center gap-0.5">
@@ -555,10 +540,9 @@ export default function VotesScreen({ isVoteModalOpen, setIsVoteModalOpen }) {
                 <div className="flex flex-col">
                   <div className="flex items-center gap-2 mb-1">
                     <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-tertiary-fixed text-on-tertiary-fixed font-label-sm text-label-sm font-semibold">
-                      <span className="w-1.5 h-1.5 rounded-full bg-tertiary"></span>
                       W realizacji przez MZD
                     </span>
-                    <span className="text-secondary font-label-sm text-label-sm">Wczoraj, 14:20</span>
+                    <span className="text-on-surface-variant font-label-sm text-label-sm">Wczoraj, 14:20</span>
                   </div>
                   <h4 className="font-title-md text-title-md text-on-surface font-semibold">
                     Uzupełnienie doświetlenia przejścia dla pieszych ul. Grudziądzka
@@ -573,8 +557,8 @@ export default function VotesScreen({ isVoteModalOpen, setIsVoteModalOpen }) {
                 </div>
               </div>
               <div className="bg-surface-container-low rounded-lg p-2.5 flex items-center justify-between gap-2">
-                <div className="flex items-center gap-2 text-secondary font-body-sm text-body-sm">
-                  <span className="material-symbols-outlined text-secondary text-[18px]">build_circle</span>
+                <div className="flex items-center gap-2 text-on-surface-variant font-body-sm text-body-sm">
+                  <span className="material-symbols-outlined text-on-surface-variant text-[18px]">build_circle</span>
                   <span>
                     Zaplanowano montaż opraw LED: <strong className="text-on-surface font-medium">do 25 lipca</strong>
                   </span>
@@ -591,54 +575,14 @@ export default function VotesScreen({ isVoteModalOpen, setIsVoteModalOpen }) {
           </div>
         )}
 
-        {/* Civic Alert Banner */}
-        <div className="bg-gradient-to-br from-primary to-primary-container text-on-primary rounded-2xl p-4 shadow-lg flex flex-col gap-3 relative overflow-hidden">
-          <div className="absolute -right-4 -bottom-4 w-28 h-28 bg-white/10 rounded-full blur-xl pointer-events-none"></div>
-          <div className="flex items-start justify-between relative z-10">
-            <div className="flex flex-col gap-0.5">
-              <div className="flex items-center gap-1.5">
-                <span className="material-symbols-outlined text-[20px] text-on-primary-container">campaign</span>
-                <span className="font-label-sm text-label-sm uppercase tracking-wider text-on-primary-container font-semibold">
-                  Alert Miejski
-                </span>
-              </div>
-              <h3 className="font-headline-sm text-headline-sm text-on-primary font-bold">
-                Widzisz usterkę lub masz pomysł?
-              </h3>
-              <p className="font-body-sm text-body-sm text-on-primary-container">
-                Opisz problem, dodaj zdjęcie i współrzędne GPS. System natychmiast przekaże sprawę odpowiedniemu wydziałowi UM Torunia.
-              </p>
-            </div>
-          </div>
-          <div className="flex flex-col sm:flex-row gap-2 pt-1 relative z-10">
-            <button
-              onClick={() => setIsReportModalOpen(true)}
-              className="h-11 px-4 bg-surface-container-lowest text-primary rounded-lg font-title-md text-title-md font-semibold flex items-center justify-center gap-2 shadow hover:bg-surface-container transition-all active:scale-[0.98] cursor-pointer"
-              type="button"
-            >
-              <span className="material-symbols-outlined text-[20px]">add_location_alt</span>
-              Zgłoś nowy problem lub pomysł
-            </button>
-            <button
-              onClick={() => alert('Otwieram mapę zgłoszeń mieszkańców Torunia...')}
-              className="h-11 px-3 bg-white/10 hover:bg-white/15 text-on-primary rounded-lg font-label-lg text-label-lg flex items-center justify-center gap-1.5 backdrop-blur-sm transition-colors cursor-pointer"
-              type="button"
-            >
-              <span className="material-symbols-outlined text-[18px]">map</span>
-              Mapa zgłoszeń w okolicy
-            </button>
-          </div>
-        </div>
-
-        <div className="flex items-center justify-center gap-2 py-2 text-secondary font-label-sm text-label-sm text-center">
-          <span className="material-symbols-outlined text-[16px] text-tertiary">security</span>
-          <span>Głosowania zabezpieczone podpisem miejskim Profilu Torunianina</span>
-        </div>
       </div>
 
       {/* Vote Confirmation Modal */}
       {isVoteModalOpen && (
-        <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center bg-inverse-surface/40 backdrop-blur-sm p-0 sm:p-4 animate-fadeIn">
+        <div
+          className="!m-0 fixed inset-0 z-50 flex items-end sm:items-center justify-center bg-inverse-surface/40 backdrop-blur-sm p-0 sm:p-4 animate-fadeIn"
+          onClick={(e) => { if (e.target === e.currentTarget && !isSubmittingVote) setIsVoteModalOpen(false); }}
+        >
           <div className="bg-surface-container-lowest w-full max-w-md rounded-t-2xl sm:rounded-2xl p-5 shadow-2xl flex flex-col gap-4">
             <div className="w-12 h-1 bg-surface-container-high rounded-full mx-auto sm:hidden"></div>
             <div className="flex items-center justify-between">
@@ -683,7 +627,7 @@ export default function VotesScreen({ isVoteModalOpen, setIsVoteModalOpen }) {
               <button
                 onClick={handleConfirmVote}
                 disabled={isSubmittingVote}
-                className="flex-1 h-11 rounded-lg bg-primary-container text-on-primary font-title-md text-title-md shadow-sm font-semibold flex items-center justify-center gap-2 hover:bg-primary transition-colors cursor-pointer"
+                className="flex-1 h-11 rounded-lg bg-primary text-white font-title-md text-title-md shadow-sm font-semibold flex items-center justify-center gap-2 hover:bg-primary transition-colors cursor-pointer"
                 type="button"
               >
                 {isSubmittingVote ? (
@@ -702,7 +646,10 @@ export default function VotesScreen({ isVoteModalOpen, setIsVoteModalOpen }) {
 
       {/* New Report Modal */}
       {isReportModalOpen && (
-        <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center bg-inverse-surface/40 backdrop-blur-sm p-0 sm:p-4 animate-fadeIn">
+        <div
+          className="!m-0 fixed inset-0 z-50 flex items-end sm:items-center justify-center bg-inverse-surface/40 backdrop-blur-sm p-0 sm:p-4 animate-fadeIn"
+          onClick={(e) => { if (e.target === e.currentTarget) setIsReportModalOpen(false); }}
+        >
           <div className="bg-surface-container-lowest w-full max-w-md rounded-t-2xl sm:rounded-2xl p-5 shadow-2xl flex flex-col gap-4">
             <div className="w-12 h-1 bg-surface-container-high rounded-full mx-auto sm:hidden"></div>
             <div className="flex items-center justify-between">
@@ -756,7 +703,7 @@ export default function VotesScreen({ isVoteModalOpen, setIsVoteModalOpen }) {
                     value={newReportText}
                     onChange={(e) => setNewReportText(e.target.value)}
                     placeholder="Np. Uszkodzona nawierzchnia chodnika przy ul. Szerokiej 12..."
-                    className="w-full p-2.5 rounded-lg bg-surface-container-low text-on-surface border border-surface-container text-body-md focus:outline-none focus:ring-2 focus:ring-primary/20"
+                    className="w-full resize-none p-2.5 rounded-lg bg-surface-container-low text-on-surface border border-surface-container text-body-md focus:outline-none focus:ring-2 focus:ring-primary/20"
                     required
                   ></textarea>
                 </div>

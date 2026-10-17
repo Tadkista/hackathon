@@ -45,7 +45,7 @@ export default {
 
         "tertiary": "#059669",
         "on-tertiary": "#ffffff",
-        "tertiary-container": "#ecfdf5",
+        "tertiary-container": "#059669",
         "on-tertiary-container": "#065f46",
         "tertiary-fixed": "#d1fae5",
         "tertiary-fixed-dim": "#a7f3d0",

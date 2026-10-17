@@ -10,7 +10,7 @@ export default function NotificationsModal({ isOpen, onClose, onNavigate }) {
       desc: 'Most im. Józefa Piłsudskiego – prace serwisowe oświetlenia od godz. 21:00.',
       time: '15 min temu',
       icon: 'warning',
-      color: 'text-error bg-error-container',
+      color: 'text-on-surface-variant bg-surface-container-high',
       actionTab: 'parking',
       actionText: 'Sprawdź objazd'
     },
@@ -20,7 +20,7 @@ export default function NotificationsModal({ isOpen, onClose, onNavigate }) {
       desc: 'Rejon 4: Papier i Bioodpady. Wystaw pojemniki przed 6:00.',
       time: '1 godz. temu',
       icon: 'delete',
-      color: 'text-tertiary-container bg-tertiary-fixed',
+      color: 'text-on-surface-variant bg-surface-container-high',
       actionTab: 'home',
       actionText: 'Zobacz harmonogram'
     },
@@ -30,19 +30,22 @@ export default function NotificationsModal({ isOpen, onClose, onNavigate }) {
       desc: 'Pozostało tylko 3 dni na oddanie głosu na projekty ogólnomiejskie!',
       time: '3 godz. temu',
       icon: 'how_to_vote',
-      color: 'text-primary bg-primary-fixed',
+      color: 'text-on-surface-variant bg-surface-container-high',
       actionTab: 'votes',
       actionText: 'Oddaj głos'
     }
   ];
 
   return (
-    <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center bg-inverse-surface/40 backdrop-blur-sm p-0 sm:p-4 animate-fadeIn">
+    <div
+          className="!m-0 fixed inset-0 z-50 flex items-end sm:items-center justify-center bg-inverse-surface/40 backdrop-blur-sm p-0 sm:p-4 animate-fadeIn"
+          onClick={(e) => { if (e.target === e.currentTarget) onClose(); }}
+        >
       <div className="bg-surface-container-lowest w-full max-w-md rounded-t-2xl sm:rounded-2xl p-5 shadow-2xl flex flex-col max-h-[85vh] overflow-y-auto">
         <div className="w-12 h-1 bg-surface-container-high rounded-full mx-auto sm:hidden mb-2"></div>
         <div className="flex items-center justify-between pb-3 border-b border-surface-container">
           <div className="flex items-center gap-2">
-            <span className="material-symbols-outlined text-primary text-[24px]">notifications</span>
+            <span className="material-symbols-outlined text-on-surface-variant text-[24px]">notifications</span>
             <h2 className="font-title-lg text-title-lg text-on-surface font-semibold">Powiadomienia miejskie</h2>
           </div>
           <button

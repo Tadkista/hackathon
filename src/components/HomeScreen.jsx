@@ -1,6 +1,8 @@
 import React from 'react';
 
-export default function HomeScreen({ onNavigate, onTriggerVoteModal }) {
+export default function HomeScreen({ onNavigate, onTriggerVoteModal, onOpenQr }) {
+  const openQr = onOpenQr || (() => onNavigate('tickets'));
+
   return (
     <div className="flex flex-col w-full pb-10 space-y-7 max-w-7xl mx-auto">
       {/* ── Welcome & City Greeting ── */}
@@ -152,7 +154,7 @@ export default function HomeScreen({ onNavigate, onTriggerVoteModal }) {
           <section className="flex flex-col space-y-3">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-2">
-                <span className="w-2.5 h-2.5 rounded-full bg-primary animate-pulse"></span>
+                <span className="w-2.5 h-2.5 rounded-full bg-amber-500 animate-pulse"></span>
                 <h2 className="text-base sm:text-lg font-bold text-on-surface">Budżet Obywatelski 2025</h2>
               </div>
               <span className="text-xs text-primary font-semibold hover:underline cursor-pointer" onClick={() => onNavigate('votes')}>
@@ -167,7 +169,7 @@ export default function HomeScreen({ onNavigate, onTriggerVoteModal }) {
                   alt="Zielone bulwary nad Wisłą"
                   src="https://lh3.googleusercontent.com/aida-public/AB6AXuDTltgh5A9Hnb1xvzYvKW7YIe9-JmTv5pDh8IihoB2i8b-6w7BJnxuhaZYCo8YEOfRqQ7AO2S7O5sPNH4DsOdLSRZQ6LXobKzbQKICpu9oZiJe8le5fHT57vBaPW51vhU5RMrTqwSWPmh5NN5rf4_qCLzrvCZ6Il5V1PfZtZEsUiK3Fbifej4I2YzzIkG9ULbS4aS0_bQiZgMQHtYysIhzs8gr3iVP8iOwXPZYLYjTTgSq1jTbb_sX9"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-slate-950/20 to-transparent"></div>
+                <div className="absolute inset-0 bg-black/35"></div>
                 
                 <div className="absolute top-3.5 left-3.5 flex items-center gap-2">
                   <span className="px-2.5 py-1 rounded-lg bg-black/60 backdrop-blur-md text-[11px] font-semibold text-white tracking-wide">
@@ -375,32 +377,34 @@ export default function HomeScreen({ onNavigate, onTriggerVoteModal }) {
               </span>
             </div>
 
-            <div className="p-4 rounded-xl bg-gradient-to-br from-primary to-[#5a101b] text-white flex flex-col justify-between relative overflow-hidden shadow-sm">
+            <div
+              role="button"
+              tabIndex={0}
+              aria-label="Pokaż kod QR Karty Torunianina"
+              onClick={openQr}
+              onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openQr(); } }}
+              className="p-4 rounded-xl bg-surface-container border border-outline-variant/60 hover:border-outline text-on-surface flex flex-col justify-between relative overflow-hidden cursor-pointer transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-primary/30"
+            >
               <div className="flex justify-between items-start z-10">
                 <div>
-                  <span className="text-[11px] text-white/70 uppercase tracking-widest block font-medium">
+                  <span className="text-[11px] text-secondary uppercase tracking-widest block font-medium">
                     Karta Torunianina
                   </span>
-                  <span className="text-base font-bold text-white block mt-0.5">
+                  <span className="text-base font-bold text-on-surface block mt-0.5">
                     Aleksandra Wiśniewska
                   </span>
                 </div>
-                <span className="material-symbols-outlined text-[24px] text-white/80">
+                <span className="material-symbols-outlined text-[24px] text-secondary">
                   contactless
                 </span>
               </div>
 
               <div className="mt-5 flex justify-between items-end z-10">
                 <div>
-                  <span className="text-[10px] text-white/70 block">Ważność uprawnień PIT</span>
-                  <span className="text-xs font-semibold text-white">Do 30.04.2025</span>
+                  <span className="text-[10px] text-secondary block">Ważność uprawnień PIT</span>
+                  <span className="text-xs font-semibold text-on-surface">Do 30.04.2025</span>
                 </div>
-                <button
-                  onClick={() => onNavigate('tickets')}
-                  className="px-3 py-1.5 rounded-lg bg-white/20 hover:bg-white/30 backdrop-blur-md text-xs font-semibold text-white transition-colors cursor-pointer"
-                >
-                  Pokaż kod QR
-                </button>
+                <span className="material-symbols-outlined text-[26px] text-secondary">qr_code_2</span>
               </div>
             </div>
 

@@ -13,11 +13,18 @@ export default function App() {
   const [currentTab, setCurrentTab] = useState('home');
   const [isNotificationsOpen, setIsNotificationsOpen] = useState(false);
   const [isVoteModalOpen, setIsVoteModalOpen] = useState(false);
+  const [qrRequested, setQrRequested] = useState(false);
 
   const handleNavigate = (tab) => {
     // Map legacy 'explore' tab to 'parking'
     const target = tab === 'explore' ? 'parking' : tab;
     setCurrentTab(target);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  const handleOpenQr = () => {
+    setCurrentTab('tickets');
+    setQrRequested(true);
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
@@ -51,13 +58,17 @@ export default function App() {
           <HomeScreen
             onNavigate={handleNavigate}
             onTriggerVoteModal={handleTriggerVoteModal}
+            onOpenQr={handleOpenQr}
           />
         )}
         {currentTab === 'parking' && (
           <ParkingScreen />
         )}
         {currentTab === 'tickets' && (
-          <TicketsScreen />
+          <TicketsScreen
+            openQrRequested={qrRequested}
+            onQrHandled={() => setQrRequested(false)}
+          />
         )}
         {currentTab === 'votes' && (
           <VotesScreen

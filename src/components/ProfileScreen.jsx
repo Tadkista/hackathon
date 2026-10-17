@@ -46,8 +46,6 @@ export default function ProfileScreen({ onNavigate }) {
           {/* Citizen Identity Card */}
           <div>
             <div className="bg-surface-container-lowest rounded-2xl shadow-card border border-outline-variant/60 p-space-md flex flex-col gap-space-md relative overflow-hidden">
-          {/* Decorative Civic Tint Accent */}
-          <div className="absolute -right-10 -top-10 w-32 h-32 rounded-full bg-primary-fixed/30 pointer-events-none blur-2xl"></div>
 
           {/* Avatar & Essential Bio */}
           <div className="flex items-start gap-space-md relative z-10">
@@ -57,17 +55,6 @@ export default function ProfileScreen({ onNavigate }) {
                 className="w-16 h-16 rounded-full object-cover shadow-sm ring-2 ring-primary/20"
                 src="https://lh3.googleusercontent.com/aida-public/AB6AXuBKpu-CxsyYFROnKC97ZISDGnAVNZJSMO-8gzdhVX_hJsHeoNzLMhxb_HuGomq6MuXzDWJsYFO02qtqSykSyAfyiDForQCPK7jJUwBYKRRmVP9b89KyQIkOanKnTcPBzrWG1ojpKD2XMg0fKxxJd2pRE1AHV-7TFgpUhQPzXf2L1-cI2uokJMq9outTy9noRn3_tnowuOuQBcZhyYyuK1DLMFrIQNe8nORieBDcAGPx34bVSyrAB-VQ"
               />
-              <div
-                className="absolute -bottom-1 -right-1 w-6 h-6 rounded-full bg-tertiary-container text-on-tertiary flex items-center justify-center shadow-xs"
-                title="Konto potwierdzone"
-              >
-                <span
-                  className="material-symbols-outlined text-[15px]"
-                  style={{ fontVariationSettings: "'FILL' 1" }}
-                >
-                  verified
-                </span>
-              </div>
             </div>
 
             <div className="flex flex-col min-w-0 flex-1">
@@ -78,18 +65,6 @@ export default function ProfileScreen({ onNavigate }) {
                 Obywatel Torunia od 2018 r.
               </span>
 
-              {/* Verification Badge */}
-              <div className="mt-space-xs inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-tertiary-fixed text-on-tertiary-fixed w-fit">
-                <span
-                  className="material-symbols-outlined text-[14px]"
-                  style={{ fontVariationSettings: "'FILL' 1" }}
-                >
-                  shield
-                </span>
-                <span className="font-label-sm text-label-sm truncate font-medium">
-                  Profil Zaufany • mObywatel
-                </span>
-              </div>
             </div>
           </div>
 
@@ -126,7 +101,7 @@ export default function ProfileScreen({ onNavigate }) {
           <span className="font-title-lg text-title-lg text-on-surface font-bold">
             Aktywność obywatelska
           </span>
-          <span className="font-label-sm text-label-sm text-tertiary-container font-semibold flex items-center gap-0.5">
+          <span className="font-label-sm text-label-sm text-emerald-700 dark:text-emerald-400 font-semibold flex items-center gap-0.5">
             <span className="material-symbols-outlined text-[14px]">workspace_premium</span>
             Aktywna torunianka
           </span>
@@ -293,7 +268,7 @@ export default function ProfileScreen({ onNavigate }) {
                 onClick={() => toggleNotification('transport')}
                 className={`px-3 py-1.5 rounded-lg text-label-md font-medium transition-colors cursor-pointer flex items-center gap-1.5 ${
                   notifications.transport
-                    ? 'bg-primary-container text-on-primary'
+                    ? 'bg-primary text-white'
                     : 'bg-surface-container text-secondary'
                 }`}
               >
@@ -307,7 +282,7 @@ export default function ProfileScreen({ onNavigate }) {
                 onClick={() => toggleNotification('alerts')}
                 className={`px-3 py-1.5 rounded-lg text-label-md font-medium transition-colors cursor-pointer flex items-center gap-1.5 ${
                   notifications.alerts
-                    ? 'bg-primary-container text-on-primary'
+                    ? 'bg-primary text-white'
                     : 'bg-surface-container text-secondary'
                 }`}
               >
@@ -321,7 +296,7 @@ export default function ProfileScreen({ onNavigate }) {
                 onClick={() => toggleNotification('civicBudget')}
                 className={`px-3 py-1.5 rounded-lg text-label-md font-medium transition-colors cursor-pointer flex items-center gap-1.5 ${
                   notifications.civicBudget
-                    ? 'bg-primary-container text-on-primary'
+                    ? 'bg-primary text-white'
                     : 'bg-surface-container text-secondary'
                 }`}
               >
@@ -335,7 +310,7 @@ export default function ProfileScreen({ onNavigate }) {
                 onClick={() => toggleNotification('culture')}
                 className={`px-3 py-1.5 rounded-lg text-label-md font-medium transition-colors cursor-pointer flex items-center gap-1.5 ${
                   notifications.culture
-                    ? 'bg-primary-container text-on-primary'
+                    ? 'bg-primary text-white'
                     : 'bg-surface-container text-secondary'
                 }`}
               >
@@ -375,7 +350,7 @@ export default function ProfileScreen({ onNavigate }) {
             <button
               onClick={toggleTheme}
               className={`w-12 h-7 rounded-full transition-colors relative p-1 cursor-pointer ${
-                isDark ? 'bg-primary-container' : 'bg-surface-container-high'
+                isDark ? 'bg-emerald-500' : 'bg-surface-container-high'
               }`}
             >
               <div
@@ -406,7 +381,7 @@ export default function ProfileScreen({ onNavigate }) {
             <button
               onClick={() => setBiometricsEnabled(!biometricsEnabled)}
               className={`w-12 h-7 rounded-full transition-colors relative p-1 cursor-pointer ${
-                biometricsEnabled ? 'bg-primary-container' : 'bg-surface-container-high'
+                biometricsEnabled ? 'bg-emerald-500' : 'bg-surface-container-high'
               }`}
             >
               <div
@@ -482,24 +457,16 @@ export default function ProfileScreen({ onNavigate }) {
           Wyloguj z konta mieszkańca
         </button>
 
-        <div className="flex flex-col items-center text-center">
-          <div className="flex items-center gap-1.5 text-secondary">
-            <span className="material-symbols-outlined text-[16px]">location_city</span>
-            <span className="font-label-sm text-label-sm font-medium">
-              Urząd Miasta Torunia • Wydział Informatyki
-            </span>
-          </div>
-          <span className="font-label-sm text-label-sm text-secondary/70 mt-0.5">
-            MójToruń v2.4.0 (React Edition)
-          </span>
-        </div>
       </div>
     </div>
   </div>
 
       {/* District Selector Modal */}
       {isChangingDistrict && (
-        <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center bg-inverse-surface/40 backdrop-blur-sm p-0 sm:p-4 animate-fadeIn">
+        <div
+          className="!m-0 fixed inset-0 z-50 flex items-end sm:items-center justify-center bg-inverse-surface/40 backdrop-blur-sm p-0 sm:p-4 animate-fadeIn"
+          onClick={(e) => { if (e.target === e.currentTarget) setIsChangingDistrict(false); }}
+        >
           <div className="bg-surface-container-lowest w-full max-w-sm rounded-t-2xl sm:rounded-2xl p-5 shadow-2xl flex flex-col gap-3">
             <div className="flex items-center justify-between pb-2 border-b border-surface-container">
               <span className="font-title-lg font-bold text-on-surface">Wybierz dzielnicę Torunia</span>
@@ -520,7 +487,7 @@ export default function ProfileScreen({ onNavigate }) {
                   }}
                   className={`p-2.5 rounded-lg text-left font-title-md transition-colors ${
                     district === d
-                      ? 'bg-primary-container text-on-primary font-bold'
+                      ? 'bg-primary text-white font-bold'
                       : 'hover:bg-surface-container text-on-surface'
                   }`}
                 >

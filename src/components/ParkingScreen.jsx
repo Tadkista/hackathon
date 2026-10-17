@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useTheme } from '../ThemeContext.jsx';
 import {
   Map,
   MapMarker,
@@ -9,6 +10,7 @@ import {
 } from './map/map.tsx';
 
 export default function ParkingScreen() {
+  const { isDark } = useTheme();
   const [selectedZone, setSelectedZone] = useState('all');
   const [searchQuery, setSearchQuery] = useState('');
   const [isPayModalOpen, setIsPayModalOpen] = useState(false);
@@ -170,7 +172,7 @@ export default function ParkingScreen() {
     <div className="flex flex-col w-full pb-10 space-y-6 max-w-7xl mx-auto">
       {/* Toast */}
       {paySuccessToast && (
-        <div className="fixed top-20 left-1/2 -translate-x-1/2 z-50 bg-emerald-600 text-white px-5 py-3 rounded-2xl shadow-xl flex items-center gap-2.5 text-sm font-semibold animate-bounce">
+        <div className="fixed top-20 left-1/2 -translate-x-1/2 z-50 bg-emerald-600 text-white px-5 py-3 rounded-2xl shadow-xl flex items-center gap-2.5 text-sm font-semibold animate-fadeIn">
           <span className="material-symbols-outlined text-[20px]">check_circle</span>
           <span>{paySuccessToast}</span>
         </div>
@@ -299,6 +301,7 @@ export default function ParkingScreen() {
             <Map
               center={selectedLot ? selectedLot.coords : [18.6048, 53.0103]}
               zoom={14.8}
+              theme={isDark ? 'dark' : 'light'}
               className="w-full h-[450px] sm:h-[540px] relative"
             >
               <MapControls
@@ -393,7 +396,7 @@ export default function ParkingScreen() {
             <div className="rounded-2xl bg-surface-container-lowest border border-outline-variant/60 shadow-card p-5 flex flex-col space-y-4">
               <div className="flex items-start justify-between gap-2">
                 <div>
-                  <span className="px-2.5 py-0.5 rounded-md bg-rose-50 dark:bg-rose-950/40 text-primary text-[11px] font-bold uppercase tracking-wider inline-block">
+                  <span className="px-2.5 py-0.5 rounded-md bg-surface-container-high text-on-surface-variant text-[11px] font-bold uppercase tracking-wider inline-block">
                     {selectedLot.zoneName}
                   </span>
                   <h3 className="text-base sm:text-lg font-bold text-on-surface mt-1.5 leading-snug">
@@ -524,7 +527,10 @@ export default function ParkingScreen() {
 
       {/* Modal: Quick SPP Ticket Payment */}
       {isPayModalOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-sm p-4 animate-fadeIn">
+        <div
+          className="!m-0 fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-sm p-4 animate-fadeIn"
+          onClick={(e) => { if (e.target === e.currentTarget) setIsPayModalOpen(false); }}
+        >
           <div className="bg-surface-container-lowest w-full max-w-md rounded-2xl p-6 shadow-2xl flex flex-col space-y-4">
             <div className="flex items-center justify-between border-b border-outline-variant/60 pb-3">
               <div className="flex items-center gap-2">

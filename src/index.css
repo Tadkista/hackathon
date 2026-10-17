@@ -166,33 +166,6 @@
   color: #f8fafc !important;
 }
 
-/* 2. Resident Card / Digital Wallet Cards - Uniform Sleek Titanium Look */
-div.bg-gradient-to-br.from-primary {
-  background-image: none !important;
-  background-color: #1e293b !important;
-  border: 1px solid rgba(255, 255, 255, 0.1) !important;
-  color: #f8fafc !important;
-}
-.dark div.bg-gradient-to-br.from-primary {
-  background-image: none !important;
-  background-color: #141c2c !important;
-  border: 1px solid rgba(255, 255, 255, 0.08) !important;
-  color: #f8fafc !important;
-}
-div.bg-gradient-to-br.from-primary * {
-  color: inherit;
-}
-div.bg-gradient-to-br.from-primary span[class*="text-white/70"] {
-  color: #94a3b8 !important;
-}
-div.bg-gradient-to-br.from-primary button {
-  background-color: rgba(255, 255, 255, 0.12) !important;
-  color: #f8fafc !important;
-}
-div.bg-gradient-to-br.from-primary button:hover {
-  background-color: rgba(255, 255, 255, 0.2) !important;
-}
-
 /* 3. Card Icon Containers: neutral and uniform (no random color boxes) */
 .rounded-xl.bg-amber-500\/10,
 .rounded-xl.bg-emerald-50,
@@ -233,12 +206,13 @@ span.rounded-xl[class*="bg-rose-50"] .material-symbols-outlined {
 /* Primary Action Buttons */
 button.bg-primary:not(.grid.grid-cols-2.sm\:grid-cols-4 > button),
 a.bg-primary:not(.grid.grid-cols-2.sm\:grid-cols-4 > a) {
-  background-color: #0f172a !important;
-  color: #ffffff !important;
+  background-color: #e2e8f0 !important;
+  color: #0f172a !important;
+  border: 1px solid #94a3b8 !important;
 }
 button.bg-primary:not(.grid.grid-cols-2.sm\:grid-cols-4 > button):hover,
 a.bg-primary:not(.grid.grid-cols-2.sm\:grid-cols-4 > a):hover {
-  background-color: #1e293b !important;
+  background-color: #cbd5e1 !important;
 }
 
 .dark button.bg-primary:not(.grid.grid-cols-2.sm\:grid-cols-4 > button),
@@ -300,7 +274,7 @@ span.rounded[class*="dark:bg-rose-950"] {
 
 /* Uniform Neutral Progress Bar */
 div.h-full.bg-primary.rounded-full {
-  background-color: #334155 !important;
+  background-color: #64748b !important;
 }
 .dark div.h-full.bg-primary.rounded-full {
   background-color: #475569 !important;
@@ -324,8 +298,8 @@ div.h-full.bg-primary.rounded-full {
 span.rounded-md[class*="bg-emerald-50"],
 span.rounded-md[class*="dark:bg-emerald-950"],
 span.rounded-full[class*="bg-tertiary"] {
-  background-color: rgba(16, 185, 129, 0.12) !important;
-  color: #047857 !important;
+  background-color: rgba(16, 185, 129, 0.16) !important;
+  color: #065f46 !important;
   border: 1px solid rgba(16, 185, 129, 0.28) !important;
 }
 .dark span.rounded-md[class*="bg-emerald-50"],
@@ -340,7 +314,7 @@ span.rounded-full[class*="bg-tertiary"] {
 div.flex.items-center.gap-1.text-tertiary,
 span.inline-flex.items-center.text-tertiary,
 span[class*="text-emerald-700"] {
-  color: #059669 !important;
+  color: #047857 !important;
 }
 .dark div.flex.items-center.gap-1.text-tertiary,
 .dark span.inline-flex.items-center.text-tertiary,
@@ -350,50 +324,50 @@ span[class*="text-emerald-700"] {
 }
 
 /* Status indicator dots */
-span.rounded-full.bg-tertiary,
-span.rounded-full[class*="bg-emerald-500"],
-span.rounded-full.bg-tertiary-fixed {
+span.rounded-full.bg-tertiary:is(.w-1\.5, .w-2, .w-2\.5),
+span.rounded-full[class*="bg-emerald-500"]:is(.w-1\.5, .w-2, .w-2\.5),
+span.rounded-full.bg-tertiary-fixed:is(.w-1\.5, .w-2, .w-2\.5) {
   background-color: #10b981 !important;
   border: none !important;
 }
 
 /* 2. Amber / Yellow Badges: Warnings, Traffic Alerts, Deadlines */
-div[class*="bg-amber-50/70"],
+div[class*="bg-amber-50/"],
 div[class*="dark:bg-amber-950/30"] {
   background-color: rgba(245, 158, 11, 0.08) !important;
   border: 1px solid rgba(245, 158, 11, 0.28) !important;
 }
-div[class*="bg-amber-50/70"] span.font-semibold {
+div[class*="bg-amber-50/"] span.font-semibold {
+  color: #78350f !important;
+}
+div[class*="bg-amber-50/"] p {
   color: #92400e !important;
 }
-div[class*="bg-amber-50/70"] p {
-  color: #b45309 !important;
-}
-div[class*="bg-amber-50/70"] .material-symbols-outlined {
+div[class*="bg-amber-50/"] .material-symbols-outlined {
   color: #d97706 !important;
 }
-div[class*="bg-amber-50/70"] button {
+div[class*="bg-amber-50/"] button {
   color: #92400e !important;
 }
 
-.dark div[class*="bg-amber-50/70"],
+.dark div[class*="bg-amber-50/"],
 .dark div[class*="dark:bg-amber-950/30"] {
   background-color: rgba(245, 158, 11, 0.14) !important;
   border: 1px solid rgba(245, 158, 11, 0.35) !important;
 }
-.dark div[class*="bg-amber-50/70"] span.font-semibold,
+.dark div[class*="bg-amber-50/"] span.font-semibold,
 .dark div[class*="dark:bg-amber-950/30"] span.font-semibold {
   color: #fde68a !important;
 }
-.dark div[class*="bg-amber-50/70"] p,
+.dark div[class*="bg-amber-50/"] p,
 .dark div[class*="dark:bg-amber-950/30"] p {
   color: #fef3c7 !important;
 }
-.dark div[class*="bg-amber-50/70"] .material-symbols-outlined,
+.dark div[class*="bg-amber-50/"] .material-symbols-outlined,
 .dark div[class*="dark:bg-amber-950/30"] .material-symbols-outlined {
   color: #fbbf24 !important;
 }
-.dark div[class*="bg-amber-50/70"] button,
+.dark div[class*="bg-amber-50/"] button,
 .dark div[class*="dark:bg-amber-950/30"] button {
   color: #fbbf24 !important;
 }
@@ -456,13 +430,13 @@ span.rounded-full[class*="bg-primary-fixed"] .material-symbols-outlined {
 }
 
 /* 6. Voting Topic Badges */
-span.rounded-full.bg-primary {
+span.w-1\.5.h-1\.5.rounded-full.bg-primary {
   background-color: #f59e0b !important;
 }
-span.rounded-full.bg-secondary {
+span.w-1\.5.h-1\.5.rounded-full.bg-secondary {
   background-color: #3b82f6 !important;
 }
-span.rounded-full.bg-secondary-container {
+span.w-1\.5.h-1\.5.rounded-full.bg-secondary-container {
   background-color: #a855f7 !important;
 }
 
@@ -566,4 +540,59 @@ span.rounded-full.bg-secondary-container {
 * {
   -ms-overflow-style: none;
   scrollbar-width: none;
+}
+
+/* ═══════════════════════════════════════════════
+   THEME CONSISTENCY FIXES
+   ═══════════════════════════════════════════════ */
+
+/* Tailwind hover: variants are separate classes, so the .dark surface overrides
+   above do not cover them. Without these, hovering turns dark rows white. */
+.dark .hover\:bg-surface-container-lowest:hover { background-color: #101623 !important; }
+.dark .hover\:bg-surface-container-low:hover { background-color: #141c2c !important; }
+.dark .hover\:bg-surface-container:hover { background-color: #192338 !important; }
+.dark .hover\:bg-surface-container-high:hover { background-color: #212d46 !important; }
+.dark .hover\:bg-secondary-container:hover { background-color: #212d46 !important; }
+.dark .hover\:bg-error-container:hover { background-color: rgba(239, 68, 68, 0.18) !important; }
+.dark .hover\:text-on-error-container:hover { color: #fecaca !important; }
+
+/* Borders written with an opacity suffix (border-outline-variant/60 ...) are
+   different classes than the plain ones overridden earlier. */
+.dark [class*="border-outline"]:not([class*="border-transparent"]) {
+  border-color: rgba(255, 255, 255, 0.08) !important;
+}
+
+/* Plain border-outline is used for emphasised blocks, keep it clearer than the subtle variants */
+.dark [class~="border-outline"]:not([class*="border-transparent"]) {
+  border-color: rgba(255, 255, 255, 0.16) !important;
+}
+
+/* Semantic tokens that had no dark-mode counterpart */
+.dark .bg-tertiary-fixed { background-color: rgba(16, 185, 129, 0.16) !important; }
+.dark .bg-tertiary-container { background-color: #10b981 !important; }
+.dark .text-tertiary,
+.dark .text-tertiary-container { color: #34d399 !important; }
+.dark .text-on-tertiary-fixed { color: #6ee7b7 !important; }
+.dark .bg-error-container { background-color: rgba(239, 68, 68, 0.16) !important; }
+.dark .text-error { color: #f87171 !important; }
+.dark .text-on-error-container { color: #fecaca !important; }
+
+/* Tiny status dots with a tertiary background are solid green, not pale pills */
+span.rounded-full[class*="bg-tertiary"]:is(.w-1\.5, .w-2, .w-2\.5),
+.dark span.rounded-full[class*="bg-tertiary"]:is(.w-1\.5, .w-2, .w-2\.5) {
+  background-color: #10b981 !important;
+  border: none !important;
+}
+
+/* "Głos oddany" button: distinct tint per theme */
+button.btn-voted {
+  background-color: rgba(16, 185, 129, 0.14) !important;
+  color: #047857 !important;
+  border: 1px solid rgba(16, 185, 129, 0.4) !important;
+  box-shadow: none !important;
+}
+.dark button.btn-voted {
+  background-color: rgba(16, 185, 129, 0.2) !important;
+  color: #34d399 !important;
+  border-color: rgba(16, 185, 129, 0.4) !important;
 }

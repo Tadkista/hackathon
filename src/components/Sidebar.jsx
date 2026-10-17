@@ -9,13 +9,17 @@ export default function Sidebar({ currentTab, onNavigate, onOpenNotifications })
     { id: 'parking', label: 'Parkowanie i Mapa', icon: 'local_parking' },
     { id: 'tickets', label: 'Bilety i Karta', icon: 'confirmation_number' },
     { id: 'votes', label: 'Budżet i Inwestycje', icon: 'how_to_vote' },
-    { id: 'profile', label: 'Mój Profil', icon: 'person' },
   ];
 
   return (
     <aside className="desktop-sidebar bg-surface-container-lowest border-r border-outline-variant/60 shadow-sm">
       {/* Brand Header */}
-      <div className="p-6 flex items-center gap-3.5 border-b border-outline-variant/60">
+      <button
+        type="button"
+        onClick={() => onNavigate('home')}
+        aria-label="MójToruń – strona główna"
+        className="w-full p-6 flex items-center gap-3.5 border-b border-outline-variant/60 text-left cursor-pointer hover:bg-surface-container-low transition-colors focus:outline-none"
+      >
         <img
           alt="Herb Torunia"
           className="h-10 w-auto object-contain"
@@ -26,15 +30,12 @@ export default function Sidebar({ currentTab, onNavigate, onOpenNotifications })
             <span className="text-lg font-bold text-on-surface tracking-tight leading-none">
               MójToruń
             </span>
-            <span className="px-1.5 py-0.5 rounded text-[10px] font-bold bg-rose-100 text-primary dark:bg-rose-950/60 dark:text-rose-300">
-              MIASTO
-            </span>
           </div>
           <span className="text-xs text-secondary mt-1 font-medium">
             Portal Mieszkańca
           </span>
         </div>
-      </div>
+      </button>
 
       {/* Navigation List */}
       <nav className="flex-1 px-3.5 py-5 flex flex-col space-y-1.5">
@@ -119,7 +120,11 @@ export default function Sidebar({ currentTab, onNavigate, onOpenNotifications })
         {/* Resident profile preview */}
         <button
           onClick={() => onNavigate('profile')}
-          className="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl hover:bg-surface-container-low border border-transparent hover:border-outline-variant/60 transition-all cursor-pointer text-left mt-2"
+          className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-xl hover:bg-surface-container-low border transition-all cursor-pointer text-left mt-2 ${
+            currentTab === 'profile'
+              ? 'bg-surface-container border-outline-variant/60'
+              : 'border-transparent hover:border-outline-variant/60'
+          }`}
         >
           <div className="relative">
             <img
@@ -127,7 +132,6 @@ export default function Sidebar({ currentTab, onNavigate, onOpenNotifications })
               className="w-9 h-9 rounded-full object-cover shadow-xs ring-1 ring-outline-variant"
               src="https://lh3.googleusercontent.com/aida-public/AB6AXuBKpu-CxsyYFROnKC97ZISDGnAVNZJSMO-8gzdhVX_hJsHeoNzLMhxb_HuGomq6MuXzDWJsYFO02qtqSykSyAfyiDForQCPK7jJUwBYKRRmVP9b89KyQIkOanKnTcPBzrWG1ojpKD2XMg0fKxxJd2pRE1AHV-7TFgpUhQPzXf2L1-cI2uokJMq9outTy9noRn3_tnowuOuQBcZhyYyuK1DLMFrIQNe8nORieBDcAGPx34bVSyrAB-VQ"
             />
-            <span className="absolute bottom-0 right-0 w-2.5 h-2.5 rounded-full bg-emerald-500 ring-2 ring-surface-container-lowest"></span>
           </div>
           <div className="flex flex-col min-w-0 flex-1">
             <span className="text-xs font-semibold text-on-surface truncate">

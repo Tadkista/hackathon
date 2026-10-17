@@ -1,6 +1,58 @@
 import React, { useState, useEffect } from 'react';
 
-export default function TicketsScreen({ onOpenQrModal }) {
+// A QR code must always be dark modules on a light background to stay scannable,
+// regardless of the app theme, so colours are fixed here on purpose.
+function QrGraphic({ className = '' }) {
+  return (
+    <svg
+      className={className}
+      fill="#0f172a"
+      viewBox="0 0 100 100"
+      shapeRendering="crispEdges"
+      role="img"
+      aria-label="Kod QR Karty Torunianina"
+    >
+      <rect height="28" width="28" x="5" y="5"></rect>
+      <rect fill="#ffffff" height="20" width="20" x="9" y="9"></rect>
+      <rect height="12" width="12" x="13" y="13"></rect>
+      <rect height="28" width="28" x="67" y="5"></rect>
+      <rect fill="#ffffff" height="20" width="20" x="71" y="9"></rect>
+      <rect height="12" width="12" x="75" y="13"></rect>
+      <rect height="28" width="28" x="5" y="67"></rect>
+      <rect fill="#ffffff" height="20" width="20" x="9" y="71"></rect>
+      <rect height="12" width="12" x="13" y="75"></rect>
+      <rect height="6" width="6" x="38" y="10"></rect>
+      <rect height="6" width="12" x="48" y="10"></rect>
+      <rect height="6" width="12" x="38" y="22"></rect>
+      <rect height="10" width="6" x="54" y="22"></rect>
+      <rect height="8" width="8" x="10" y="38"></rect>
+      <rect height="16" width="6" x="24" y="42"></rect>
+      <rect height="10" width="10" x="36" y="36"></rect>
+      <rect height="8" width="8" x="50" y="40"></rect>
+      <rect height="6" width="12" x="66" y="38"></rect>
+      <rect height="14" width="8" x="82" y="40"></rect>
+      <rect height="6" width="16" x="42" y="52"></rect>
+      <rect height="8" width="8" x="62" y="50"></rect>
+      <rect height="6" width="14" x="38" y="66"></rect>
+      <rect height="14" width="8" x="56" y="64"></rect>
+      <rect height="6" width="10" x="68" y="66"></rect>
+      <rect height="16" width="8" x="82" y="60"></rect>
+      <rect height="14" width="6" x="40" y="78"></rect>
+      <rect height="8" width="12" x="50" y="82"></rect>
+      <rect height="6" width="14" x="66" y="78"></rect>
+      <rect height="10" width="8" x="84" y="82"></rect>
+    </svg>
+  );
+}
+
+const MZK_PRICE_LIST = [
+  { name: 'Bilet 30-minutowy', normal: '3,80 zł', reduced: '1,90 zł' },
+  { name: 'Bilet 90-minutowy', normal: '6,80 zł', reduced: '3,40 zł' },
+  { name: 'Bilet dobowy (24h)', normal: '12,00 zł', reduced: '6,00 zł' },
+  { name: 'Bilet miesięczny', normal: '88,00 zł', reduced: '—' },
+];
+
+export default function TicketsScreen({ openQrRequested = false, onQrHandled }) {
   // Live ticking clock for resident card security
   const [currentTimeStr, setCurrentTimeStr] = useState('');
   // Live ticket countdown in seconds (18 mins 42 secs = 1122 seconds)
@@ -10,6 +62,16 @@ export default function TicketsScreen({ onOpenQrModal }) {
   const [purchaseToast, setPurchaseToast] = useState(null);
   const [isQrModalOpen, setIsQrModalOpen] = useState(false);
   const [isBenefitsModalOpen, setIsBenefitsModalOpen] = useState(false);
+  const [isPriceListOpen, setIsPriceListOpen] = useState(false);
+
+  // Opened from the home wallet card: jump straight to the QR code
+  useEffect(() => {
+    if (openQrRequested) {
+      setIsQrModalOpen(true);
+      onQrHandled?.();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [openQrRequested]);
 
   useEffect(() => {
     const updateTime = () => {
@@ -48,7 +110,7 @@ export default function TicketsScreen({ onOpenQrModal }) {
     <div className="flex flex-col w-full pb-10 max-w-7xl mx-auto space-y-6">
       {/* Toast Notification */}
       {purchaseToast && (
-        <div className="fixed top-20 left-1/2 -translate-x-1/2 z-50 bg-tertiary text-on-tertiary px-4 py-3 rounded-xl shadow-xl flex items-center gap-2 text-label-md animate-bounce">
+        <div className="fixed top-20 left-1/2 -translate-x-1/2 z-50 bg-tertiary text-on-tertiary px-4 py-3 rounded-xl shadow-xl flex items-center gap-2 text-label-md animate-fadeIn">
           <span className="material-symbols-outlined text-[20px]">check_circle</span>
           <span>{purchaseToast}</span>
         </div>
@@ -71,7 +133,7 @@ export default function TicketsScreen({ onOpenQrModal }) {
           <div className="mb-1">
             <div className="bg-surface-container-low rounded-xl p-space-sm flex items-center justify-between shadow-sm">
           <div className="flex items-center gap-space-sm min-w-0">
-            <span className="w-2.5 h-2.5 rounded-full bg-tertiary-container animate-pulse shrink-0"></span>
+            <span className="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse shrink-0"></span>
             <p className="font-label-sm text-label-sm text-secondary truncate">
               System biletowy MZK: Sieć aktywna • Ważność PIT do 30.04.2025
             </p>
@@ -87,9 +149,9 @@ export default function TicketsScreen({ onOpenQrModal }) {
 
       {/* 1. Główny moduł: Cyfrowa Karta Mieszkańca Torunia */}
       <section>
-        <div className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-primary via-primary-container to-[#4a0812] text-on-primary shadow-xl p-space-md">
+        <div className="relative overflow-hidden rounded-2xl bg-surface-container-lowest border border-outline-variant text-on-surface shadow-card p-space-md">
           {/* Gothic watermark */}
-          <div className="absolute -right-8 -bottom-10 w-44 h-44 opacity-10 pointer-events-none">
+          <div className="absolute -right-8 -bottom-10 w-44 h-44 opacity-5 text-on-surface pointer-events-none">
             <svg className="w-full h-full fill-current" viewBox="0 0 100 100">
               <path d="M50 0 L58 35 L93 35 L65 55 L76 90 L50 70 L24 90 L35 55 L7 35 L42 35 Z"></path>
               <circle cx="50" cy="50" fill="none" r="46" stroke="currentColor" strokeWidth="4"></circle>
@@ -97,101 +159,64 @@ export default function TicketsScreen({ onOpenQrModal }) {
             </svg>
           </div>
 
-          {/* Top Row: Civic Brand & Status */}
+          {/* Top Row: Civic Brand */}
           <div className="relative z-10 flex items-start justify-between mb-space-md">
             <div className="flex items-center gap-2">
-              <div className="w-9 h-9 rounded-lg bg-surface-container-lowest/15 backdrop-blur-md flex items-center justify-center shadow-inner">
-                <span className="material-symbols-outlined text-surface-container-lowest text-[22px]">
+              <div className="w-9 h-9 rounded-lg bg-surface-container flex items-center justify-center">
+                <span className="material-symbols-outlined text-on-surface text-[22px]">
                   account_balance
                 </span>
               </div>
               <div>
                 <div className="flex items-center gap-1.5">
-                  <span className="font-title-lg text-title-lg leading-tight tracking-tight font-bold">
+                  <span className="font-title-lg text-title-lg leading-tight tracking-tight font-bold text-on-surface">
                     Karta Torunianina
                   </span>
-                  <span className="px-2 py-0.5 rounded-full bg-surface-container-lowest/20 backdrop-blur-sm text-[10px] font-semibold uppercase tracking-wider text-surface-container-lowest">
-                    Mieszkaniec
-                  </span>
                 </div>
-                <p className="font-label-sm text-label-sm text-primary-fixed-dim">
+                <p className="font-label-sm text-label-sm text-secondary">
                   Oficjalny Miejski Identyfikator
                 </p>
               </div>
             </div>
-            <div className="flex items-center gap-1 bg-tertiary-fixed text-on-tertiary-fixed px-2.5 py-1 rounded-full text-label-sm font-label-sm font-semibold shadow-sm">
-              <span className="material-symbols-outlined text-[14px]">verified</span>
-              <span>PIT Zweryfikowany</span>
-            </div>
           </div>
 
-          {/* Resident Info & Big QR Panel */}
-          <div className="relative z-10 grid grid-cols-12 gap-space-sm items-center bg-surface-container-lowest/10 backdrop-blur-md rounded-xl p-3.5 shadow-inner">
+          {/* Resident Info & QR Panel */}
+          <div className="relative z-10 grid grid-cols-12 gap-space-sm items-center bg-surface-container-low border border-outline-variant/60 rounded-xl p-3.5">
             {/* Text metadata */}
             <div className="col-span-7 flex flex-col justify-between min-w-0 pr-1">
               <div>
-                <span className="font-label-sm text-label-sm text-primary-fixed block uppercase tracking-wider">
+                <span className="font-label-sm text-label-sm text-secondary block uppercase tracking-wider">
                   Imię i nazwisko
                 </span>
-                <h2 className="font-headline-sm text-headline-sm text-surface-container-lowest truncate tracking-tight font-bold">
+                <h2 className="font-headline-sm text-headline-sm text-on-surface truncate tracking-tight font-bold">
                   Aleksandra Wiśniewska
                 </h2>
               </div>
               <div className="mt-2.5">
-                <span className="font-label-sm text-label-sm text-primary-fixed block">
+                <span className="font-label-sm text-label-sm text-secondary block">
                   Numer identyfikatora
                 </span>
-                <p className="font-title-md text-title-md font-mono text-surface-container-lowest tracking-wide font-semibold">
+                <p className="font-title-md text-title-md font-mono text-on-surface tracking-wide font-semibold">
                   TRN-2024-88492
                 </p>
               </div>
-              <div className="mt-2.5 inline-flex items-center gap-1.5 bg-surface-container-lowest/15 rounded-lg px-2 py-1 self-start">
-                <span className="material-symbols-outlined text-[15px] text-tertiary-fixed">group</span>
-                <span className="font-label-sm text-label-sm font-semibold text-surface-container-lowest">
+              <div className="mt-2.5 inline-flex items-center gap-1.5 bg-surface-container rounded-lg px-2 py-1 self-start">
+                <span className="material-symbols-outlined text-[15px] text-secondary">group</span>
+                <span className="font-label-sm text-label-sm font-semibold text-on-surface">
                   KDR Toruń: -50%
                 </span>
               </div>
             </div>
 
-            {/* Dynamic High-contrast QR with animated security ticker */}
+            {/* High-contrast QR (always dark on white so it stays scannable) */}
             <div className="col-span-5 flex flex-col items-center">
               <div
                 onClick={() => setIsQrModalOpen(true)}
-                className="bg-surface-container-lowest p-2 rounded-xl shadow-md w-full max-w-[118px] flex flex-col items-center cursor-pointer hover:scale-105 transition-transform"
+                className="bg-white border border-slate-200 p-2 rounded-xl shadow-sm w-full max-w-[118px] flex flex-col items-center cursor-pointer hover:scale-105 transition-transform"
               >
-                <svg className="w-full h-auto text-on-surface" fill="currentColor" viewBox="0 0 100 100">
-                  <rect height="28" width="28" x="5" y="5"></rect>
-                  <rect fill="white" height="20" width="20" x="9" y="9"></rect>
-                  <rect height="12" width="12" x="13" y="13"></rect>
-                  <rect height="28" width="28" x="67" y="5"></rect>
-                  <rect fill="white" height="20" width="20" x="71" y="9"></rect>
-                  <rect height="12" width="12" x="75" y="13"></rect>
-                  <rect height="28" width="28" x="5" y="67"></rect>
-                  <rect fill="white" height="20" width="20" x="9" y="71"></rect>
-                  <rect height="12" width="12" x="13" y="75"></rect>
-                  <rect height="6" width="6" x="38" y="10"></rect>
-                  <rect height="6" width="12" x="48" y="10"></rect>
-                  <rect height="6" width="12" x="38" y="22"></rect>
-                  <rect height="10" width="6" x="54" y="22"></rect>
-                  <rect height="8" width="8" x="10" y="38"></rect>
-                  <rect height="16" width="6" x="24" y="42"></rect>
-                  <rect height="10" width="10" x="36" y="36"></rect>
-                  <rect height="8" width="8" x="50" y="40"></rect>
-                  <rect height="6" width="12" x="66" y="38"></rect>
-                  <rect height="14" width="8" x="82" y="40"></rect>
-                  <rect height="6" width="16" x="42" y="52"></rect>
-                  <rect height="8" width="8" x="62" y="50"></rect>
-                  <rect height="6" width="14" x="38" y="66"></rect>
-                  <rect height="14" width="8" x="56" y="64"></rect>
-                  <rect height="6" width="10" x="68" y="66"></rect>
-                  <rect height="16" width="8" x="82" y="60"></rect>
-                  <rect height="14" width="6" x="40" y="78"></rect>
-                  <rect height="8" width="12" x="50" y="82"></rect>
-                  <rect height="6" width="14" x="66" y="78"></rect>
-                  <rect height="10" width="8" x="84" y="82"></rect>
-                </svg>
+                <QrGraphic className="w-full h-auto" />
                 <div className="mt-1 w-full text-center">
-                  <span className="font-label-sm text-[9px] font-semibold text-secondary block tracking-tight uppercase">
+                  <span className="font-label-sm text-[9px] font-semibold text-slate-500 block tracking-tight uppercase">
                     Skanuj kontrolerem
                   </span>
                 </div>
@@ -199,8 +224,8 @@ export default function TicketsScreen({ onOpenQrModal }) {
 
               {/* Live pulse timestamp */}
               <div className="flex items-center gap-1 mt-1.5 text-center">
-                <span className="w-1.5 h-1.5 rounded-full bg-tertiary-fixed animate-ping"></span>
-                <span className="font-label-sm text-[10px] text-surface-container-lowest font-mono tracking-tight">
+                <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-ping"></span>
+                <span className="font-label-sm text-[10px] text-secondary font-mono tracking-tight">
                   Ważny: dzisiaj, {currentTimeStr || '14:32:05'}
                 </span>
               </div>
@@ -208,18 +233,10 @@ export default function TicketsScreen({ onOpenQrModal }) {
           </div>
 
           {/* Action buttons on card */}
-          <div className="relative z-10 flex items-center justify-between mt-3 pt-2 text-surface-container-lowest">
-            <button
-              onClick={() => setIsQrModalOpen(true)}
-              className="flex items-center gap-1 font-label-md text-label-md bg-surface-container-lowest/20 hover:bg-surface-container-lowest/30 transition-colors px-3 py-1.5 rounded-lg cursor-pointer font-medium"
-              type="button"
-            >
-              <span className="material-symbols-outlined text-[16px]">qr_code_scanner</span>
-              <span>Powiększ QR</span>
-            </button>
+          <div className="relative z-10 flex items-center justify-end mt-3 pt-2">
             <button
               onClick={() => setIsBenefitsModalOpen(true)}
-              className="flex items-center gap-1 font-label-md text-label-md text-surface-container-lowest/90 hover:text-surface-container-lowest transition-colors cursor-pointer"
+              className="flex items-center gap-1 font-label-md text-label-md text-secondary hover:text-on-surface transition-colors cursor-pointer"
               type="button"
             >
               <span className="material-symbols-outlined text-[16px]">info</span>
@@ -251,24 +268,20 @@ export default function TicketsScreen({ onOpenQrModal }) {
                 </p>
               </div>
             </div>
-            <span className="px-2.5 py-1 rounded-full bg-tertiary-fixed text-on-tertiary-fixed font-label-sm text-label-sm font-semibold flex items-center gap-1">
-              <span className="w-1.5 h-1.5 rounded-full bg-tertiary animate-pulse"></span>
-              Aktywny
-            </span>
           </div>
 
           {/* Countdown Banner */}
-          <div className="bg-surface-container-low rounded-xl p-3 flex flex-col gap-2 mb-3">
+          <div className="bg-surface-container-low rounded-xl p-3 flex flex-col gap-2">
             <div className="flex items-center justify-between">
               <span className="font-label-md text-label-md text-secondary">Czas ważności:</span>
-              <span className="font-headline-sm text-headline-sm text-tertiary-container font-mono font-bold tracking-tight">
+              <span className="font-headline-sm text-headline-sm text-emerald-700 dark:text-emerald-400 font-mono font-bold tracking-tight">
                 {secondsRemaining > 0 ? formatCountdown(secondsRemaining) : 'Bilet wygasł'}
               </span>
             </div>
             {/* Progress bar */}
-            <div className="w-full bg-surface-container h-2 rounded-full overflow-hidden">
+            <div className="w-full bg-surface-container-high h-2 rounded-full overflow-hidden">
               <div
-                className="bg-tertiary-container h-full rounded-full transition-all duration-1000"
+                className="bg-emerald-500 h-full rounded-full transition-all duration-1000"
                 style={{ width: `${Math.min(100, Math.max(0, (secondsRemaining / 1800) * 100))}%` }}
               ></div>
             </div>
@@ -278,27 +291,6 @@ export default function TicketsScreen({ onOpenQrModal }) {
             </div>
           </div>
 
-          {/* Code & Security stamp */}
-          <div className="flex items-center justify-between bg-surface-container-lowest p-2.5 rounded-lg shadow-sm border border-surface-container">
-            <div className="flex items-center gap-2">
-              <span className="material-symbols-outlined text-secondary text-[20px]">pin</span>
-              <div>
-                <span className="font-label-sm text-label-sm text-secondary block">
-                  Kod kontroli biletowej
-                </span>
-                <span className="font-title-md text-title-md font-mono text-on-surface tracking-wider font-semibold">
-                  MZK-892-PL
-                </span>
-              </div>
-            </div>
-            <button
-              onClick={() => setIsQrModalOpen(true)}
-              className="px-3 py-1.5 bg-surface-container text-on-surface font-label-md text-label-md rounded-lg hover:bg-surface-container-high transition-colors cursor-pointer font-medium"
-              type="button"
-            >
-              Pokaż kontrolerowi
-            </button>
-          </div>
         </div>
       </section>
     </div>
@@ -317,7 +309,7 @@ export default function TicketsScreen({ onOpenQrModal }) {
             </p>
           </div>
           <button
-            onClick={() => alert('Oficjalny cennik MZK Toruń:\n• Bilet 30-minutowy: 3,80 zł / 1,90 zł\n• Bilet 90-minutowy: 6,80 zł / 3,40 zł\n• Bilet dobowy: 12,00 zł / 6,00 zł\n• Bilet miesięczny: 88,00 zł')}
+            onClick={() => setIsPriceListOpen(true)}
             className="font-label-md text-label-md text-primary font-semibold flex items-center gap-0.5 cursor-pointer hover:underline"
             type="button"
           >
@@ -369,7 +361,7 @@ export default function TicketsScreen({ onOpenQrModal }) {
           <div className="bg-surface-container-lowest rounded-xl p-space-md shadow-sm relative overflow-hidden">
             <div className="flex items-start justify-between gap-2 mb-2">
               <div className="flex items-center gap-2">
-                <span className="w-7 h-7 rounded-full bg-primary-fixed flex items-center justify-center text-primary">
+                <span className="w-9 h-9 rounded-full bg-surface-container flex items-center justify-center text-secondary shrink-0">
                   <span className="material-symbols-outlined text-[18px]">schedule</span>
                 </span>
                 <div>
@@ -422,7 +414,7 @@ export default function TicketsScreen({ onOpenQrModal }) {
                   Ulgowy (1,90 zł)
                 </button>
               </div>
-              <span className="font-label-sm text-label-sm text-tertiary-container font-medium flex items-center gap-0.5">
+              <span className="font-label-sm text-label-sm text-emerald-700 dark:text-emerald-400 font-medium flex items-center gap-0.5">
                 <span className="material-symbols-outlined text-[14px]">check</span>
                 KDR Aktywna
               </span>
@@ -447,7 +439,7 @@ export default function TicketsScreen({ onOpenQrModal }) {
           {/* Ticket Card 2: 90-minutowy */}
           <div className="bg-surface-container-lowest rounded-xl p-space-md shadow-sm flex items-center justify-between gap-3">
             <div className="flex items-center gap-3 min-w-0">
-              <span className="w-9 h-9 rounded-full bg-secondary-container flex items-center justify-center text-on-secondary-container shrink-0">
+              <span className="w-9 h-9 rounded-full bg-surface-container flex items-center justify-center text-secondary shrink-0">
                 <span className="material-symbols-outlined text-[20px]">hub</span>
               </span>
               <div className="min-w-0">
@@ -608,7 +600,7 @@ export default function TicketsScreen({ onOpenQrModal }) {
                 <span className="font-title-md text-title-md text-on-surface font-semibold block">
                   -96,00 zł
                 </span>
-                <span className="font-label-sm text-label-sm text-tertiary-container font-medium">
+                <span className="font-label-sm text-label-sm text-emerald-700 dark:text-emerald-400 font-medium">
                   Zniżka -20%
                 </span>
               </div>
@@ -659,19 +651,16 @@ export default function TicketsScreen({ onOpenQrModal }) {
           </div>
         </div>
 
-        <div className="mt-space-md flex items-center justify-center gap-2 text-secondary">
-          <span className="material-symbols-outlined text-[16px]">verified_user</span>
-          <span className="font-label-sm text-label-sm">
-            Oficjalny system Urzędu Miasta Torunia i MZK
-          </span>
-        </div>
       </section>
     </div>
   </div>
 
       {/* QR Code Inspection Modal */}
       {isQrModalOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-md p-4 animate-fadeIn">
+        <div
+          className="!m-0 fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-md p-4 animate-fadeIn"
+          onClick={(e) => { if (e.target === e.currentTarget) setIsQrModalOpen(false); }}
+        >
           <div className="bg-surface-container-lowest w-full max-w-sm rounded-2xl p-6 shadow-2xl flex flex-col items-center gap-4 text-center">
             <div className="flex items-center justify-between w-full">
               <span className="font-title-lg text-title-lg font-bold text-on-surface">
@@ -685,44 +674,14 @@ export default function TicketsScreen({ onOpenQrModal }) {
               </button>
             </div>
 
-            <div className="p-3 bg-white rounded-2xl shadow-lg border-4 border-primary/20">
-              <svg className="w-60 h-60 text-on-surface" fill="currentColor" viewBox="0 0 100 100">
-                <rect height="28" width="28" x="5" y="5"></rect>
-                <rect fill="white" height="20" width="20" x="9" y="9"></rect>
-                <rect height="12" width="12" x="13" y="13"></rect>
-                <rect height="28" width="28" x="67" y="5"></rect>
-                <rect fill="white" height="20" width="20" x="71" y="9"></rect>
-                <rect height="12" width="12" x="75" y="13"></rect>
-                <rect height="28" width="28" x="5" y="67"></rect>
-                <rect fill="white" height="20" width="20" x="9" y="71"></rect>
-                <rect height="12" width="12" x="13" y="75"></rect>
-                <rect height="6" width="6" x="38" y="10"></rect>
-                <rect height="6" width="12" x="48" y="10"></rect>
-                <rect height="6" width="12" x="38" y="22"></rect>
-                <rect height="10" width="6" x="54" y="22"></rect>
-                <rect height="8" width="8" x="10" y="38"></rect>
-                <rect height="16" width="6" x="24" y="42"></rect>
-                <rect height="10" width="10" x="36" y="36"></rect>
-                <rect height="8" width="8" x="50" y="40"></rect>
-                <rect height="6" width="12" x="66" y="38"></rect>
-                <rect height="14" width="8" x="82" y="40"></rect>
-                <rect height="6" width="16" x="42" y="52"></rect>
-                <rect height="8" width="8" x="62" y="50"></rect>
-                <rect height="6" width="14" x="38" y="66"></rect>
-                <rect height="14" width="8" x="56" y="64"></rect>
-                <rect height="6" width="10" x="68" y="66"></rect>
-                <rect height="16" width="8" x="82" y="60"></rect>
-                <rect height="14" width="6" x="40" y="78"></rect>
-                <rect height="8" width="12" x="50" y="82"></rect>
-                <rect height="6" width="14" x="66" y="78"></rect>
-                <rect height="10" width="8" x="84" y="82"></rect>
-              </svg>
+            <div className="p-3 bg-white rounded-2xl shadow-lg border-4 border-slate-200">
+              <QrGraphic className="w-60 h-60" />
             </div>
 
             <div>
               <p className="font-headline-sm font-bold text-on-surface">Aleksandra Wiśniewska</p>
               <p className="font-title-md font-mono text-secondary mt-0.5">TRN-2024-88492</p>
-              <p className="font-label-sm text-tertiary-container font-semibold mt-1">
+              <p className="font-label-sm text-emerald-700 dark:text-emerald-400 font-semibold mt-1">
                 Ważny: {currentTimeStr} • Zabezpieczenie dynamiczne
               </p>
             </div>
@@ -737,9 +696,63 @@ export default function TicketsScreen({ onOpenQrModal }) {
         </div>
       )}
 
+      {/* MZK Price List Modal */}
+      {isPriceListOpen && (
+        <div
+          className="!m-0 fixed inset-0 z-50 flex items-end sm:items-center justify-center bg-inverse-surface/40 backdrop-blur-sm p-0 sm:p-4 animate-fadeIn"
+          onClick={() => setIsPriceListOpen(false)}
+        >
+          <div
+            className="bg-surface-container-lowest w-full max-w-md rounded-t-2xl sm:rounded-2xl p-5 shadow-2xl flex flex-col gap-4"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="flex items-center justify-between border-b border-surface-container pb-3">
+              <h3 className="font-title-lg font-bold text-on-surface">Cennik biletów MZK Toruń</h3>
+              <button
+                onClick={() => setIsPriceListOpen(false)}
+                className="w-8 h-8 rounded-full bg-surface-container flex items-center justify-center text-secondary hover:text-on-surface cursor-pointer"
+                type="button"
+                aria-label="Zamknij cennik"
+              >
+                <span className="material-symbols-outlined text-[18px]">close</span>
+              </button>
+            </div>
+
+            <div className="rounded-xl border border-outline overflow-hidden">
+              <div className="grid grid-cols-[1fr_auto_auto] gap-4 px-3.5 py-2 bg-surface-container-low text-[11px] font-semibold uppercase tracking-wider text-secondary">
+                <span>Bilet</span>
+                <span className="text-right">Normalny</span>
+                <span className="text-right">Ulgowy</span>
+              </div>
+              {MZK_PRICE_LIST.map((row) => (
+                <div
+                  key={row.name}
+                  className="grid grid-cols-[1fr_auto_auto] gap-4 px-3.5 py-3 border-t border-outline-variant text-sm"
+                >
+                  <span className="text-on-surface font-medium">{row.name}</span>
+                  <span className="text-on-surface font-bold text-right">{row.normal}</span>
+                  <span className="text-on-surface-variant font-semibold text-right">{row.reduced}</span>
+                </div>
+              ))}
+            </div>
+
+            <button
+              onClick={() => setIsPriceListOpen(false)}
+              className="w-full py-2.5 rounded-xl bg-surface-container text-on-surface font-label-md font-semibold cursor-pointer"
+              type="button"
+            >
+              Zamknij
+            </button>
+          </div>
+        </div>
+      )}
+
       {/* Benefits Catalog Modal */}
       {isBenefitsModalOpen && (
-        <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center bg-inverse-surface/40 backdrop-blur-sm p-0 sm:p-4 animate-fadeIn">
+        <div
+          className="!m-0 fixed inset-0 z-50 flex items-end sm:items-center justify-center bg-inverse-surface/40 backdrop-blur-sm p-0 sm:p-4 animate-fadeIn"
+          onClick={(e) => { if (e.target === e.currentTarget) setIsBenefitsModalOpen(false); }}
+        >
           <div className="bg-surface-container-lowest w-full max-w-md rounded-t-2xl sm:rounded-2xl p-5 shadow-2xl flex flex-col max-h-[85vh] overflow-y-auto gap-4">
             <div className="flex items-center justify-between border-b border-surface-container pb-3">
               <h3 className="font-title-lg font-bold text-on-surface">Katalog zniżek mieszkańca</h3>
