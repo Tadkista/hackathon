@@ -3,6 +3,10 @@
 @tailwind utilities;
 
 @layer base {
+  html {
+    font-size: calc(100% * var(--ui-scale, 1));
+  }
+
   html, body {
     width: 100%;
     margin: 0;
@@ -120,11 +124,11 @@
 .grid.grid-cols-2.sm\:grid-cols-4 > button span.font-semibold {
   color: #0f172a !important;
 }
-.grid.grid-cols-2.sm\:grid-cols-4 > button span.text-\[11px\],
+.grid.grid-cols-2.sm\:grid-cols-4 > button span.text-fs-11,
 .grid.grid-cols-2.sm\:grid-cols-4 > button div > span:last-child {
   color: #64748b !important;
 }
-.grid.grid-cols-2.sm\:grid-cols-4 > button .material-symbols-outlined:not(.text-\[22px\]) {
+.grid.grid-cols-2.sm\:grid-cols-4 > button .material-symbols-outlined:not(.text-fs-22) {
   color: #64748b !important;
 }
 .grid.grid-cols-2.sm\:grid-cols-4 > button div.w-10.h-10 {
@@ -151,11 +155,11 @@
 .dark .grid.grid-cols-2.sm\:grid-cols-4 > button span.font-semibold {
   color: #f8fafc !important;
 }
-.dark .grid.grid-cols-2.sm\:grid-cols-4 > button span.text-\[11px\],
+.dark .grid.grid-cols-2.sm\:grid-cols-4 > button span.text-fs-11,
 .dark .grid.grid-cols-2.sm\:grid-cols-4 > button div > span:last-child {
   color: #94a3b8 !important;
 }
-.dark .grid.grid-cols-2.sm\:grid-cols-4 > button .material-symbols-outlined:not(.text-\[22px\]) {
+.dark .grid.grid-cols-2.sm\:grid-cols-4 > button .material-symbols-outlined:not(.text-fs-22) {
   color: #94a3b8 !important;
 }
 .dark .grid.grid-cols-2.sm\:grid-cols-4 > button div.w-10.h-10 {
@@ -456,7 +460,7 @@ span.w-1\.5.h-1\.5.rounded-full.bg-secondary-container {
     left: 0;
     top: 0;
     bottom: 0;
-    width: 270px;
+    width: 16.875rem;
     z-index: 40;
     display: flex;
     flex-direction: column;
@@ -466,9 +470,9 @@ span.w-1\.5.h-1\.5.rounded-full.bg-secondary-container {
   }
 
   .desktop-main {
-    margin-left: 270px;
+    margin-left: 16.875rem;
     flex: 1;
-    width: calc(100% - 270px);
+    width: calc(100% - 16.875rem);
     max-width: 1380px;
     padding: 2.25rem 2.5rem !important;
     min-height: 100vh;
@@ -596,3 +600,69 @@ button.btn-voted {
   color: #34d399 !important;
   border-color: rgba(16, 185, 129, 0.4) !important;
 }
+
+/* ═══════════════════════════════════════════════
+   KEYBOARD FOCUS (always visible)
+   ═══════════════════════════════════════════════ */
+:focus-visible {
+  outline: 2px solid #3b82f6;
+  outline-offset: 2px;
+}
+.dark :focus-visible { outline-color: #93c5fd; }
+
+/* Login call-to-action keeps the brand colour (the neutral global primary button looked disabled).
+   The class is repeated on purpose to outrank the :not() based global override. */
+button.login-cta.login-cta.login-cta.login-cta.login-cta.login-cta.login-cta {
+  background-color: #841829 !important;
+  color: #ffffff !important;
+  border: 1px solid #841829 !important;
+}
+button.login-cta.login-cta.login-cta.login-cta.login-cta.login-cta.login-cta:hover:not(:disabled) { background-color: #6d1322 !important; }
+.dark button.login-cta.login-cta.login-cta.login-cta.login-cta.login-cta.login-cta { background-color: #a31d35 !important; border-color: #a31d35 !important; }
+.dark button.login-cta.login-cta.login-cta.login-cta.login-cta.login-cta.login-cta:hover:not(:disabled) { background-color: #b92540 !important; }
+html.hc button.login-cta.login-cta.login-cta.login-cta.login-cta.login-cta.login-cta, html.hc.dark button.login-cta.login-cta.login-cta.login-cta.login-cta.login-cta.login-cta { background-color: var(--hc-fg) !important; color: var(--hc-bg) !important; border: 2px solid var(--hc-fg) !important; }
+
+/* ═══════════════════════════════════════════════
+   HIGH CONTRAST (Personalizacja → Wysoki kontrast)
+   html.hc.dark has higher specificity than the .dark rules above
+   ═══════════════════════════════════════════════ */
+html.hc { --hc-fg: #000000; --hc-bg: #ffffff; --hc-mute: #1f2937; --hc-line: #0f172a; }
+html.hc.dark { --hc-fg: #ffffff; --hc-bg: #000000; --hc-mute: #e5e7eb; --hc-line: #f8fafc; }
+
+html.hc, html.hc body, html.hc.dark, html.hc.dark body { background-color: var(--hc-bg) !important; color: var(--hc-fg) !important; }
+html.hc .bg-surface, html.hc .bg-background, html.hc.dark .bg-surface, html.hc.dark .bg-background,
+html.hc .bg-surface-container-lowest, html.hc.dark .bg-surface-container-lowest,
+html.hc .bg-surface-container-low, html.hc.dark .bg-surface-container-low { background-color: var(--hc-bg) !important; }
+html.hc .bg-surface-container, html.hc.dark .bg-surface-container { background-color: var(--hc-bg) !important; box-shadow: inset 0 0 0 1px var(--hc-line); }
+html.hc .bg-surface-container-high, html.hc.dark .bg-surface-container-high,
+html.hc .bg-surface-container-highest, html.hc.dark .bg-surface-container-highest { background-color: var(--hc-bg) !important; box-shadow: inset 0 0 0 2px var(--hc-line); }
+
+html.hc .text-on-surface, html.hc.dark .text-on-surface,
+html.hc .text-on-surface-variant, html.hc.dark .text-on-surface-variant,
+html.hc .text-on-background, html.hc.dark .text-on-background { color: var(--hc-fg) !important; }
+html.hc .text-secondary, html.hc.dark .text-secondary,
+html.hc .text-outline, html.hc.dark .text-outline { color: var(--hc-mute) !important; }
+html.hc .text-primary, html.hc.dark .text-primary { color: var(--hc-fg) !important; text-decoration: underline; text-underline-offset: 3px; }
+
+html.hc [class*='border-outline'], html.hc.dark [class*='border-outline'],
+html.hc [class*='border-surface-container'], html.hc.dark [class*='border-surface-container'] { border-color: var(--hc-line) !important; }
+html.hc .shadow-card, html.hc .shadow-sm, html.hc .shadow-md { box-shadow: 0 0 0 1px var(--hc-line) !important; }
+
+/* primary actions: solid inverted blocks */
+html.hc .bg-primary, html.hc.dark .bg-primary,
+html.hc button.bg-primary:not(.grid > button), html.hc.dark button.bg-primary:not(.grid > button),
+html.hc a.bg-primary, html.hc.dark a.bg-primary {
+  background-color: var(--hc-fg) !important; color: var(--hc-bg) !important; border: 2px solid var(--hc-fg) !important;
+}
+html.hc .bg-primary *, html.hc.dark .bg-primary * { color: var(--hc-bg) !important; }
+
+/* status colours keep their meaning but gain a border and stronger text */
+html.hc .text-emerald-700, html.hc .text-emerald-400, html.hc.dark .text-emerald-400 { color: var(--hc-fg) !important; font-weight: 700; }
+html.hc [class*='bg-emerald-500/'], html.hc [class*='bg-amber-500/'], html.hc [class*='bg-red-500/'], html.hc [class*='bg-blue-500/'] { box-shadow: inset 0 0 0 1px var(--hc-line); }
+
+html.hc input, html.hc select, html.hc textarea, html.hc.dark input, html.hc.dark select, html.hc.dark textarea {
+  background-color: var(--hc-bg) !important; color: var(--hc-fg) !important; border: 2px solid var(--hc-line) !important;
+}
+html.hc :focus-visible { outline: 3px solid var(--hc-fg); outline-offset: 3px; }
+html.hc a, html.hc button { text-decoration-thickness: 2px; }
+html.hc [class*='backdrop-blur'] { backdrop-filter: none !important; }

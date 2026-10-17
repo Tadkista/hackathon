@@ -63,7 +63,7 @@ export default function VotesScreen({ isVoteModalOpen, setIsVoteModalOpen }) {
       {/* Title */}
       <div className="flex items-center gap-2 pt-1 pb-1">
         <span className="inline-flex items-center justify-center w-8 h-8 rounded-xl bg-rose-50 dark:bg-rose-950/40 text-primary">
-          <span className="material-symbols-outlined text-[20px]">how_to_vote</span>
+          <span aria-hidden="true" className="material-symbols-outlined text-fs-20">how_to_vote</span>
         </span>
         <h1 className="text-2xl sm:text-3xl font-bold text-on-surface tracking-tight">
           Partycypacja Obywatelska
@@ -72,7 +72,7 @@ export default function VotesScreen({ isVoteModalOpen, setIsVoteModalOpen }) {
 
       {/* Tabs */}
       <div className="pb-1 flex flex-col md:flex-row md:items-center md:justify-between gap-3">
-        <div className="inline-flex w-fit max-w-full p-1 bg-surface-container rounded-2xl gap-1 overflow-x-auto scrollbar-none">
+        <div className="flex flex-wrap w-fit max-w-full p-1 bg-surface-container rounded-2xl gap-1">
           <button
             onClick={() => setActiveTab('glosowania')}
             className={`tab-btn px-3.5 py-2 rounded-xl text-xs sm:text-sm transition-all cursor-pointer whitespace-nowrap ${
@@ -116,7 +116,7 @@ export default function VotesScreen({ isVoteModalOpen, setIsVoteModalOpen }) {
             type="button"
           >
             Zgłoszenia
-            <span className="inline-flex items-center justify-center w-4 h-4 rounded-full bg-amber-500 text-white text-[10px] ml-1 font-bold">
+            <span className="inline-flex items-center justify-center w-4 h-4 rounded-full bg-amber-500 text-white text-fs-10 ml-1 font-bold">
               3
             </span>
           </button>
@@ -127,16 +127,16 @@ export default function VotesScreen({ isVoteModalOpen, setIsVoteModalOpen }) {
           className="h-10 px-4 rounded-xl bg-primary text-white font-semibold text-sm inline-flex items-center justify-center gap-2 self-start md:self-auto shrink-0 cursor-pointer"
           type="button"
         >
-          <span className="material-symbols-outlined text-[20px]">add_location_alt</span>
+          <span aria-hidden="true" className="material-symbols-outlined text-fs-20">add_location_alt</span>
           Zgłoś problem
         </button>
       </div>
 
       {/* Filters (Rejon & Temat) */}
       <div className="flex flex-col gap-2 pb-2">
-        <div className="flex items-center gap-2 overflow-x-auto scrollbar-none py-1">
+        <div className="flex flex-wrap items-center gap-2 py-1">
           <span className="text-xs text-secondary uppercase tracking-wider shrink-0 flex items-center gap-1 font-semibold">
-            <span className="material-symbols-outlined text-[14px]">location_on</span>
+            <span aria-hidden="true" className="material-symbols-outlined text-fs-14">location_on</span>
             Rejon:
           </span>
           {districts.map((d) => (
@@ -154,9 +154,9 @@ export default function VotesScreen({ isVoteModalOpen, setIsVoteModalOpen }) {
           ))}
         </div>
 
-        <div className="flex items-center gap-2 overflow-x-auto scrollbar-none py-1">
+        <div className="flex flex-wrap items-center gap-2 py-1">
           <span className="text-xs text-secondary uppercase tracking-wider shrink-0 flex items-center gap-1 font-semibold">
-            <span className="material-symbols-outlined text-[14px]">category</span>
+            <span aria-hidden="true" className="material-symbols-outlined text-fs-14">category</span>
             Temat:
           </span>
           {topics.map((t) => (
@@ -182,8 +182,7 @@ export default function VotesScreen({ isVoteModalOpen, setIsVoteModalOpen }) {
           <div className="flex flex-col gap-space-sm">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-1.5">
-                <span
-                  className="material-symbols-outlined text-primary text-[20px]"
+                <span aria-hidden="true" className="material-symbols-outlined text-primary text-fs-20"
                   style={{ fontVariationSettings: "'FILL' 1" }}
                 >
                   gavel
@@ -208,7 +207,7 @@ export default function VotesScreen({ isVoteModalOpen, setIsVoteModalOpen }) {
                 <div className="absolute inset-0 bg-black/30"></div>
                 <div className="absolute top-3 left-3 flex flex-wrap gap-1.5">
                   <span className="px-2.5 py-1 rounded-full bg-primary-container text-on-primary font-label-sm text-label-sm shadow-sm flex items-center gap-1">
-                    <span className="material-symbols-outlined text-[14px]">verified</span>
+                    <span aria-hidden="true" className="material-symbols-outlined text-fs-14">verified</span>
                     Budżet Obywatelski 2025
                   </span>
                 </div>
@@ -225,12 +224,12 @@ export default function VotesScreen({ isVoteModalOpen, setIsVoteModalOpen }) {
               <div className="p-4 flex flex-col gap-3">
                 <div className="flex items-center gap-2 text-secondary font-label-sm text-label-sm">
                   <span className="flex items-center gap-0.5 text-primary-container font-medium">
-                    <span className="material-symbols-outlined text-[16px]">pin_drop</span>
+                    <span aria-hidden="true" className="material-symbols-outlined text-fs-16">pin_drop</span>
                     Bydgoskie Przedmieście
                   </span>
                   <span>•</span>
                   <span className="flex items-center gap-0.5">
-                    <span className="material-symbols-outlined text-[16px]">park</span>
+                    <span aria-hidden="true" className="material-symbols-outlined text-fs-16">park</span>
                     Ekologia i rekreacja
                   </span>
                 </div>
@@ -245,7 +244,7 @@ export default function VotesScreen({ isVoteModalOpen, setIsVoteModalOpen }) {
                 <div className="bg-surface-container-low rounded-lg p-3 flex flex-col gap-1.5">
                   <div className="flex justify-between items-center font-label-sm text-label-sm">
                     <span className="text-on-surface font-medium flex items-center gap-1">
-                      <span className="material-symbols-outlined text-[15px] text-tertiary">group</span>
+                      <span aria-hidden="true" className="material-symbols-outlined text-fs-15 text-tertiary">group</span>
                       Poparcie torunian:
                     </span>
                     <span className="font-semibold text-on-surface">
@@ -255,7 +254,7 @@ export default function VotesScreen({ isVoteModalOpen, setIsVoteModalOpen }) {
                   <div className="w-full bg-surface-container-high rounded-full h-2 overflow-hidden">
                     <div className="h-full bg-primary rounded-full" style={{ width: '68%' }}></div>
                   </div>
-                  <div className="flex items-center justify-between text-[11px] text-secondary font-label-sm">
+                  <div className="flex items-center justify-between text-fs-11 text-secondary font-label-sm">
                     <span>Weryfikacja PESEL / Karta Torunianina</span>
                   </div>
                 </div>
@@ -273,7 +272,7 @@ export default function VotesScreen({ isVoteModalOpen, setIsVoteModalOpen }) {
                     }`}
                     type="button"
                   >
-                    <span className="material-symbols-outlined text-[18px]">
+                    <span aria-hidden="true" className="material-symbols-outlined text-fs-18">
                       {hasVoted ? 'check' : 'how_to_vote'}
                     </span>
                     {hasVoted ? 'Głos oddany' : 'Zagłosuj teraz'}
@@ -287,7 +286,7 @@ export default function VotesScreen({ isVoteModalOpen, setIsVoteModalOpen }) {
                     title="Szczegóły i kosztorys"
                     type="button"
                   >
-                    <span className="material-symbols-outlined text-[18px] text-secondary">description</span>
+                    <span aria-hidden="true" className="material-symbols-outlined text-fs-18 text-secondary">description</span>
                     <span className="hidden sm:inline">Kosztorys</span>
                   </button>
                 </div>
@@ -309,7 +308,7 @@ export default function VotesScreen({ isVoteModalOpen, setIsVoteModalOpen }) {
                 </h2>
               </div>
               <div className="w-10 h-10 rounded-xl bg-surface-container flex items-center justify-center text-primary">
-                <span className="material-symbols-outlined text-[22px]">account_balance</span>
+                <span aria-hidden="true" className="material-symbols-outlined text-fs-22">account_balance</span>
               </div>
             </div>
 
@@ -327,7 +326,7 @@ export default function VotesScreen({ isVoteModalOpen, setIsVoteModalOpen }) {
                   onClick={() => alert('Pobieranie oficjalnego sprawozdania z wykonania budżetu m. Torunia (PDF z Biuletynu BIP)...')}
                   className="px-3.5 py-2 rounded-xl bg-surface-container hover:bg-surface-container-high text-on-surface text-xs font-semibold flex items-center gap-1.5 transition-colors cursor-pointer"
                 >
-                  <span className="material-symbols-outlined text-[16px]">picture_as_pdf</span>
+                  <span aria-hidden="true" className="material-symbols-outlined text-fs-16">picture_as_pdf</span>
                   <span>Raport BIP</span>
                 </button>
               </div>
@@ -356,7 +355,7 @@ export default function VotesScreen({ isVoteModalOpen, setIsVoteModalOpen }) {
                   <div className="w-full h-2 rounded-full bg-surface-container overflow-hidden">
                     <div className="h-full bg-primary rounded-full" style={{ width: '78%' }}></div>
                   </div>
-                  <span className="text-[11px] text-secondary">Planowane oddanie: IV kwartał 2025</span>
+                  <span className="text-fs-11 text-secondary">Planowane oddanie: IV kwartał 2025</span>
                 </div>
               </div>
 
@@ -381,7 +380,7 @@ export default function VotesScreen({ isVoteModalOpen, setIsVoteModalOpen }) {
                   <div className="w-full h-2 rounded-full bg-surface-container overflow-hidden">
                     <div className="h-full bg-emerald-600 rounded-full" style={{ width: '92%' }}></div>
                   </div>
-                  <span className="text-[11px] text-secondary">Etap odbiorów technicznych</span>
+                  <span className="text-fs-11 text-secondary">Etap odbiorów technicznych</span>
                 </div>
               </div>
 
@@ -406,7 +405,7 @@ export default function VotesScreen({ isVoteModalOpen, setIsVoteModalOpen }) {
                   <div className="w-full h-2 rounded-full bg-surface-container overflow-hidden">
                     <div className="h-full bg-primary rounded-full" style={{ width: '44%' }}></div>
                   </div>
-                  <span className="text-[11px] text-secondary">Stan surowy otwarty</span>
+                  <span className="text-fs-11 text-secondary">Stan surowy otwarty</span>
                 </div>
               </div>
 
@@ -431,7 +430,7 @@ export default function VotesScreen({ isVoteModalOpen, setIsVoteModalOpen }) {
                   <div className="w-full h-2 rounded-full bg-surface-container overflow-hidden">
                     <div className="h-full bg-primary rounded-full" style={{ width: '31%' }}></div>
                   </div>
-                  <span className="text-[11px] text-secondary">Prace fundamentowe i konstrukcyjne</span>
+                  <span className="text-fs-11 text-secondary">Prace fundamentowe i konstrukcyjne</span>
                 </div>
               </div>
             </div>
@@ -467,7 +466,7 @@ export default function VotesScreen({ isVoteModalOpen, setIsVoteModalOpen }) {
           <div className="flex flex-col gap-space-sm">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-1.5">
-                <span className="material-symbols-outlined text-secondary text-[20px]">forum</span>
+                <span aria-hidden="true" className="material-symbols-outlined text-secondary text-fs-20">forum</span>
                 <h2 className="font-title-lg text-title-lg text-on-surface font-semibold">Konsultacje społeczne</h2>
               </div>
               <span className="px-2 py-0.5 rounded-full bg-surface-container text-secondary font-label-sm text-label-sm">
@@ -479,7 +478,7 @@ export default function VotesScreen({ isVoteModalOpen, setIsVoteModalOpen }) {
               <div className="flex items-start justify-between gap-2">
                 <div className="flex items-center gap-1.5">
                   <span className="px-2 py-0.5 rounded-full bg-surface-container-high text-on-surface border border-outline font-label-sm text-label-sm flex items-center gap-1 font-semibold">
-                    <span className="material-symbols-outlined text-[14px]">directions_bus</span>
+                    <span aria-hidden="true" className="material-symbols-outlined text-fs-14">directions_bus</span>
                     Wydział Gospodarki Komunalnej
                   </span>
                 </div>
@@ -496,13 +495,13 @@ export default function VotesScreen({ isVoteModalOpen, setIsVoteModalOpen }) {
               <div className="flex items-center justify-between pt-1">
                 <div className="flex items-center gap-2">
                   <div className="flex -space-x-1.5 overflow-hidden">
-                    <div className="inline-block h-6 w-6 rounded-full bg-primary-fixed text-primary flex items-center justify-center font-label-sm text-[10px] font-bold">
+                    <div className="inline-block h-6 w-6 rounded-full bg-primary-fixed text-primary flex items-center justify-center font-label-sm text-fs-10 font-bold">
                       AK
                     </div>
-                    <div className="inline-block h-6 w-6 rounded-full bg-secondary-container text-on-secondary-container flex items-center justify-center font-label-sm text-[10px] font-bold">
+                    <div className="inline-block h-6 w-6 rounded-full bg-secondary-container text-on-secondary-container flex items-center justify-center font-label-sm text-fs-10 font-bold">
                       ML
                     </div>
-                    <div className="inline-block h-6 w-6 rounded-full bg-surface-container text-secondary flex items-center justify-center font-label-sm text-[10px]">
+                    <div className="inline-block h-6 w-6 rounded-full bg-surface-container text-secondary flex items-center justify-center font-label-sm text-fs-10">
                       +82
                     </div>
                   </div>
@@ -515,7 +514,7 @@ export default function VotesScreen({ isVoteModalOpen, setIsVoteModalOpen }) {
                 >
                   <span>Wyraź opinię</span>
                   <span className="font-label-sm text-label-sm text-secondary">(~3 min)</span>
-                  <span className="material-symbols-outlined text-[16px]">arrow_forward</span>
+                  <span aria-hidden="true" className="material-symbols-outlined text-fs-16">arrow_forward</span>
                 </button>
               </div>
             </div>
@@ -526,12 +525,12 @@ export default function VotesScreen({ isVoteModalOpen, setIsVoteModalOpen }) {
           <div className="flex flex-col gap-space-sm">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-1.5">
-                <span className="material-symbols-outlined text-emerald-700 dark:text-emerald-400 text-[20px]">assignment_turned_in</span>
+                <span aria-hidden="true" className="material-symbols-outlined text-emerald-700 dark:text-emerald-400 text-fs-20">assignment_turned_in</span>
                 <h2 className="font-title-lg text-title-lg text-on-surface font-semibold">Moje ostatnie zgłoszenie</h2>
               </div>
               <span className="font-label-md text-label-md text-primary font-medium flex items-center gap-0.5">
                 Wszystkie (3)
-                <span className="material-symbols-outlined text-[16px]">chevron_right</span>
+                <span aria-hidden="true" className="material-symbols-outlined text-fs-16">chevron_right</span>
               </span>
             </div>
 
@@ -558,7 +557,7 @@ export default function VotesScreen({ isVoteModalOpen, setIsVoteModalOpen }) {
               </div>
               <div className="bg-surface-container-low rounded-lg p-2.5 flex items-center justify-between gap-2">
                 <div className="flex items-center gap-2 text-on-surface-variant font-body-sm text-body-sm">
-                  <span className="material-symbols-outlined text-on-surface-variant text-[18px]">build_circle</span>
+                  <span aria-hidden="true" className="material-symbols-outlined text-on-surface-variant text-fs-18">build_circle</span>
                   <span>
                     Zaplanowano montaż opraw LED: <strong className="text-on-surface font-medium">do 25 lipca</strong>
                   </span>
@@ -588,7 +587,7 @@ export default function VotesScreen({ isVoteModalOpen, setIsVoteModalOpen }) {
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-2">
                 <div className="w-8 h-8 rounded-full bg-primary-fixed text-primary flex items-center justify-center">
-                  <span className="material-symbols-outlined text-[18px]">verified_user</span>
+                  <span aria-hidden="true" className="material-symbols-outlined text-fs-18">verified_user</span>
                 </div>
                 <span className="font-title-lg text-title-lg text-on-surface font-semibold">Potwierdź swój głos</span>
               </div>
@@ -597,7 +596,7 @@ export default function VotesScreen({ isVoteModalOpen, setIsVoteModalOpen }) {
                 className="w-8 h-8 rounded-full bg-surface-container flex items-center justify-center text-secondary hover:text-on-surface cursor-pointer"
                 type="button"
               >
-                <span className="material-symbols-outlined text-[18px]">close</span>
+                <span aria-hidden="true" className="material-symbols-outlined text-fs-18">close</span>
               </button>
             </div>
 
@@ -607,7 +606,7 @@ export default function VotesScreen({ isVoteModalOpen, setIsVoteModalOpen }) {
                 Modernizacja Parku na Bydgoskim Przedmieściu
               </span>
               <span className="text-tertiary font-label-sm text-label-sm font-medium flex items-center gap-1 mt-1">
-                <span className="material-symbols-outlined text-[16px]">check_circle</span>
+                <span aria-hidden="true" className="material-symbols-outlined text-fs-16">check_circle</span>
                 Twoja Karta Torunianina jest aktywna i uprawniona
               </span>
             </div>
@@ -632,7 +631,7 @@ export default function VotesScreen({ isVoteModalOpen, setIsVoteModalOpen }) {
               >
                 {isSubmittingVote ? (
                   <>
-                    <span className="material-symbols-outlined text-[18px] animate-spin">refresh</span>
+                    <span aria-hidden="true" className="material-symbols-outlined text-fs-18 animate-spin">refresh</span>
                     <span>Rejestracja...</span>
                   </>
                 ) : (
@@ -654,21 +653,21 @@ export default function VotesScreen({ isVoteModalOpen, setIsVoteModalOpen }) {
             <div className="w-12 h-1 bg-surface-container-high rounded-full mx-auto sm:hidden"></div>
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-2">
-                <span className="material-symbols-outlined text-primary text-[22px]">add_location_alt</span>
+                <span aria-hidden="true" className="material-symbols-outlined text-primary text-fs-22">add_location_alt</span>
                 <h3 className="font-title-lg text-title-lg text-on-surface font-semibold">Zgłoś usterkę lub pomysł</h3>
               </div>
               <button
                 onClick={() => setIsReportModalOpen(false)}
                 className="w-8 h-8 rounded-full bg-surface-container flex items-center justify-center text-secondary hover:text-on-surface cursor-pointer"
               >
-                <span className="material-symbols-outlined text-[18px]">close</span>
+                <span aria-hidden="true" className="material-symbols-outlined text-fs-18">close</span>
               </button>
             </div>
 
             {reportSuccess ? (
               <div className="p-6 text-center flex flex-col items-center justify-center gap-2">
                 <div className="w-12 h-12 rounded-full bg-tertiary-fixed text-tertiary flex items-center justify-center">
-                  <span className="material-symbols-outlined text-[28px]">task_alt</span>
+                  <span aria-hidden="true" className="material-symbols-outlined text-fs-28">task_alt</span>
                 </div>
                 <h4 className="font-title-lg font-bold text-on-surface">Zgłoszenie przyjęte!</h4>
                 <p className="font-body-sm text-secondary">
@@ -709,7 +708,7 @@ export default function VotesScreen({ isVoteModalOpen, setIsVoteModalOpen }) {
                 </div>
 
                 <div className="flex items-center gap-2 text-secondary font-label-sm text-label-sm p-2 rounded-lg bg-surface-container-low">
-                  <span className="material-symbols-outlined text-[18px] text-primary">my_location</span>
+                  <span aria-hidden="true" className="material-symbols-outlined text-fs-18 text-primary">my_location</span>
                   <span>Lokalizacja GPS zostanie dołączona automatycznie (Toruń, Centrum)</span>
                 </div>
 

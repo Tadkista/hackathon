@@ -45,14 +45,14 @@ export default function NotificationsModal({ isOpen, onClose, onNavigate }) {
         <div className="w-12 h-1 bg-surface-container-high rounded-full mx-auto sm:hidden mb-2"></div>
         <div className="flex items-center justify-between pb-3 border-b border-surface-container">
           <div className="flex items-center gap-2">
-            <span className="material-symbols-outlined text-on-surface-variant text-[24px]">notifications</span>
+            <span aria-hidden="true" className="material-symbols-outlined text-on-surface-variant text-fs-24">notifications</span>
             <h2 className="font-title-lg text-title-lg text-on-surface font-semibold">Powiadomienia miejskie</h2>
           </div>
           <button
             onClick={onClose}
             className="w-8 h-8 rounded-full bg-surface-container flex items-center justify-center text-secondary hover:text-on-surface transition-colors cursor-pointer"
           >
-            <span className="material-symbols-outlined text-[18px]">close</span>
+            <span aria-hidden="true" className="material-symbols-outlined text-fs-18">close</span>
           </button>
         </div>
 
@@ -61,7 +61,7 @@ export default function NotificationsModal({ isOpen, onClose, onNavigate }) {
             <div key={item.id} className="p-3 rounded-xl bg-surface-container-low flex flex-col gap-2 hover:bg-surface-container transition-colors">
               <div className="flex items-start gap-3">
                 <div className={`w-9 h-9 rounded-lg flex items-center justify-center shrink-0 ${item.color}`}>
-                  <span className="material-symbols-outlined text-[20px]">{item.icon}</span>
+                  <span aria-hidden="true" className="material-symbols-outlined text-fs-20">{item.icon}</span>
                 </div>
                 <div className="flex-1 min-w-0">
                   <div className="flex items-center justify-between">

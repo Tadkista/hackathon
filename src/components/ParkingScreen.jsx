@@ -1,16 +1,17 @@
 import React, { useState } from 'react';
 import { useTheme } from '../ThemeContext.jsx';
+import { useAuth } from '../AuthContext.jsx';
 import {
   Map,
   MapMarker,
   MarkerContent,
   MarkerPopup,
-  MarkerTooltip,
   MapControls,
 } from './map/map.tsx';
 
 export default function ParkingScreen() {
   const { isDark } = useTheme();
+  const { isGuest } = useAuth();
   const [selectedZone, setSelectedZone] = useState('all');
   const [searchQuery, setSearchQuery] = useState('');
   const [isPayModalOpen, setIsPayModalOpen] = useState(false);
@@ -173,7 +174,7 @@ export default function ParkingScreen() {
       {/* Toast */}
       {paySuccessToast && (
         <div className="fixed top-20 left-1/2 -translate-x-1/2 z-50 bg-emerald-600 text-white px-5 py-3 rounded-2xl shadow-xl flex items-center gap-2.5 text-sm font-semibold animate-fadeIn">
-          <span className="material-symbols-outlined text-[20px]">check_circle</span>
+          <span aria-hidden="true" className="material-symbols-outlined text-fs-20">check_circle</span>
           <span>{paySuccessToast}</span>
         </div>
       )}
@@ -182,7 +183,7 @@ export default function ParkingScreen() {
       <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 pt-1 pb-1">
         <div className="flex flex-col">
           <div className="inline-flex items-center gap-1.5 text-secondary text-xs font-medium mb-1">
-            <span className="material-symbols-outlined text-[16px] text-primary">local_parking</span>
+            <span aria-hidden="true" className="material-symbols-outlined text-fs-16 text-primary">local_parking</span>
             <span>Strefa Płatnego Parkowania Toruń (SPP)</span>
             <span className="w-1 h-1 rounded-full bg-secondary/50"></span>
             <span>Dane sensorów na żywo</span>
@@ -198,13 +199,13 @@ export default function ParkingScreen() {
         {/* Global Summary Badge */}
         <div className="inline-flex items-center gap-3 px-4 py-2.5 rounded-2xl bg-surface-container-lowest border border-outline-variant/60 shadow-card self-start sm:self-auto">
           <div className="w-10 h-10 rounded-xl bg-emerald-50 dark:bg-emerald-950/40 text-emerald-600 dark:text-emerald-400 flex items-center justify-center shrink-0">
-            <span className="material-symbols-outlined text-[22px]">directions_car</span>
+            <span aria-hidden="true" className="material-symbols-outlined text-fs-22">directions_car</span>
           </div>
           <div>
             <div className="flex items-center gap-1.5">
               <span className="text-base font-bold text-on-surface">{totalFreeSpots} wolnych miejsc</span>
             </div>
-            <span className="text-[11px] text-secondary">
+            <span className="text-fs-11 text-secondary">
               Płatne: Pn-Pt 8:00 - 18:00 • Sob 8:00 - 14:00
             </span>
           </div>
@@ -215,20 +216,17 @@ export default function ParkingScreen() {
       <div className="p-3.5 rounded-2xl bg-amber-50/80 dark:bg-amber-950/30 border border-amber-200/80 dark:border-amber-800/40 flex items-center justify-between gap-3 shadow-xs">
         <div className="flex items-center gap-3 min-w-0">
           <div className="w-9 h-9 rounded-xl bg-amber-500/10 text-amber-600 dark:text-amber-400 flex items-center justify-center shrink-0">
-            <span className="material-symbols-outlined text-[20px]">warning</span>
+            <span aria-hidden="true" className="material-symbols-outlined text-fs-20">warning</span>
           </div>
           <div className="min-w-0">
             <span className="text-xs font-bold text-amber-950 dark:text-amber-200 block truncate">
               Komunikat drogowy: Most im. J. Piłsudskiego (prace serwisowe od 21:00)
             </span>
-            <span className="text-[11px] text-amber-800/90 dark:text-amber-300/90 block truncate">
+            <span className="text-fs-11 text-amber-800/90 dark:text-amber-300/90 block truncate">
               Zalecany dojazd do Strefy A przez Most gen. Elżbiety Zawackiej (Wschodni).
             </span>
           </div>
         </div>
-        <span className="text-[11px] font-semibold text-amber-900 dark:text-amber-300 shrink-0 px-2.5 py-1 rounded-lg bg-amber-100 dark:bg-amber-900/40">
-          Utrudnienia
-        </span>
       </div>
 
       {/* Search & Filter Bar */}
@@ -280,7 +278,7 @@ export default function ParkingScreen() {
         {/* Search Input */}
         <div className="relative w-full sm:w-72">
           <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-secondary">
-            <span className="material-symbols-outlined text-[18px]">search</span>
+            <span aria-hidden="true" className="material-symbols-outlined text-fs-18">search</span>
           </div>
           <input
             value={searchQuery}
@@ -331,28 +329,24 @@ export default function ParkingScreen() {
                     <MarkerContent>
                       <div className="group cursor-pointer select-none transition-transform duration-200">
                         <div className="relative flex flex-col items-center">
-                          {isSelected && (
-                            <div className="absolute -inset-1.5 rounded-full bg-rose-500/40 animate-ping" />
-                          )}
                           <div
                             className={`flex items-center gap-1 px-2.5 py-1 rounded-full shadow-lg border-2 text-xs font-bold transition-all ${colorClass} ${
                               isSelected
-                                ? 'scale-110 ring-4 ring-rose-500/30 ring-offset-2'
+                                ? 'scale-110 ring-4 ring-black/20'
                                 : 'hover:scale-105'
                             }`}
                           >
-                            <span className="material-symbols-outlined text-[14px]">local_parking</span>
+                            <span aria-hidden="true" className="material-symbols-outlined text-fs-14">local_parking</span>
                             <span>{lot.freeSpots} wolnych</span>
                           </div>
                           <div className={`w-2 h-2 rotate-45 -mt-1 ${colorClass.split(' ')[0]}`} />
                         </div>
                       </div>
                     </MarkerContent>
-                    <MarkerTooltip>{lot.name}</MarkerTooltip>
                     <MarkerPopup>
                       <div className="p-1 space-y-1">
                         <p className="font-bold text-xs text-on-surface leading-tight">{lot.name}</p>
-                        <p className="text-[11px] text-secondary">{lot.address}</p>
+                        <p className="text-fs-11 text-secondary">{lot.address}</p>
                         <div className="flex items-center justify-between text-xs pt-1 border-t border-outline-variant/60">
                           <span className="font-semibold text-emerald-600 dark:text-emerald-400">
                             {lot.freeSpots} / {lot.totalSpots} wolnych
@@ -384,8 +378,8 @@ export default function ParkingScreen() {
                 <span>Prawie pełny (&lt;10)</span>
               </span>
             </div>
-            <div className="text-[11px] font-medium">
-              Strefa A: 5 zł/h • Strefa B: 3 zł/h • Karta Torunianina: -30%
+            <div className="text-fs-11 font-medium">
+              {isGuest ? 'Strefa A: 5 zł/h • Strefa B: 3 zł/h' : 'Strefa A: 5 zł/h • Strefa B: 3 zł/h • Karta Torunianina: -30%'}
             </div>
           </div>
         </div>
@@ -396,7 +390,7 @@ export default function ParkingScreen() {
             <div className="rounded-2xl bg-surface-container-lowest border border-outline-variant/60 shadow-card p-5 flex flex-col space-y-4">
               <div className="flex items-start justify-between gap-2">
                 <div>
-                  <span className="px-2.5 py-0.5 rounded-md bg-surface-container-high text-on-surface-variant text-[11px] font-bold uppercase tracking-wider inline-block">
+                  <span className="px-2.5 py-0.5 rounded-md bg-surface-container-high text-on-surface-variant text-fs-11 font-bold uppercase tracking-wider inline-block">
                     {selectedLot.zoneName}
                   </span>
                   <h3 className="text-base sm:text-lg font-bold text-on-surface mt-1.5 leading-snug">
@@ -426,35 +420,39 @@ export default function ParkingScreen() {
                     style={{ width: `${selectedLot.occupancy}%` }}
                   ></div>
                 </div>
-                <div className="flex justify-between items-center text-[11px] text-secondary">
+                <div className="flex justify-between items-center text-fs-11 text-secondary">
                   <span>Obłożenie: {selectedLot.occupancy}%</span>
                   <span>{selectedLot.distance}</span>
                 </div>
               </div>
 
               {/* Pricing & Features */}
-              <div className="grid grid-cols-2 gap-2.5 text-xs">
+              {!isGuest && (
+<div className="grid grid-cols-2 gap-2.5 text-xs">
                 <div className="p-3 rounded-xl bg-surface-container-low flex flex-col">
-                  <span className="text-secondary text-[11px]">Cena standardowa:</span>
+                  <span className="text-secondary text-fs-11">Cena standardowa:</span>
                   <span className="font-bold text-on-surface text-sm mt-0.5">{selectedLot.hourlyRate}</span>
                 </div>
-                <div className="p-3 rounded-xl bg-rose-50 dark:bg-rose-950/30 border border-rose-200/50 dark:border-rose-900/30 flex flex-col">
-                  <span className="text-primary text-[11px] font-semibold">Z Kartą Torunianina:</span>
+                {!isGuest && (
+<div className="p-3 rounded-xl bg-rose-50 dark:bg-rose-950/30 border border-rose-200/50 dark:border-rose-900/30 flex flex-col">
+                  <span className="text-primary text-fs-11 font-semibold">Z Kartą Torunianina:</span>
                   <span className="font-bold text-primary text-sm mt-0.5">{selectedLot.residentRate}</span>
                 </div>
+)}
               </div>
+)}
 
               {/* Amenities */}
               <div className="flex items-center gap-2 text-xs text-secondary">
                 {selectedLot.isGuarded && (
                   <span className="inline-flex items-center gap-1 px-2 py-1 rounded-md bg-surface-container">
-                    <span className="material-symbols-outlined text-[14px]">videocam</span>
+                    <span aria-hidden="true" className="material-symbols-outlined text-fs-14">videocam</span>
                     Monitorowany
                   </span>
                 )}
                 {selectedLot.hasEvCharging && (
                   <span className="inline-flex items-center gap-1 px-2 py-1 rounded-md bg-surface-container">
-                    <span className="material-symbols-outlined text-[14px]">ev_station</span>
+                    <span aria-hidden="true" className="material-symbols-outlined text-fs-14">ev_station</span>
                     Ładowarka EV
                   </span>
                 )}
@@ -466,16 +464,18 @@ export default function ParkingScreen() {
                   onClick={() => handleStartNavigation(selectedLot)}
                   className="w-full h-11 rounded-xl bg-primary text-white font-semibold text-xs sm:text-sm flex items-center justify-center gap-2 shadow-sm hover:opacity-95 active:scale-[0.99] transition-all cursor-pointer"
                 >
-                  <span className="material-symbols-outlined text-[18px]">navigation</span>
+                  <span aria-hidden="true" className="material-symbols-outlined text-fs-18">navigation</span>
                   <span>Prowadź nawigacją do parkingu</span>
                 </button>
-                <button
+                {!isGuest && (
+<button
                   onClick={() => setIsPayModalOpen(true)}
                   className="w-full h-11 rounded-xl bg-surface-container hover:bg-surface-container-high text-on-surface font-semibold text-xs sm:text-sm flex items-center justify-center gap-2 transition-colors cursor-pointer"
                 >
-                  <span className="material-symbols-outlined text-[18px]">payments</span>
+                  <span aria-hidden="true" className="material-symbols-outlined text-fs-18">payments</span>
                   <span>Opłać bilet parkingowy SPP</span>
                 </button>
+)}
               </div>
             </div>
           ) : null}
@@ -494,8 +494,8 @@ export default function ParkingScreen() {
                     onClick={() => setSelectedLot(lot)}
                     className={`p-3 rounded-xl text-left transition-all cursor-pointer border ${
                       isSelected
-                        ? 'bg-rose-50/70 dark:bg-rose-950/30 border-primary text-on-surface'
-                        : 'bg-surface-container-low border-transparent hover:border-outline-variant/80'
+                        ? 'bg-surface-container border-outline text-on-surface'
+                        : 'bg-surface-container-low border-transparent hover:border-outline-variant'
                     }`}
                   >
                     <div className="flex items-center justify-between">
@@ -503,7 +503,7 @@ export default function ParkingScreen() {
                         {lot.name}
                       </span>
                       <span
-                        className={`text-[11px] font-bold px-2 py-0.5 rounded-full shrink-0 ${
+                        className={`text-fs-11 font-bold px-2 py-0.5 rounded-full shrink-0 ${
                           lot.freeSpots <= 10
                             ? 'bg-rose-100 text-rose-800 dark:bg-rose-950 dark:text-rose-300'
                             : 'bg-emerald-100 text-emerald-800 dark:bg-emerald-950 dark:text-emerald-300'
@@ -512,7 +512,7 @@ export default function ParkingScreen() {
                         {lot.freeSpots} wolnych
                       </span>
                     </div>
-                    <div className="flex items-center justify-between mt-1 text-[11px] text-secondary">
+                    <div className="flex items-center justify-between mt-1 text-fs-11 text-secondary">
                       <span>{lot.zoneName}</span>
                       <span>{lot.distance}</span>
                     </div>
@@ -534,14 +534,14 @@ export default function ParkingScreen() {
           <div className="bg-surface-container-lowest w-full max-w-md rounded-2xl p-6 shadow-2xl flex flex-col space-y-4">
             <div className="flex items-center justify-between border-b border-outline-variant/60 pb-3">
               <div className="flex items-center gap-2">
-                <span className="material-symbols-outlined text-primary text-[22px]">local_parking</span>
+                <span aria-hidden="true" className="material-symbols-outlined text-primary text-fs-22">local_parking</span>
                 <h3 className="text-base font-bold text-on-surface">Opłata za postój w SPP Toruń</h3>
               </div>
               <button
                 onClick={() => setIsPayModalOpen(false)}
                 className="w-8 h-8 rounded-full bg-surface-container flex items-center justify-center text-secondary hover:text-on-surface cursor-pointer"
               >
-                <span className="material-symbols-outlined text-[18px]">close</span>
+                <span aria-hidden="true" className="material-symbols-outlined text-fs-18">close</span>
               </button>
             </div>
 
@@ -591,7 +591,7 @@ export default function ParkingScreen() {
                     {parkingDuration === '30min' ? '1,80 zł' : parkingDuration === '1h' ? '3,50 zł' : parkingDuration === '2h' ? '7,00 zł' : '25,00 zł'}
                   </span>
                 </div>
-                <span className="px-2 py-0.5 rounded-md bg-emerald-100 text-emerald-800 dark:bg-emerald-950 dark:text-emerald-300 font-semibold text-[11px]">
+                <span className="px-2 py-0.5 rounded-md bg-emerald-100 text-emerald-800 dark:bg-emerald-950 dark:text-emerald-300 font-semibold text-fs-11">
                   Zniżka -30% aktywna
                 </span>
               </div>
@@ -600,7 +600,7 @@ export default function ParkingScreen() {
                 type="submit"
                 className="w-full h-11 rounded-xl bg-primary text-white font-semibold text-sm flex items-center justify-center gap-2 shadow-sm hover:opacity-95 active:scale-[0.99] transition-all cursor-pointer"
               >
-                <span className="material-symbols-outlined text-[18px]">bolt</span>
+                <span aria-hidden="true" className="material-symbols-outlined text-fs-18">bolt</span>
                 <span>Potwierdź i opłać (BLIK / Portfel)</span>
               </button>
             </form>

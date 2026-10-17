@@ -1,502 +1,304 @@
 import React, { useState } from 'react';
+import { useAuth } from '../AuthContext.jsx';
 import { useTheme } from '../ThemeContext.jsx';
+import { usePrefs } from '../PrefsContext.jsx';
+import { ROLE_LABEL } from '../data/identities.js';
+import { Avatar, Modal, ModalHeader, Segmented, Toggle, formatDatePl, maskPesel } from './ui.jsx';
+import { TwoFactorSetup } from './LoginScreen.jsx';
+
+const HELP_ITEMS = [
+  { id: 'tck', icon: 'contact_support', title: 'Toruńskie Centrum Kontaktu (TCK)', desc: 'Infolinia miejska 56 611 83 10 • tck@um.torun.pl', body: 'Telefon: 56 611 83 10\nE-mail: tck@um.torun.pl\nGodziny pracy: pon.–pt. 7:30–17:00\nZgłoszenia awarii przyjmujemy całą dobę.' },
+  { id: 'rodo', icon: 'policy', title: 'Regulamin i Ochrona Danych (RODO)', desc: 'Administrator: Prezydent Miasta Torunia', body: 'Administratorem danych osobowych jest Prezydent Miasta Torunia. Dane przetwarzamy w celu świadczenia usług miejskich zgodnie z RODO. Masz prawo wglądu, sprostowania i usunięcia swoich danych.' },
+];
+
+function Row({ icon, title, desc, children, onClick, divider = true, stack = false }) {
+  const Tag = onClick ? 'button' : 'div';
+  return (
+    <>
+      <Tag
+        {...(onClick ? { type: 'button', onClick } : {})}
+        className={`w-full p-space-md flex ${stack ? 'flex-col items-stretch sm:flex-row sm:items-center' : 'items-center'} justify-between gap-4 text-left ${onClick ? 'hover:bg-surface-container-low transition-colors cursor-pointer' : ''}`}
+      >
+        <div className="flex items-center gap-space-md min-w-0">
+          <div className="w-10 h-10 rounded-lg bg-surface-container text-secondary flex items-center justify-center shrink-0">
+            <span aria-hidden="true" className="material-symbols-outlined text-fs-22">{icon}</span>
+          </div>
+          <div className="flex flex-col min-w-0">
+            <span className="font-title-md text-title-md text-on-surface font-semibold">{title}</span>
+            {desc && <span className="font-body-sm text-body-sm text-secondary">{desc}</span>}
+          </div>
+        </div>
+        {children}
+      </Tag>
+      {divider && <div className="h-px bg-surface-container-high mx-space-md"></div>}
+    </>
+  );
+}
 
 export default function ProfileScreen({ onNavigate }) {
-  const { isDark, toggleTheme } = useTheme();
-  const [district, setDistrict] = useState('Stare Miasto / Mokre');
-  const [isChangingDistrict, setIsChangingDistrict] = useState(false);
-  const [biometricsEnabled, setBiometricsEnabled] = useState(true);
-  const [notifications, setNotifications] = useState({
-    transport: true,
-    alerts: true,
-    civicBudget: true,
-    culture: false,
-  });
+  const { user, role, isGuest, isChild, method, logout } = useAuth();
+  const { mode, setMode } = useTheme();
+  const { prefs, setPref, resetPrefs } = usePrefs();
+  const district = 'Stare Miasto / Mokre'; // wynika z zweryfikowanego adresu, nie można go zmienić
+  const [twoFaOpen, setTwoFaOpen] = useState(false);
+  const [confirmLogout, setConfirmLogout] = useState(false);
+  const [helpOpen, setHelpOpen] = useState(null);
+  const [confirmClear, setConfirmClear] = useState(false);
+  const [notifications, setNotifications] = useState({ transport: true, alerts: true, civicBudget: true, culture: false });
+  const toggleNotification = (key) => setNotifications((p) => ({ ...p, [key]: !p[key] }));
 
-  const toggleNotification = (key) => {
-    setNotifications((prev) => ({ ...prev, [key]: !prev[key] }));
+  const clearLocalData = () => {
+    try { localStorage.clear(); sessionStorage.clear(); } catch (e) { /* ignore */ }
+    window.location.reload();
   };
 
-  const districtsList = [
-    'Stare Miasto / Mokre',
-    'Bydgoskie Przedmieście',
-    'Chełmińskie Przedmieście',
-    'Rubinkowo',
-    'Jar',
-    'Skarpa',
-    'Podgórz',
-    'Stawki',
-  ];
+  const fullName = isGuest ? 'Gość' : `${user.firstName} ${user.lastName}`;
+  const sub = isGuest ? 'Przeglądasz miasto bez konta' : isChild ? 'Konto dziecka zatwierdzone przez opiekuna' : 'Obywatel Torunia od 2018 r.';
+  const methodLabel = { mobywatel: 'mObywatel', pko: 'PKO Bank Polski', mbank: 'mBank', ing: 'ING Bank Śląski', santander: 'Santander Bank Polska', millennium: 'Bank Millennium', ca: 'Credit Agricole', guardian: 'Zatwierdzenie przez opiekuna', guest: 'Brak logowania' }[method] || '—';
 
   return (
     <div className="flex flex-col w-full pb-10 space-y-6 max-w-7xl mx-auto">
-      {/* Title Header */}
       <div className="flex flex-col pt-1 pb-1">
-        <h1 className="text-2xl sm:text-3xl font-bold text-on-surface tracking-tight">
-          Profil Mieszkańca
-        </h1>
+        <h1 className="text-2xl sm:text-3xl font-bold text-on-surface tracking-tight">{isGuest ? 'Profil gościa' : 'Profil Mieszkańca'}</h1>
         <p className="text-secondary text-body-sm mt-0.5">
-          Zarządzaj tożsamością miejską, ustawieniami konta oraz historią aktywności w Toruniu.
+          {isGuest ? 'Dostosuj aplikację do siebie. Zaloguj się, aby korzystać z usług dla mieszkańców.' : 'Zarządzaj tożsamością miejską, ustawieniami konta oraz historią aktywności w Toruniu.'}
         </p>
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-7">
-        {/* Left Column: Citizen Identity & Activity Stats */}
         <div className="lg:col-span-5 flex flex-col space-y-6">
-          {/* Citizen Identity Card */}
+          {/* identity */}
+          <div className="bg-surface-container-lowest rounded-2xl shadow-card border border-outline-variant/60 p-space-md flex flex-col gap-space-md">
+            <div className="flex items-start gap-space-md">
+              <Avatar user={user} size={64} />
+              <div className="flex flex-col min-w-0 flex-1">
+                <h2 className="font-headline-sm text-headline-sm text-on-surface truncate font-bold">{fullName}</h2>
+                <span className="font-body-sm text-body-sm text-secondary">{sub}</span>
+                <span className="mt-1.5 inline-flex w-fit items-center px-2.5 py-0.5 rounded-full bg-surface-container text-on-surface-variant text-fs-11 font-semibold">{ROLE_LABEL[role]}</span>
+              </div>
+            </div>
+
+            {!isGuest && (
+              <dl className="rounded-xl bg-surface-container-low divide-y divide-outline-variant/60 text-sm">
+                {[
+                  ['PESEL', maskPesel(user.pesel)],
+                  ['Data urodzenia', formatDatePl(user.birthDate)],
+                  ['Adres', user.address],
+                  ['Zweryfikowano przez', methodLabel],
+                ].map(([k, v]) => (
+                  <div key={k} className="flex items-start justify-between gap-4 px-3.5 py-2.5">
+                    <dt className="text-secondary shrink-0">{k}</dt>
+                    <dd className="text-on-surface font-semibold text-right">{v}</dd>
+                  </div>
+                ))}
+              </dl>
+            )}
+
+            {!isGuest && (
+              <div className="bg-surface-container-low rounded-xl p-space-sm flex items-center justify-between gap-space-sm">
+                <div className="flex items-center gap-space-xs min-w-0">
+                  <span aria-hidden="true" className="material-symbols-outlined text-primary-container text-fs-20 shrink-0">location_on</span>
+                  <div className="flex flex-col min-w-0">
+                    <span className="font-label-sm text-label-sm text-secondary leading-none">Twoja dzielnica miejska (przypisana do adresu)</span>
+                    <span className="font-title-md text-title-md text-on-surface font-semibold truncate mt-0.5">{district}</span>
+                  </div>
+                </div>
+                <span className="px-3 py-1 rounded-full bg-surface-container text-secondary font-label-md text-label-md shrink-0 flex items-center gap-1 font-semibold" title="Dzielnica wynika z zweryfikowanego adresu zamieszkania">
+                  <span aria-hidden="true" className="material-symbols-outlined text-fs-14">lock</span><span>Z adresu</span>
+                </span>
+              </div>
+            )}
+
+            {isGuest && (
+              <button type="button" onClick={logout} className="w-full h-11 rounded-xl bg-primary text-white font-semibold text-sm flex items-center justify-center gap-2 cursor-pointer">
+                <span aria-hidden="true" className="material-symbols-outlined text-fs-18">login</span>Zaloguj się lub załóż konto
+              </button>
+            )}
+          </div>
+
+          {!isGuest && !isChild && (
+            <div>
+              <div className="flex items-center justify-between mb-space-sm">
+                <span className="font-title-lg text-title-lg text-on-surface font-bold">Aktywność obywatelska</span>
+                <span className="font-label-sm text-label-sm text-emerald-700 dark:text-emerald-400 font-semibold flex items-center gap-0.5"><span aria-hidden="true" className="material-symbols-outlined text-fs-14">workspace_premium</span>Aktywny mieszkaniec</span>
+              </div>
+              <div className="grid grid-cols-3 gap-space-sm">
+                {[['how_to_vote', '14', 'Głosów w BO'], ['flag', '5', 'Zgłoszeń (4 załatwione)'], ['volunteer_activism', '3', 'Akcje Eko']].map(([icon, n, label]) => (
+                  <button key={label} type="button" onClick={() => onNavigate('votes')} className="bg-surface-container-lowest rounded-xl p-space-sm shadow-sm flex flex-col justify-between hover:shadow-md transition-shadow text-left cursor-pointer">
+                    <div className="w-7 h-7 rounded-lg bg-surface-container flex items-center justify-center text-on-surface-variant mb-2"><span aria-hidden="true" className="material-symbols-outlined text-fs-18">{icon}</span></div>
+                    <div>
+                      <div className="font-headline-md text-headline-md text-on-surface font-bold leading-tight">{n}</div>
+                      <div className="font-label-sm text-label-sm text-secondary leading-tight mt-0.5">{label}</div>
+                    </div>
+                  </button>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {!isGuest && (
+            <div>
+              <h2 className="font-title-lg text-title-lg text-on-surface font-bold mb-space-sm">Moje zasoby miejskie</h2>
+              <div className="bg-surface-container-lowest rounded-xl shadow-sm overflow-hidden flex flex-col">
+                <Row icon="bookmark" title="Zapisane wydarzenia" desc="Kalendarz wydarzeń miejskich" onClick={() => onNavigate('events')}>
+                  <span aria-hidden="true" className="material-symbols-outlined text-secondary text-fs-20 shrink-0">chevron_right</span>
+                </Row>
+                {!isChild && (
+                  <Row icon="assignment" title="Wnioski i formularze urzędowe" desc="Toruńska Karta Dużej Rodziny / Mieszkańca" onClick={() => onNavigate('tickets')}>
+                    <span aria-hidden="true" className="material-symbols-outlined text-secondary text-fs-20 shrink-0">chevron_right</span>
+                  </Row>
+                )}
+                <Row icon="receipt_long" title="Historia biletów i opłat miejskich" desc="MZK Toruń, Strefa Płatnego Parkowania" onClick={() => onNavigate('tickets#historia-biletow')} divider={false}>
+                  <span aria-hidden="true" className="material-symbols-outlined text-secondary text-fs-20 shrink-0">chevron_right</span>
+                </Row>
+              </div>
+            </div>
+          )}
+        </div>
+
+        <div className="lg:col-span-7 flex flex-col space-y-6">
+          {/* ───────── Personalizacja (osobny kafelek) ───────── */}
+          <section aria-labelledby="personalization-title" data-testid="personalization">
+            <h2 id="personalization-title" className="font-title-lg text-title-lg text-on-surface font-bold mb-space-sm">Personalizacja</h2>
+            <div className="bg-surface-container-lowest rounded-xl shadow-card border border-outline-variant/60 overflow-hidden flex flex-col">
+              <Row icon="contrast" title="Motyw aplikacji" desc="Jasny, ciemny lub zgodny z ustawieniami systemu" stack>
+                <label className="sr-only" htmlFor="profile-theme">Motyw aplikacji</label>
+                <select id="profile-theme" value={mode} onChange={(e) => setMode(e.target.value)} className="h-10 px-3 rounded-xl bg-surface-container-low border border-outline-variant/60 text-sm text-on-surface cursor-pointer shrink-0">
+                  <option value="light">Jasny</option>
+                  <option value="dark">Ciemny</option>
+                  <option value="system">Systemowy</option>
+                </select>
+              </Row>
+
+              <Row icon="fingerprint" title="Logowanie biometryczne" desc={`Face ID / Odcisk palca ${prefs.biometrics ? 'aktywne' : 'wyłączone'}`}>
+                <Toggle checked={prefs.biometrics} onChange={(v) => setPref('biometrics', v)} label="Logowanie biometryczne" />
+              </Row>
+
+              <Row icon="security" title="Uwierzytelnianie dwuskładnikowe (2FA)" desc={prefs.twoFA ? 'Aktywne – kod z aplikacji Authenticator' : 'Wyłączone – zalecamy włączyć'}>
+                <Toggle checked={prefs.twoFA} onChange={(v) => { if (v) setTwoFaOpen(true); else setPref('twoFA', false); }} label="Uwierzytelnianie dwuskładnikowe" />
+              </Row>
+
+              <div className="px-space-md pt-space-md pb-1">
+                <span className="text-fs-11 font-bold text-secondary uppercase tracking-wider">Ułatwienia dostępu</span>
+              </div>
+
+              <Row icon="invert_colors" title="Wysoki kontrast" desc="Mocniejsze kolory i wyraźne obramowania">
+                <Toggle checked={prefs.hc} onChange={(v) => setPref('hc', v)} label="Wysoki kontrast" />
+              </Row>
+
+              <Row icon="format_size" title="Rozmiar czcionki" desc="Zmienia wielkość tekstu w całej aplikacji" stack>
+                <Segmented label="Rozmiar czcionki" value={prefs.font} onChange={(v) => setPref('font', v)} options={[{ value: 'small', label: 'A−' }, { value: 'normal', label: 'A' }, { value: 'large', label: 'A+' }, { value: 'xlarge', label: 'A++' }]} />
+              </Row>
+
+              <Row icon="zoom_in" title="Rozmiar interfejsu" desc="Skaluje przyciski, odstępy i ikony" divider={false} stack>
+                <Segmented label="Rozmiar interfejsu" value={prefs.ui} onChange={(v) => setPref('ui', v)} options={[{ value: 'compact', label: 'Kompaktowy' }, { value: 'normal', label: 'Standardowy' }, { value: 'large', label: 'Duży' }]} />
+              </Row>
+
+              <div className="px-space-md py-space-sm bg-surface-container-low flex items-center justify-between gap-3">
+                <p className="text-xs text-secondary">Zmiany zapisują się automatycznie.</p>
+                <button type="button" onClick={resetPrefs} className="text-xs font-semibold text-primary hover:underline cursor-pointer">Przywróć domyślne</button>
+              </div>
+            </div>
+          </section>
+
+          {!isGuest && (
+            <div>
+              <h2 className="font-title-lg text-title-lg text-on-surface font-bold mb-space-sm">Centrum powiadomień i kanały</h2>
+              <div className="bg-surface-container-lowest rounded-xl shadow-card border border-outline-variant/60 p-space-md flex flex-col gap-space-md">
+                <span className="font-label-md text-label-md text-secondary block font-semibold">Tematy alertów miejskich w Toruniu</span>
+                <div className="flex flex-wrap gap-space-xs">
+                  {[['transport', 'Transport i MZK'], ['alerts', 'Alerty SMS i kryzysowe'], ['civicBudget', 'Budżet Obywatelski'], ['culture', 'Kultura i Festiwale']].map(([k, label]) => (
+                    <button key={k} type="button" onClick={() => toggleNotification(k)} aria-pressed={notifications[k]} className={`px-3 py-1.5 rounded-lg text-label-md font-medium transition-colors cursor-pointer flex items-center gap-1.5 ${notifications[k] ? 'bg-primary text-white' : 'bg-surface-container text-secondary'}`}>
+                      <span aria-hidden="true" className="material-symbols-outlined text-fs-16">{notifications[k] ? 'check' : 'add'}</span>{label}
+                    </button>
+                  ))}
+                </div>
+              </div>
+            </div>
+          )}
+
           <div>
-            <div className="bg-surface-container-lowest rounded-2xl shadow-card border border-outline-variant/60 p-space-md flex flex-col gap-space-md relative overflow-hidden">
-
-          {/* Avatar & Essential Bio */}
-          <div className="flex items-start gap-space-md relative z-10">
-            <div className="relative shrink-0">
-              <img
-                alt="Aleksandra Wiśniewska"
-                className="w-16 h-16 rounded-full object-cover shadow-sm ring-2 ring-primary/20"
-                src="https://lh3.googleusercontent.com/aida-public/AB6AXuBKpu-CxsyYFROnKC97ZISDGnAVNZJSMO-8gzdhVX_hJsHeoNzLMhxb_HuGomq6MuXzDWJsYFO02qtqSykSyAfyiDForQCPK7jJUwBYKRRmVP9b89KyQIkOanKnTcPBzrWG1ojpKD2XMg0fKxxJd2pRE1AHV-7TFgpUhQPzXf2L1-cI2uokJMq9outTy9noRn3_tnowuOuQBcZhyYyuK1DLMFrIQNe8nORieBDcAGPx34bVSyrAB-VQ"
-              />
-            </div>
-
-            <div className="flex flex-col min-w-0 flex-1">
-              <h1 className="font-headline-sm text-headline-sm text-on-surface truncate font-bold">
-                Aleksandra Wiśniewska
-              </h1>
-              <span className="font-body-sm text-body-sm text-secondary">
-                Obywatel Torunia od 2018 r.
-              </span>
-
+            <h2 className="font-title-lg text-title-lg text-on-surface font-bold mb-space-sm">Pomoc i kontakt</h2>
+            <div className="bg-surface-container-lowest rounded-xl shadow-card border border-outline-variant/60 overflow-hidden flex flex-col">
+              {HELP_ITEMS.map((h, i) => {
+                const isOpen = helpOpen === h.id;
+                return (
+                  <div key={h.id} className={i < HELP_ITEMS.length - 1 ? 'border-b border-outline-variant/60' : ''}>
+                    <button
+                      type="button"
+                      onClick={() => setHelpOpen(isOpen ? null : h.id)}
+                      aria-expanded={isOpen}
+                      aria-controls={`help-${h.id}`}
+                      className="w-full p-space-md flex items-center justify-between gap-4 text-left hover:bg-surface-container-low transition-colors cursor-pointer"
+                    >
+                      <span className="flex items-center gap-space-md min-w-0">
+                        <span className="w-10 h-10 rounded-lg bg-surface-container text-secondary flex items-center justify-center shrink-0">
+                          <span aria-hidden="true" className="material-symbols-outlined text-fs-22">{h.icon}</span>
+                        </span>
+                        <span className="flex flex-col min-w-0">
+                          <span className="font-title-md text-title-md text-on-surface font-semibold">{h.title}</span>
+                          <span className="font-body-sm text-body-sm text-secondary">{h.desc}</span>
+                        </span>
+                      </span>
+                      <span aria-hidden="true" className={`material-symbols-outlined text-secondary text-fs-20 shrink-0 transition-transform ${isOpen ? 'rotate-180' : ''}`}>expand_more</span>
+                    </button>
+                    {isOpen && (
+                      <div id={`help-${h.id}`} className="px-space-md pb-space-md pl-[4.5rem] -mt-1 text-sm text-on-surface-variant whitespace-pre-line">
+                        {h.body}
+                      </div>
+                    )}
+                  </div>
+                );
+              })}
             </div>
           </div>
 
-          {/* District Selector Ribbon */}
-          <div className="bg-surface-container-low rounded-xl p-space-sm flex items-center justify-between gap-space-sm relative z-10">
-            <div className="flex items-center gap-space-xs min-w-0">
-              <span className="material-symbols-outlined text-primary-container text-[20px] shrink-0">
-                location_on
-              </span>
-              <div className="flex flex-col min-w-0">
-                <span className="font-label-sm text-label-sm text-secondary leading-none">
-                  Twoja dzielnica miejska
-                </span>
-                <span className="font-title-md text-title-md text-on-surface font-semibold truncate mt-0.5">
-                  {district}
-                </span>
-              </div>
-            </div>
-            <button
-              onClick={() => setIsChangingDistrict(true)}
-              className="px-3 py-1 rounded-full bg-surface-container text-primary font-label-md text-label-md shrink-0 hover:bg-secondary-container transition-colors flex items-center gap-1 font-semibold cursor-pointer"
-              type="button"
-            >
-              <span>Zmień</span>
-              <span className="material-symbols-outlined text-[14px]">expand_more</span>
-            </button>
-          </div>
-        </div>
-      </div>
-
-      {/* Civic Impact Stats (Bento Ribbon) */}
-      <div>
-        <div className="flex items-center justify-between mb-space-sm">
-          <span className="font-title-lg text-title-lg text-on-surface font-bold">
-            Aktywność obywatelska
-          </span>
-          <span className="font-label-sm text-label-sm text-emerald-700 dark:text-emerald-400 font-semibold flex items-center gap-0.5">
-            <span className="material-symbols-outlined text-[14px]">workspace_premium</span>
-            Aktywna torunianka
-          </span>
-        </div>
-        <div className="grid grid-cols-3 gap-space-sm">
-          {/* Stat 1 */}
-          <button
-            onClick={() => onNavigate('votes')}
-            className="bg-surface-container-lowest rounded-xl p-space-sm shadow-sm flex flex-col justify-between hover:shadow-md transition-shadow text-left cursor-pointer"
-          >
-            <div className="w-7 h-7 rounded-lg bg-primary-fixed flex items-center justify-center text-primary-container mb-2">
-              <span className="material-symbols-outlined text-[18px]">how_to_vote</span>
-            </div>
-            <div>
-              <div className="font-headline-md text-headline-md text-on-surface font-bold leading-tight">
-                14
-              </div>
-              <div className="font-label-sm text-label-sm text-secondary leading-tight mt-0.5">
-                Głosów w BO
-              </div>
-            </div>
-          </button>
-
-          {/* Stat 2 */}
-          <button
-            onClick={() => onNavigate('votes')}
-            className="bg-surface-container-lowest rounded-xl p-space-sm shadow-sm flex flex-col justify-between hover:shadow-md transition-shadow text-left cursor-pointer"
-          >
-            <div className="w-7 h-7 rounded-lg bg-surface-container flex items-center justify-center text-primary mb-2">
-              <span className="material-symbols-outlined text-[18px]">flag</span>
-            </div>
-            <div>
-              <div className="font-headline-md text-headline-md text-on-surface font-bold leading-tight">
-                5
-              </div>
-              <div className="font-label-sm text-label-sm text-secondary leading-tight mt-0.5">
-                Zgłoszeń (4 załatwione)
-              </div>
-            </div>
-          </button>
-
-          {/* Stat 3 */}
-          <button
-            onClick={() => onNavigate('votes')}
-            className="bg-surface-container-lowest rounded-xl p-space-sm shadow-sm flex flex-col justify-between hover:shadow-md transition-shadow text-left cursor-pointer"
-          >
-            <div className="w-7 h-7 rounded-lg bg-tertiary-fixed flex items-center justify-center text-tertiary mb-2">
-              <span className="material-symbols-outlined text-[18px]">volunteer_activism</span>
-            </div>
-            <div>
-              <div className="font-headline-md text-headline-md text-on-surface font-bold leading-tight">
-                3
-              </div>
-              <div className="font-label-sm text-label-sm text-secondary leading-tight mt-0.5">
-                Akcje Eko
-              </div>
-            </div>
-          </button>
-        </div>
-      </div>
-
-      {/* Section: Moje zasoby miejskie */}
-      <div>
-        <h2 className="font-title-lg text-title-lg text-on-surface font-bold mb-space-sm">
-          Moje zasoby miejskie
-        </h2>
-        <div className="bg-surface-container-lowest rounded-xl shadow-sm overflow-hidden flex flex-col">
-          {/* Item 1 */}
-          <button
-            onClick={() => alert('Zapisane wydarzenia kulturalne w Toruniu (4):\n• Festiwal Światła Bella Skyway\n• Teatr im. Wilama Horzycy (Premiera)\n• Koncert na Rynku Staromiejskim\n• Noc Muzeów w Ratuszu Staromiejskim')}
-            className="w-full p-space-md flex items-center justify-between text-left hover:bg-surface-container-low transition-colors cursor-pointer"
-          >
-            <div className="flex items-center gap-space-md min-w-0">
-              <div className="w-10 h-10 rounded-lg bg-secondary-container text-on-secondary-container flex items-center justify-center shrink-0">
-                <span className="material-symbols-outlined text-[22px]">bookmark</span>
-              </div>
-              <div className="flex flex-col min-w-0">
-                <span className="font-title-md text-title-md text-on-surface font-semibold truncate">
-                  Zapisane wydarzenia i oferty pracy
-                </span>
-                <span className="font-body-sm text-body-sm text-secondary truncate">
-                  Teatr Horzycy, warsztaty w Młynie Wiedzy
-                </span>
-              </div>
-            </div>
-            <div className="flex items-center gap-space-xs shrink-0">
-              <span className="px-2 py-0.5 rounded-full bg-surface-container text-secondary font-label-sm text-label-sm font-semibold">
-                4
-              </span>
-              <span className="material-symbols-outlined text-secondary text-[20px]">chevron_right</span>
-            </div>
-          </button>
-
-          <div className="h-px bg-surface-container-high mx-space-md"></div>
-
-          {/* Item 2 */}
-          <button
-            onClick={() => onNavigate('tickets')}
-            className="w-full p-space-md flex items-center justify-between text-left hover:bg-surface-container-low transition-colors cursor-pointer"
-          >
-            <div className="flex items-center gap-space-md min-w-0">
-              <div className="w-10 h-10 rounded-lg bg-primary-fixed text-primary-container flex items-center justify-center shrink-0">
-                <span className="material-symbols-outlined text-[22px]">assignment</span>
-              </div>
-              <div className="flex flex-col min-w-0">
-                <span className="font-title-md text-title-md text-on-surface font-semibold truncate">
-                  Wnioski i formularze urzędowe
-                </span>
-                <span className="font-body-sm text-body-sm text-secondary truncate">
-                  Toruńska Karta Dużej Rodziny / Mieszkańca
-                </span>
-              </div>
-            </div>
-            <div className="flex items-center gap-space-xs shrink-0">
-              <span className="px-2 py-0.5 rounded-full bg-error-container text-on-error-container font-label-sm text-label-sm font-semibold">
-                1 w toku
-              </span>
-              <span className="material-symbols-outlined text-secondary text-[20px]">chevron_right</span>
-            </div>
-          </button>
-
-          <div className="h-px bg-surface-container-high mx-space-md"></div>
-
-          {/* Item 3 */}
-          <button
-            onClick={() => onNavigate('tickets')}
-            className="w-full p-space-md flex items-center justify-between text-left hover:bg-surface-container-low transition-colors cursor-pointer"
-          >
-            <div className="flex items-center gap-space-md min-w-0">
-              <div className="w-10 h-10 rounded-lg bg-surface-container flex items-center justify-center text-primary-container shrink-0">
-                <span className="material-symbols-outlined text-[22px]">receipt_long</span>
-              </div>
-              <div className="flex flex-col min-w-0">
-                <span className="font-title-md text-title-md text-on-surface font-semibold truncate">
-                  Historia biletów i opłat miejskich
-                </span>
-                <span className="font-body-sm text-body-sm text-secondary truncate">
-                  MZK Toruń, Strefa Płatnego Parkowania
-                </span>
-              </div>
-            </div>
-            <div className="flex items-center gap-space-xs shrink-0">
-              <span className="material-symbols-outlined text-secondary text-[20px]">chevron_right</span>
-            </div>
-          </button>
-        </div>
-      </div>
-    </div>
-
-    {/* Right Column: Settings, Notifications & Security */}
-    <div className="lg:col-span-7 flex flex-col space-y-6">
-      {/* Section: Ustawienia preferencji i powiadomień */}
-      <div>
-        <h2 className="font-title-lg text-title-lg text-on-surface font-bold mb-space-sm">
-          Centrum powiadomień i kanały
-        </h2>
-        <div className="bg-surface-container-lowest rounded-xl shadow-card border border-outline-variant/60 p-space-md flex flex-col gap-space-md">
           <div>
-            <span className="font-label-md text-label-md text-secondary block mb-space-xs font-semibold">
-              Tematy alertów miejskich w Toruniu
-            </span>
-            <div className="flex flex-wrap gap-space-xs">
-              <button
-                onClick={() => toggleNotification('transport')}
-                className={`px-3 py-1.5 rounded-lg text-label-md font-medium transition-colors cursor-pointer flex items-center gap-1.5 ${
-                  notifications.transport
-                    ? 'bg-primary text-white'
-                    : 'bg-surface-container text-secondary'
-                }`}
-              >
-                <span className="material-symbols-outlined text-[16px]">
-                  {notifications.transport ? 'check' : 'add'}
-                </span>
-                Transport i MZK
-              </button>
-
-              <button
-                onClick={() => toggleNotification('alerts')}
-                className={`px-3 py-1.5 rounded-lg text-label-md font-medium transition-colors cursor-pointer flex items-center gap-1.5 ${
-                  notifications.alerts
-                    ? 'bg-primary text-white'
-                    : 'bg-surface-container text-secondary'
-                }`}
-              >
-                <span className="material-symbols-outlined text-[16px]">
-                  {notifications.alerts ? 'check' : 'add'}
-                </span>
-                Alerty SMS i kryzysowe
-              </button>
-
-              <button
-                onClick={() => toggleNotification('civicBudget')}
-                className={`px-3 py-1.5 rounded-lg text-label-md font-medium transition-colors cursor-pointer flex items-center gap-1.5 ${
-                  notifications.civicBudget
-                    ? 'bg-primary text-white'
-                    : 'bg-surface-container text-secondary'
-                }`}
-              >
-                <span className="material-symbols-outlined text-[16px]">
-                  {notifications.civicBudget ? 'check' : 'add'}
-                </span>
-                Budżet Obywatelski
-              </button>
-
-              <button
-                onClick={() => toggleNotification('culture')}
-                className={`px-3 py-1.5 rounded-lg text-label-md font-medium transition-colors cursor-pointer flex items-center gap-1.5 ${
-                  notifications.culture
-                    ? 'bg-primary text-white'
-                    : 'bg-surface-container text-secondary'
-                }`}
-              >
-                <span className="material-symbols-outlined text-[16px]">
-                  {notifications.culture ? 'check' : 'add'}
-                </span>
-                Kultura i Festiwale
-              </button>
+            <h2 className="font-title-lg text-title-lg text-on-surface font-bold mb-space-sm">Dane na tym urządzeniu</h2>
+            <div className="bg-surface-container-lowest rounded-xl shadow-card border border-outline-variant/60 overflow-hidden">
+              <Row icon="cleaning_services" title="Wyczyść dane lokalne" desc="Usuwa sesję, ustawienia, zakupy i zapisane przystanki z tej przeglądarki" onClick={() => setConfirmClear(true)} divider={false}>
+                <span aria-hidden="true" className="material-symbols-outlined text-secondary text-fs-20 shrink-0">chevron_right</span>
+              </Row>
             </div>
           </div>
-        </div>
-      </div>
 
-      {/* Security & Settings */}
-      <div>
-        <h2 className="font-title-lg text-title-lg text-on-surface font-bold mb-space-sm">
-          Bezpieczeństwo i kontakt
-        </h2>
-        <div className="bg-surface-container-lowest rounded-xl shadow-card border border-outline-variant/60 overflow-hidden flex flex-col">
-          {/* Dark Mode Toggle */}
-          <div className="p-space-md flex items-center justify-between">
-            <div className="flex items-center gap-space-md">
-              <div className="w-10 h-10 rounded-lg bg-surface-container text-secondary flex items-center justify-center shrink-0">
-                <span className="material-symbols-outlined text-[22px]">
-                  {isDark ? 'dark_mode' : 'light_mode'}
-                </span>
-              </div>
-              <div className="flex flex-col">
-                <span className="font-title-md text-title-md text-on-surface font-semibold">
-                  Motyw aplikacji
-                </span>
-                <span className="font-body-sm text-body-sm text-secondary">
-                  {isDark ? 'Ciemny' : 'Jasny'} – kliknij, by zmienić
-                </span>
-              </div>
-            </div>
-            <button
-              onClick={toggleTheme}
-              className={`w-12 h-7 rounded-full transition-colors relative p-1 cursor-pointer ${
-                isDark ? 'bg-emerald-500' : 'bg-surface-container-high'
-              }`}
-            >
-              <div
-                className={`w-5 h-5 rounded-full bg-white transition-transform shadow-sm ${
-                  isDark ? 'translate-x-5' : 'translate-x-0'
-                }`}
-              ></div>
+          <div className="flex flex-col items-center gap-space-md pt-2">
+            <button type="button" onClick={() => setConfirmLogout(true)} className="w-full h-11 rounded-xl bg-surface-container text-error hover:bg-error-container hover:text-on-error-container font-title-md text-title-md font-semibold transition-colors flex items-center justify-center gap-space-xs cursor-pointer">
+              <span aria-hidden="true" className="material-symbols-outlined text-fs-20">logout</span>
+              {isGuest ? 'Wyjdź z trybu gościa' : 'Wyloguj z konta'}
             </button>
           </div>
-
-          <div className="h-px bg-surface-container-high mx-space-md"></div>
-
-          {/* Biometrics */}
-          <div className="p-space-md flex items-center justify-between">
-            <div className="flex items-center gap-space-md">
-              <div className="w-10 h-10 rounded-lg bg-tertiary-fixed text-tertiary flex items-center justify-center shrink-0">
-                <span className="material-symbols-outlined text-[22px]">fingerprint</span>
-              </div>
-              <div className="flex flex-col">
-                <span className="font-title-md text-title-md text-on-surface font-semibold">
-                  Logowanie biometryczne
-                </span>
-                <span className="font-body-sm text-body-sm text-secondary">
-                  Face ID / Odcisk palca {biometricsEnabled ? 'aktywne' : 'wyłączone'}
-                </span>
-              </div>
-            </div>
-            <button
-              onClick={() => setBiometricsEnabled(!biometricsEnabled)}
-              className={`w-12 h-7 rounded-full transition-colors relative p-1 cursor-pointer ${
-                biometricsEnabled ? 'bg-emerald-500' : 'bg-surface-container-high'
-              }`}
-            >
-              <div
-                className={`w-5 h-5 rounded-full bg-white transition-transform shadow-sm ${
-                  biometricsEnabled ? 'translate-x-5' : 'translate-x-0'
-                }`}
-              ></div>
-            </button>
-          </div>
-
-          <div className="h-px bg-surface-container-high mx-space-md"></div>
-
-          {/* TCK Help Desk */}
-          <button
-            onClick={() => alert('Toruńskie Centrum Kontaktu (TCK):\nTelefon: 56 611 83 10\nE-mail: tck@um.torun.pl\nGodziny: 7:30 - 17:00')}
-            className="w-full p-space-md flex items-center justify-between text-left hover:bg-surface-container-low transition-colors cursor-pointer"
-            type="button"
-          >
-            <div className="flex items-center gap-space-md">
-              <div className="w-10 h-10 rounded-lg bg-surface-container text-secondary flex items-center justify-center shrink-0">
-                <span className="material-symbols-outlined text-[22px]">contact_support</span>
-              </div>
-              <div className="flex flex-col">
-                <span className="font-title-md text-title-md text-on-surface font-semibold">
-                  Toruńskie Centrum Kontaktu (TCK)
-                </span>
-                <span className="font-body-sm text-body-sm text-secondary">
-                  Infolinia miejska 56 611 83 10 • tck@um.torun.pl
-                </span>
-              </div>
-            </div>
-            <span className="material-symbols-outlined text-secondary text-[20px]">open_in_new</span>
-          </button>
-
-          <div className="h-px bg-surface-container-high mx-space-md"></div>
-
-          {/* RODO */}
-          <button
-            onClick={() => alert('Polityka prywatności i ochrona danych (RODO):\nAdministratorem danych osobowych jest Prezydent Miasta Torunia.')}
-            className="w-full p-space-md flex items-center justify-between text-left hover:bg-surface-container-low transition-colors cursor-pointer"
-            type="button"
-          >
-            <div className="flex items-center gap-space-md">
-              <div className="w-10 h-10 rounded-lg bg-surface-container text-secondary flex items-center justify-center shrink-0">
-                <span className="material-symbols-outlined text-[22px]">policy</span>
-              </div>
-              <div className="flex flex-col">
-                <span className="font-title-md text-title-md text-on-surface font-semibold">
-                  Regulamin i Ochrona Danych (RODO)
-                </span>
-                <span className="font-body-sm text-body-sm text-secondary">
-                  Administrator: Prezydent Miasta Torunia
-                </span>
-              </div>
-            </div>
-            <span className="material-symbols-outlined text-secondary text-[20px]">chevron_right</span>
-          </button>
         </div>
       </div>
 
-      {/* Logout and Version Footer */}
-      <div className="flex flex-col items-center gap-space-md pt-2">
-        <button
-          onClick={() => {
-            if (confirm('Czy na pewno chcesz wylogować się z konta mieszkańca Torunia?')) {
-              alert('Zostałeś bezpiecznie wylogowany.');
-            }
-          }}
-          className="w-full h-11 rounded-xl bg-surface-container text-error hover:bg-error-container hover:text-on-error-container font-title-md text-title-md font-semibold transition-colors flex items-center justify-center gap-space-xs cursor-pointer"
-          type="button"
-        >
-          <span className="material-symbols-outlined text-[20px]">logout</span>
-          Wyloguj z konta mieszkańca
-        </button>
+      {twoFaOpen && (
+        <TwoFactorSetup
+          account={`${(user.firstName || 'konto').toLowerCase()}@mojtorun.pl`}
+          onClose={() => setTwoFaOpen(false)}
+          onEnabled={() => { setPref('twoFA', true); setTwoFaOpen(false); }}
+        />
+      )}
 
-      </div>
-    </div>
-  </div>
-
-      {/* District Selector Modal */}
-      {isChangingDistrict && (
-        <div
-          className="!m-0 fixed inset-0 z-50 flex items-end sm:items-center justify-center bg-inverse-surface/40 backdrop-blur-sm p-0 sm:p-4 animate-fadeIn"
-          onClick={(e) => { if (e.target === e.currentTarget) setIsChangingDistrict(false); }}
-        >
-          <div className="bg-surface-container-lowest w-full max-w-sm rounded-t-2xl sm:rounded-2xl p-5 shadow-2xl flex flex-col gap-3">
-            <div className="flex items-center justify-between pb-2 border-b border-surface-container">
-              <span className="font-title-lg font-bold text-on-surface">Wybierz dzielnicę Torunia</span>
-              <button
-                onClick={() => setIsChangingDistrict(false)}
-                className="w-8 h-8 rounded-full bg-surface-container flex items-center justify-center text-secondary hover:text-on-surface"
-              >
-                <span className="material-symbols-outlined text-[18px]">close</span>
-              </button>
-            </div>
-            <div className="flex flex-col gap-1 max-h-60 overflow-y-auto">
-              {districtsList.map((d) => (
-                <button
-                  key={d}
-                  onClick={() => {
-                    setDistrict(d);
-                    setIsChangingDistrict(false);
-                  }}
-                  className={`p-2.5 rounded-lg text-left font-title-md transition-colors ${
-                    district === d
-                      ? 'bg-primary text-white font-bold'
-                      : 'hover:bg-surface-container text-on-surface'
-                  }`}
-                >
-                  {d}
-                </button>
-              ))}
-            </div>
+      {confirmLogout && (
+        <Modal onClose={() => setConfirmLogout(false)} size="sm" labelledBy="logout-title">
+          <ModalHeader id="logout-title" title={isGuest ? 'Wyjść z trybu gościa?' : 'Wylogować się?'} icon="logout" onClose={() => setConfirmLogout(false)} />
+          <p className="text-sm text-on-surface-variant">{isGuest ? 'Wrócisz do ekranu logowania.' : 'Zostaniesz wylogowany z konta. Ustawienia personalizacji pozostaną zapisane na tym urządzeniu.'}</p>
+          <div className="grid grid-cols-2 gap-2">
+            <button type="button" onClick={() => setConfirmLogout(false)} className="h-11 rounded-xl bg-surface-container text-on-surface font-semibold text-sm cursor-pointer">Anuluj</button>
+            <button type="button" onClick={() => { setConfirmLogout(false); logout(); }} className="h-11 rounded-xl bg-primary text-white font-semibold text-sm cursor-pointer">{isGuest ? 'Wyjdź' : 'Wyloguj'}</button>
           </div>
-        </div>
+        </Modal>
+      )}
+
+      {confirmClear && (
+        <Modal onClose={() => setConfirmClear(false)} size="sm" labelledBy="clear-title">
+          <ModalHeader id="clear-title" title="Wyczyścić dane lokalne?" icon="cleaning_services" onClose={() => setConfirmClear(false)} />
+          <p className="text-sm text-on-surface-variant">Zostaniesz wylogowany, a ustawienia personalizacji, zakupione produkty i zapisane przystanki zostaną usunięte z tej przeglądarki.</p>
+          <div className="grid grid-cols-2 gap-2">
+            <button type="button" onClick={() => setConfirmClear(false)} className="h-11 rounded-xl bg-surface-container text-on-surface font-semibold text-sm cursor-pointer">Anuluj</button>
+            <button type="button" onClick={clearLocalData} className="h-11 rounded-xl bg-primary text-white font-semibold text-sm cursor-pointer">Wyczyść</button>
+          </div>
+        </Modal>
       )}
     </div>
   );

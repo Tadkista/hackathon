@@ -1,7 +1,25 @@
 import React from 'react';
+import { useAuth } from '../AuthContext.jsx';
+
+const GUEST_TILES = [
+  { id: 'timetable', icon: 'departure_board', title: 'Rozkład jazdy', sub: 'MZK i pociągi' },
+  { id: 'parking', icon: 'local_parking', title: 'Parkowanie & Mapa', sub: 'Wolne miejsca SPP' },
+  { id: 'events', icon: 'event', title: 'Wydarzenia', sub: 'Co się dzieje w mieście' },
+  { id: 'fuel', icon: 'local_gas_station', title: 'Ceny paliw', sub: 'Najtańsze stacje' },
+];
+
+const CITY_TILES = [
+  { id: 'fuel', icon: 'local_gas_station', title: 'Ceny paliw', sub: 'Mapa stacji' },
+  { id: 'disruptions', icon: 'construction', title: 'Utrudnienia', sub: 'Remonty i korki' },
+  { id: 'events', icon: 'event', title: 'Wydarzenia', sub: 'Koncerty, warsztaty' },
+  { id: 'timetable', icon: 'departure_board', title: 'Rozkład jazdy', sub: 'MZK i pociągi' },
+  { id: 'guides', icon: 'headphones', title: 'Przewodniki', sub: 'Audio i gry miejskie' },
+];
 
 export default function HomeScreen({ onNavigate, onTriggerVoteModal, onOpenQr }) {
+  const { user, isGuest } = useAuth();
   const openQr = onOpenQr || (() => onNavigate('tickets'));
+  const civicTab = isGuest ? 'events' : 'votes';
 
   return (
     <div className="flex flex-col w-full pb-10 space-y-7 max-w-7xl mx-auto">
@@ -9,30 +27,30 @@ export default function HomeScreen({ onNavigate, onTriggerVoteModal, onOpenQr })
       <section className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 pt-1 pb-2">
         <div className="flex flex-col">
           <div className="inline-flex items-center gap-1.5 text-secondary text-label-md font-medium mb-1">
-            <span className="material-symbols-outlined text-[16px] text-primary">location_on</span>
+            <span aria-hidden="true" className="material-symbols-outlined text-fs-16 text-primary">location_on</span>
             <span>Toruń • Stare Miasto</span>
             <span className="w-1 h-1 rounded-full bg-secondary/50"></span>
             <span>Województwo kujawsko-pomorskie</span>
           </div>
           <h1 className="text-2xl sm:text-3xl font-bold text-on-surface tracking-tight">
-            Dzień dobry, Aleksandro!
+            {isGuest ? 'Witaj w Toruniu!' : `Dzień dobry, ${user.vocative}!`}
           </h1>
           <p className="text-secondary text-body-sm mt-0.5">
-            Sprawdź dzisiejsze usługi miejskie, bilety MZK i bieżące konsultacje.
+            {isGuest ? 'Sprawdź, co dzieje się w mieście: wydarzenia, utrudnienia i rozkłady jazdy.' : 'Sprawdź dzisiejsze usługi miejskie, bilety MZK i bieżące konsultacje.'}
           </p>
         </div>
 
         {/* Live Weather Compact Badge */}
-        <div className="inline-flex items-center gap-3 px-4 py-2 rounded-2xl bg-surface-container-lowest border border-outline-variant/60 shadow-card self-start sm:self-auto">
+        <div className="flex w-full sm:w-auto items-center gap-3 px-4 py-2.5 rounded-2xl bg-surface-container-lowest border border-outline-variant/60 shadow-card sm:self-auto">
           <div className="w-9 h-9 rounded-xl bg-amber-500/10 text-amber-600 dark:text-amber-400 flex items-center justify-center shrink-0">
-            <span className="material-symbols-outlined text-[20px]">wb_sunny</span>
+            <span aria-hidden="true" className="material-symbols-outlined text-fs-20">wb_sunny</span>
           </div>
           <div className="flex flex-col">
             <div className="flex items-center gap-1.5">
               <span className="font-bold text-on-surface text-body-md">18°C</span>
               <span className="text-xs text-secondary">Słonecznie</span>
             </div>
-            <div className="flex items-center gap-1 text-[11px] text-tertiary font-medium">
+            <div className="flex items-center gap-1 text-fs-11 text-tertiary font-medium">
               <span className="w-1.5 h-1.5 rounded-full bg-tertiary"></span>
               <span>AQI 22 • Czyste powietrze</span>
             </div>
@@ -55,6 +73,28 @@ export default function HomeScreen({ onNavigate, onTriggerVoteModal, onOpenQr })
               <span className="text-xs text-secondary font-medium">Najczęściej wybierane</span>
             </div>
 
+            {isGuest ? (
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-3.5">
+                {GUEST_TILES.map((t) => (
+                  <button
+                    key={t.id}
+                    onClick={() => onNavigate(t.id)}
+                    className="group flex flex-col justify-between p-4 rounded-2xl bg-surface-container-lowest border border-outline-variant/60 shadow-card hover:shadow-card-hover transition-all text-left cursor-pointer active:scale-[0.98]"
+                  >
+                    <div className="flex items-center justify-between w-full">
+                      <div className="w-10 h-10 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 flex items-center justify-center">
+                        <span aria-hidden="true" className="material-symbols-outlined text-fs-22">{t.icon}</span>
+                      </div>
+                      <span aria-hidden="true" className="material-symbols-outlined text-fs-18 text-secondary group-hover:translate-x-0.5 transition-transform">arrow_forward</span>
+                    </div>
+                    <div className="mt-5">
+                      <span className="font-semibold text-sm sm:text-base text-on-surface block leading-snug">{t.title}</span>
+                      <span className="text-fs-11 text-secondary block mt-0.5">{t.sub}</span>
+                    </div>
+                  </button>
+                ))}
+              </div>
+            ) : (
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-3.5">
               {/* Buy Ticket - Primary Highlight Card */}
               <button
@@ -63,9 +103,9 @@ export default function HomeScreen({ onNavigate, onTriggerVoteModal, onOpenQr })
               >
                 <div className="flex items-center justify-between w-full">
                   <div className="w-10 h-10 rounded-xl bg-white/15 backdrop-blur-sm flex items-center justify-center text-white">
-                    <span className="material-symbols-outlined text-[22px]">directions_bus</span>
+                    <span aria-hidden="true" className="material-symbols-outlined text-fs-22">directions_bus</span>
                   </div>
-                  <span className="material-symbols-outlined text-[18px] text-white/70 group-hover:translate-x-0.5 transition-transform">
+                  <span aria-hidden="true" className="material-symbols-outlined text-fs-18 text-white/70 group-hover:translate-x-0.5 transition-transform">
                     arrow_forward
                   </span>
                 </div>
@@ -73,7 +113,7 @@ export default function HomeScreen({ onNavigate, onTriggerVoteModal, onOpenQr })
                   <span className="font-semibold text-sm sm:text-base block leading-snug text-white">
                     Kup bilet MZK
                   </span>
-                  <span className="text-[11px] text-white/80 block mt-0.5">
+                  <span className="text-fs-11 text-white/80 block mt-0.5">
                     Autobus &amp; Tramwaj
                   </span>
                 </div>
@@ -86,9 +126,9 @@ export default function HomeScreen({ onNavigate, onTriggerVoteModal, onOpenQr })
               >
                 <div className="flex items-center justify-between w-full">
                   <div className="w-10 h-10 rounded-xl bg-rose-50 dark:bg-rose-950/40 text-primary flex items-center justify-center">
-                    <span className="material-symbols-outlined text-[22px]">qr_code_2</span>
+                    <span aria-hidden="true" className="material-symbols-outlined text-fs-22">qr_code_2</span>
                   </div>
-                  <span className="material-symbols-outlined text-[18px] text-secondary group-hover:translate-x-0.5 transition-transform">
+                  <span aria-hidden="true" className="material-symbols-outlined text-fs-18 text-secondary group-hover:translate-x-0.5 transition-transform">
                     arrow_forward
                   </span>
                 </div>
@@ -96,7 +136,7 @@ export default function HomeScreen({ onNavigate, onTriggerVoteModal, onOpenQr })
                   <span className="font-semibold text-sm sm:text-base text-on-surface block leading-snug">
                     Karta Torunianina
                   </span>
-                  <span className="text-[11px] text-secondary block mt-0.5">
+                  <span className="text-fs-11 text-secondary block mt-0.5">
                     Twój kod mieszkańca
                   </span>
                 </div>
@@ -109,9 +149,9 @@ export default function HomeScreen({ onNavigate, onTriggerVoteModal, onOpenQr })
               >
                 <div className="flex items-center justify-between w-full">
                   <div className="w-10 h-10 rounded-xl bg-amber-50 dark:bg-amber-950/40 text-amber-600 dark:text-amber-400 flex items-center justify-center">
-                    <span className="material-symbols-outlined text-[22px]">rate_review</span>
+                    <span aria-hidden="true" className="material-symbols-outlined text-fs-22">rate_review</span>
                   </div>
-                  <span className="material-symbols-outlined text-[18px] text-secondary group-hover:translate-x-0.5 transition-transform">
+                  <span aria-hidden="true" className="material-symbols-outlined text-fs-18 text-secondary group-hover:translate-x-0.5 transition-transform">
                     arrow_forward
                   </span>
                 </div>
@@ -119,7 +159,7 @@ export default function HomeScreen({ onNavigate, onTriggerVoteModal, onOpenQr })
                   <span className="font-semibold text-sm sm:text-base text-on-surface block leading-snug">
                     Zgłoś sprawę
                   </span>
-                  <span className="text-[11px] text-secondary block mt-0.5">
+                  <span className="text-fs-11 text-secondary block mt-0.5">
                     Usterki &amp; Inicjatywy
                   </span>
                 </div>
@@ -132,9 +172,9 @@ export default function HomeScreen({ onNavigate, onTriggerVoteModal, onOpenQr })
               >
                 <div className="flex items-center justify-between w-full">
                   <div className="w-10 h-10 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 flex items-center justify-center">
-                    <span className="material-symbols-outlined text-[22px]">local_parking</span>
+                    <span aria-hidden="true" className="material-symbols-outlined text-fs-22">local_parking</span>
                   </div>
-                  <span className="material-symbols-outlined text-[18px] text-secondary group-hover:translate-x-0.5 transition-transform">
+                  <span aria-hidden="true" className="material-symbols-outlined text-fs-18 text-secondary group-hover:translate-x-0.5 transition-transform">
                     arrow_forward
                   </span>
                 </div>
@@ -142,16 +182,45 @@ export default function HomeScreen({ onNavigate, onTriggerVoteModal, onOpenQr })
                   <span className="font-semibold text-sm sm:text-base text-on-surface block leading-snug">
                     Parkowanie &amp; Mapa
                   </span>
-                  <span className="text-[11px] text-secondary block mt-0.5">
+                  <span className="text-fs-11 text-secondary block mt-0.5">
                     Wolne miejsca SPP
                   </span>
                 </div>
               </button>
             </div>
+            )}
           </section>
 
+          {/* Odkrywaj miasto: nowe sekcje */}
+          {!isGuest && (
+            <section className="flex flex-col space-y-3" aria-label="Odkrywaj miasto">
+              <div className="flex items-center justify-between">
+                <h2 className="text-base sm:text-lg font-bold text-on-surface">Odkrywaj miasto</h2>
+                <span className="text-xs text-secondary font-medium">Na żywo w Toruniu</span>
+              </div>
+              <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3">
+                {CITY_TILES.map((t) => (
+                  <button
+                    key={t.id}
+                    onClick={() => onNavigate(t.id)}
+                    className="group flex flex-col gap-3 p-3.5 rounded-2xl bg-surface-container-lowest border border-outline-variant/60 shadow-card hover:shadow-card-hover transition-all text-left cursor-pointer active:scale-[0.98]"
+                  >
+                    <span className="w-9 h-9 rounded-xl bg-surface-container text-on-surface-variant flex items-center justify-center">
+                      <span aria-hidden="true" className="material-symbols-outlined text-fs-20">{t.icon}</span>
+                    </span>
+                    <span>
+                      <span className="font-semibold text-sm text-on-surface block leading-snug">{t.title}</span>
+                      <span className="text-fs-11 text-secondary block mt-0.5">{t.sub}</span>
+                    </span>
+                  </button>
+                ))}
+              </div>
+            </section>
+          )}
+
           {/* Featured Civic Spotlight: Budżet Obywatelski 2025 */}
-          <section className="flex flex-col space-y-3">
+          {!isGuest && (
+<section className="flex flex-col space-y-3">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-2">
                 <span className="w-2.5 h-2.5 rounded-full bg-amber-500 animate-pulse"></span>
@@ -172,7 +241,7 @@ export default function HomeScreen({ onNavigate, onTriggerVoteModal, onOpenQr })
                 <div className="absolute inset-0 bg-black/35"></div>
                 
                 <div className="absolute top-3.5 left-3.5 flex items-center gap-2">
-                  <span className="px-2.5 py-1 rounded-lg bg-black/60 backdrop-blur-md text-[11px] font-semibold text-white tracking-wide">
+                  <span className="px-2.5 py-1 rounded-lg bg-black/60 backdrop-blur-md text-fs-11 font-semibold text-white tracking-wide">
                     PROJEKT OGÓLNOMIEJSKI #14
                   </span>
                 </div>
@@ -180,7 +249,7 @@ export default function HomeScreen({ onNavigate, onTriggerVoteModal, onOpenQr })
                 <div className="absolute bottom-3.5 left-4 right-4 flex items-center justify-between text-white">
                   <span className="text-xs text-slate-200">Rewitalizacja nabrzeża Wisły</span>
                   <span className="inline-flex items-center gap-1 text-xs font-medium bg-white/20 backdrop-blur-md px-2.5 py-0.5 rounded-full">
-                    <span className="material-symbols-outlined text-[14px]">hourglass_bottom</span>
+                    <span aria-hidden="true" className="material-symbols-outlined text-fs-14">hourglass_bottom</span>
                     Pozostało 3 dni
                   </span>
                 </div>
@@ -221,38 +290,39 @@ export default function HomeScreen({ onNavigate, onTriggerVoteModal, onOpenQr })
                     }}
                     className="flex-1 h-11 px-5 rounded-xl bg-primary text-white font-semibold text-sm flex items-center justify-center gap-2 shadow-sm hover:opacity-95 active:scale-[0.99] transition-all cursor-pointer"
                   >
-                    <span className="material-symbols-outlined text-[19px]">how_to_vote</span>
+                    <span aria-hidden="true" className="material-symbols-outlined text-fs-19">how_to_vote</span>
                     <span>Oddaj swój głos</span>
                   </button>
                   <button
                     onClick={() => onNavigate('votes')}
                     className="h-11 px-4 rounded-xl bg-surface-container hover:bg-surface-container-high text-on-surface text-sm font-medium flex items-center justify-center gap-1.5 transition-colors cursor-pointer"
                   >
-                    <span className="material-symbols-outlined text-[18px]">info</span>
+                    <span aria-hidden="true" className="material-symbols-outlined text-fs-18">info</span>
                     <span>Szczegóły</span>
                   </button>
                 </div>
               </div>
             </div>
           </section>
+)}
 
           {/* Municipal News / Events */}
           <section className="flex flex-col space-y-3">
             <div className="flex items-center justify-between">
               <h2 className="text-base sm:text-lg font-bold text-on-surface">Aktualności &amp; Wydarzenia</h2>
               <button
-                onClick={() => onNavigate('votes')}
+                onClick={() => onNavigate(civicTab)}
                 className="text-xs text-primary font-semibold hover:underline flex items-center gap-0.5 cursor-pointer"
               >
-                <span>Inwestycje</span>
-                <span className="material-symbols-outlined text-[16px]">chevron_right</span>
+                <span>{isGuest ? 'Wydarzenia' : 'Inwestycje'}</span>
+                <span aria-hidden="true" className="material-symbols-outlined text-fs-16">chevron_right</span>
               </button>
             </div>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               {/* News 1 */}
               <div
-                onClick={() => onNavigate('votes')}
+                onClick={() => onNavigate(civicTab)}
                 className="p-4 rounded-2xl bg-surface-container-lowest border border-outline-variant/60 shadow-card hover:shadow-card-hover transition-all flex flex-col justify-between cursor-pointer group"
               >
                 <div className="w-full h-36 rounded-xl overflow-hidden bg-surface-container mb-3.5">
@@ -264,10 +334,10 @@ export default function HomeScreen({ onNavigate, onTriggerVoteModal, onOpenQr })
                 </div>
                 <div>
                   <div className="flex items-center gap-2 mb-1.5">
-                    <span className="px-2 py-0.5 rounded-md bg-surface-container text-secondary text-[11px] font-semibold">
+                    <span className="px-2 py-0.5 rounded-md bg-surface-container text-secondary text-fs-11 font-semibold">
                       Inwestycje
                     </span>
-                    <span className="text-[11px] text-secondary">2 godz. temu</span>
+                    <span className="text-fs-11 text-secondary">2 godz. temu</span>
                   </div>
                   <h4 className="font-semibold text-on-surface text-sm sm:text-base leading-snug line-clamp-2 group-hover:text-primary transition-colors">
                     Nowe tramwaje niskopodłogowe dotarły do Torunia
@@ -292,10 +362,10 @@ export default function HomeScreen({ onNavigate, onTriggerVoteModal, onOpenQr })
                 </div>
                 <div>
                   <div className="flex items-center gap-2 mb-1.5">
-                    <span className="px-2 py-0.5 rounded-md bg-rose-50 dark:bg-rose-950/40 text-primary text-[11px] font-semibold">
+                    <span className="px-2 py-0.5 rounded-md bg-rose-50 dark:bg-rose-950/40 text-primary text-fs-11 font-semibold">
                       Kultura
                     </span>
-                    <span className="text-[11px] text-secondary">12-14 Czerwca</span>
+                    <span className="text-fs-11 text-secondary">12-14 Czerwca</span>
                   </div>
                   <h4 className="font-semibold text-on-surface text-sm sm:text-base leading-snug line-clamp-2 group-hover:text-primary transition-colors">
                     Święto Miasta Torunia – program i bezpłatne wejściówki
@@ -323,20 +393,20 @@ export default function HomeScreen({ onNavigate, onTriggerVoteModal, onOpenQr })
                   Toruń na żywo
                 </span>
               </div>
-              <span className="text-[11px] text-secondary font-medium">Bieżący monitoring</span>
+              <span className="text-fs-11 text-secondary font-medium">Bieżący monitoring</span>
             </div>
 
             {/* Weather & Air Quality row */}
             <div className="p-3.5 rounded-xl bg-surface-container-low flex items-center justify-between">
               <div className="flex items-center gap-3">
-                <span className="material-symbols-outlined text-[24px] text-amber-500">wb_sunny</span>
+                <span aria-hidden="true" className="material-symbols-outlined text-fs-24 text-amber-500">wb_sunny</span>
                 <div>
                   <div className="text-xs font-semibold text-on-surface">18°C, Słonecznie</div>
-                  <div className="text-[11px] text-secondary">Stacja pomiarowa: Wały gen. Sikorskiego</div>
+                  <div className="text-fs-11 text-secondary">Stacja pomiarowa: Wały gen. Sikorskiego</div>
                 </div>
               </div>
               <div className="text-right">
-                <span className="inline-block px-2 py-0.5 rounded-md bg-emerald-50 dark:bg-emerald-950/40 text-emerald-700 dark:text-emerald-400 font-semibold text-[11px]">
+                <span className="inline-block px-2 py-0.5 rounded-md bg-emerald-50 dark:bg-emerald-950/40 text-emerald-700 dark:text-emerald-400 font-semibold text-fs-11">
                   AQI 22 • Dobre
                 </span>
               </div>
@@ -344,35 +414,36 @@ export default function HomeScreen({ onNavigate, onTriggerVoteModal, onOpenQr })
 
             {/* City Traffic Alert - Refined, elegant tone */}
             <div className="p-3.5 rounded-xl bg-amber-50/70 dark:bg-amber-950/30 border border-amber-200/60 dark:border-amber-800/40 flex items-start gap-3">
-              <span className="material-symbols-outlined text-[20px] text-amber-600 dark:text-amber-400 shrink-0 mt-0.5">
+              <span aria-hidden="true" className="material-symbols-outlined text-fs-20 text-amber-600 dark:text-amber-400 shrink-0 mt-0.5">
                 info
               </span>
               <div className="flex flex-col min-w-0 flex-1">
                 <span className="text-xs font-semibold text-amber-900 dark:text-amber-200">
                   Prace drogowe: Most im. J. Piłsudskiego
                 </span>
-                <p className="text-[12px] text-amber-800/90 dark:text-amber-300/90 mt-0.5 leading-snug">
+                <p className="text-fs-12 text-amber-800/90 dark:text-amber-300/90 mt-0.5 leading-snug">
                   Wymiana oświetlenia dziś od godz. 21:00. Zwężenie do jednego pasa.
                 </p>
                 <button
-                  onClick={() => onNavigate('parking')}
-                  className="mt-2 text-[11px] font-semibold text-amber-900 dark:text-amber-300 hover:underline self-start flex items-center gap-0.5 cursor-pointer"
+                  onClick={() => onNavigate('disruptions')}
+                  className="mt-2 text-fs-11 font-semibold text-amber-900 dark:text-amber-300 hover:underline self-start flex items-center gap-0.5 cursor-pointer"
                 >
-                  <span>Mapa objazdów &amp; parkowanie</span>
-                  <span className="material-symbols-outlined text-[13px]">arrow_forward</span>
+                  <span>Mapa utrudnień drogowych</span>
+                  <span aria-hidden="true" className="material-symbols-outlined text-fs-13">arrow_forward</span>
                 </button>
               </div>
             </div>
           </div>
 
           {/* Card: Digital Resident Status */}
-          <div className="rounded-2xl bg-surface-container-lowest border border-outline-variant/60 shadow-card p-5 flex flex-col space-y-4">
+          {!isGuest && (
+<div className="rounded-2xl bg-surface-container-lowest border border-outline-variant/60 shadow-card p-5 flex flex-col space-y-4">
             <div className="flex items-center justify-between">
               <span className="font-bold text-sm text-on-surface uppercase tracking-wider">
                 Twój portfel miejski
               </span>
-              <span className="inline-flex items-center gap-1 text-[11px] font-semibold text-tertiary">
-                <span className="material-symbols-outlined text-[15px]">verified</span>
+              <span className="inline-flex items-center gap-1 text-fs-11 font-semibold text-tertiary">
+                <span aria-hidden="true" className="material-symbols-outlined text-fs-15">verified</span>
                 Aktywny
               </span>
             </div>
@@ -387,65 +458,67 @@ export default function HomeScreen({ onNavigate, onTriggerVoteModal, onOpenQr })
             >
               <div className="flex justify-between items-start z-10">
                 <div>
-                  <span className="text-[11px] text-secondary uppercase tracking-widest block font-medium">
+                  <span className="text-fs-11 text-secondary uppercase tracking-widest block font-medium">
                     Karta Torunianina
                   </span>
                   <span className="text-base font-bold text-on-surface block mt-0.5">
-                    Aleksandra Wiśniewska
+                    {user.firstName} {user.lastName}
                   </span>
                 </div>
-                <span className="material-symbols-outlined text-[24px] text-secondary">
+                <span aria-hidden="true" className="material-symbols-outlined text-fs-24 text-secondary">
                   contactless
                 </span>
               </div>
 
               <div className="mt-5 flex justify-between items-end z-10">
                 <div>
-                  <span className="text-[10px] text-secondary block">Ważność uprawnień PIT</span>
+                  <span className="text-fs-10 text-secondary block">Ważność uprawnień PIT</span>
                   <span className="text-xs font-semibold text-on-surface">Do 30.04.2025</span>
                 </div>
-                <span className="material-symbols-outlined text-[26px] text-secondary">qr_code_2</span>
+                <span aria-hidden="true" className="material-symbols-outlined text-fs-26 text-secondary">qr_code_2</span>
               </div>
             </div>
 
             {/* Active Ticket Status mini-tile */}
             <div className="flex items-center justify-between p-3 rounded-xl bg-surface-container-low text-xs">
               <div className="flex items-center gap-2.5">
-                <span className="material-symbols-outlined text-[18px] text-primary">directions_bus</span>
+                <span aria-hidden="true" className="material-symbols-outlined text-fs-18 text-primary">directions_bus</span>
                 <div>
                   <span className="font-semibold text-on-surface block">Bilet czasowy 30-minutowy</span>
-                  <span className="text-secondary text-[11px]">Pozostało 18 min 42 sek</span>
+                  <span className="text-secondary text-fs-11">Pozostało 18 min 42 sek</span>
                 </div>
               </div>
               <button
                 onClick={() => onNavigate('tickets')}
-                className="text-primary font-semibold text-[11px] hover:underline cursor-pointer"
+                className="text-primary font-semibold text-fs-11 hover:underline cursor-pointer"
               >
                 Szczegóły
               </button>
             </div>
           </div>
+)}
 
           {/* Card: Waste Management Schedule */}
-          <div className="rounded-2xl bg-surface-container-lowest border border-outline-variant/60 shadow-card p-5 flex flex-col space-y-3">
+          {!isGuest && (
+<div className="rounded-2xl bg-surface-container-lowest border border-outline-variant/60 shadow-card p-5 flex flex-col space-y-3">
             <div className="flex items-center justify-between">
               <span className="font-bold text-sm text-on-surface uppercase tracking-wider">
                 Odbiór odpadów
               </span>
-              <span className="text-[11px] px-2 py-0.5 rounded-md bg-surface-container text-secondary font-medium">
+              <span className="text-fs-11 px-2 py-0.5 rounded-md bg-surface-container text-secondary font-medium">
                 Rejon 4: Stare Miasto
               </span>
             </div>
 
             <div className="flex items-center gap-3 p-3 rounded-xl bg-surface-container-low">
               <div className="w-10 h-10 rounded-xl bg-emerald-50 dark:bg-emerald-950/40 text-emerald-600 dark:text-emerald-400 flex items-center justify-center shrink-0">
-                <span className="material-symbols-outlined text-[20px]">delete_outline</span>
+                <span aria-hidden="true" className="material-symbols-outlined text-fs-20">delete_outline</span>
               </div>
               <div className="flex-1 min-w-0">
                 <span className="text-xs font-bold text-on-surface block">
                   Jutro: Papier i Bioodpady
                 </span>
-                <span className="text-[11px] text-secondary block mt-0.5">
+                <span className="text-fs-11 text-secondary block mt-0.5">
                   Wystaw pojemniki przed godz. 06:00
                 </span>
               </div>
@@ -458,19 +531,21 @@ export default function HomeScreen({ onNavigate, onTriggerVoteModal, onOpenQr })
               Zobacz pełny harmonogram rejonu
             </button>
           </div>
+)}
 
           {/* Municipal Stats Summary */}
-          <div className="grid grid-cols-2 gap-3">
+          {!isGuest && (
+<div className="grid grid-cols-2 gap-3">
             <div
               onClick={() => onNavigate('votes')}
               className="p-4 rounded-2xl bg-surface-container-lowest border border-outline-variant/60 shadow-card hover:shadow-card-hover transition-all cursor-pointer"
             >
               <div className="flex items-center justify-between text-secondary mb-2">
-                <span className="text-[11px] font-semibold uppercase">Konsultacje</span>
-                <span className="material-symbols-outlined text-[17px] text-primary">forum</span>
+                <span className="text-fs-11 font-semibold uppercase">Konsultacje</span>
+                <span aria-hidden="true" className="material-symbols-outlined text-fs-17 text-primary">forum</span>
               </div>
               <div className="text-2xl font-bold text-on-surface">12</div>
-              <span className="text-[11px] text-secondary mt-0.5 block">Aktywnych tematów</span>
+              <span className="text-fs-11 text-secondary mt-0.5 block">Aktywnych tematów</span>
             </div>
 
             <div
@@ -478,13 +553,14 @@ export default function HomeScreen({ onNavigate, onTriggerVoteModal, onOpenQr })
               className="p-4 rounded-2xl bg-surface-container-lowest border border-outline-variant/60 shadow-card hover:shadow-card-hover transition-all cursor-pointer"
             >
               <div className="flex items-center justify-between text-secondary mb-2">
-                <span className="text-[11px] font-semibold uppercase">Realizacja</span>
-                <span className="material-symbols-outlined text-[17px] text-tertiary">check_circle</span>
+                <span className="text-fs-11 font-semibold uppercase">Realizacja</span>
+                <span aria-hidden="true" className="material-symbols-outlined text-fs-17 text-tertiary">check_circle</span>
               </div>
               <div className="text-2xl font-bold text-on-surface">87%</div>
-              <span className="text-[11px] text-secondary mt-0.5 block">Spraw na czas</span>
+              <span className="text-fs-11 text-secondary mt-0.5 block">Spraw na czas</span>
             </div>
           </div>
+)}
 
         </div>
 

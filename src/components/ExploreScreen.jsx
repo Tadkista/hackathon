@@ -42,7 +42,7 @@ export default function ExploreScreen() {
         <div className="flex items-center gap-space-sm">
           <div className="relative flex-1">
             <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-secondary">
-              <span className="material-symbols-outlined text-[20px]">search</span>
+              <span aria-hidden="true" className="material-symbols-outlined text-fs-20">search</span>
             </div>
             <input
               value={searchQuery}
@@ -58,7 +58,7 @@ export default function ExploreScreen() {
             className="h-11 w-11 flex-shrink-0 flex items-center justify-center rounded-xl bg-surface-container-lowest text-secondary shadow-sm active:scale-95 transition-all hover:text-primary cursor-pointer"
             type="button"
           >
-            <span className="material-symbols-outlined text-[22px]">tune</span>
+            <span aria-hidden="true" className="material-symbols-outlined text-fs-22">tune</span>
           </button>
         </div>
       </section>
@@ -90,7 +90,7 @@ export default function ExploreScreen() {
                 }`}
               >
                 <div className={`w-8 h-8 rounded-lg flex items-center justify-center shrink-0 ${c.bg} ${c.text}`}>
-                  <span className="material-symbols-outlined text-[18px]">{c.icon}</span>
+                  <span aria-hidden="true" className="material-symbols-outlined text-fs-18">{c.icon}</span>
                 </div>
                 <div className="flex flex-col">
                   <span className={`text-title-md font-title-md font-semibold ${isSel ? 'text-white' : 'text-on-surface'}`}>
@@ -111,7 +111,7 @@ export default function ExploreScreen() {
         <section className="w-full bg-surface-container-lowest rounded-xl p-space-md shadow-sm">
           <div className="flex items-center justify-between mb-space-sm">
             <div className="flex items-center gap-space-xs">
-              <span className="material-symbols-outlined text-primary text-[20px]">local_parking</span>
+              <span aria-hidden="true" className="material-symbols-outlined text-primary text-fs-20">local_parking</span>
               <span className="text-title-lg font-title-lg text-on-surface font-semibold">
                 Parkowanie Starówka na żywo
               </span>
@@ -147,7 +147,7 @@ export default function ExploreScreen() {
           >
             <div className="w-full bg-surface-container-lowest/95 backdrop-blur-md px-3 py-2 rounded-lg flex items-center justify-between shadow-sm">
               <span className="text-label-sm font-label-sm text-on-surface flex items-center gap-1.5 font-semibold">
-                <span className="material-symbols-outlined text-[16px] text-primary">navigation</span>
+                <span aria-hidden="true" className="material-symbols-outlined text-fs-16 text-primary">navigation</span>
                 P1: Plac św. Katarzyny (64 wolne)
               </span>
               <button
@@ -174,7 +174,7 @@ export default function ExploreScreen() {
               </h2>
             </div>
             <div className="w-9 h-9 rounded-lg bg-surface-container flex items-center justify-center text-primary">
-              <span className="material-symbols-outlined text-[20px]">query_stats</span>
+              <span aria-hidden="true" className="material-symbols-outlined text-fs-20">query_stats</span>
             </div>
           </div>
 
@@ -261,7 +261,7 @@ export default function ExploreScreen() {
             <div className="flex items-center justify-between pt-2">
               <div className="flex items-center gap-2 text-label-sm font-label-sm text-secondary">
                 <span className="flex items-center gap-1">
-                  <span className="material-symbols-outlined text-[15px]">schedule</span>
+                  <span aria-hidden="true" className="material-symbols-outlined text-fs-15">schedule</span>
                   Do 15 maja
                 </span>
                 <span>•</span>
@@ -279,13 +279,13 @@ export default function ExploreScreen() {
           <div className="w-full bg-surface-container rounded-xl p-3 flex items-center justify-between">
             <div className="flex items-center gap-2.5 min-w-0">
               <div className="w-8 h-8 rounded-full bg-surface-container-highest flex items-center justify-center text-primary flex-shrink-0">
-                <span className="material-symbols-outlined text-[18px]">notifications_active</span>
+                <span aria-hidden="true" className="material-symbols-outlined text-fs-18">notifications_active</span>
               </div>
               <p className="text-body-sm font-body-sm text-on-surface truncate">
                 Oznaczono <strong className="font-semibold text-primary">14 nowych ofert</strong> w jednostkach miejskich
               </p>
             </div>
-            <span className="material-symbols-outlined text-secondary text-[20px]">chevron_right</span>
+            <span aria-hidden="true" className="material-symbols-outlined text-secondary text-fs-20">chevron_right</span>
           </div>
         </section>
       )}
@@ -303,7 +303,7 @@ export default function ExploreScreen() {
           <div className="bg-surface-container-lowest rounded-xl p-space-md shadow-sm space-y-3">
             <div className="flex gap-space-sm items-start">
               <div className="w-12 h-12 rounded-xl bg-tertiary-fixed flex items-center justify-center text-on-tertiary-fixed flex-shrink-0 shadow-xs">
-                <span className="material-symbols-outlined text-[24px]">forest</span>
+                <span aria-hidden="true" className="material-symbols-outlined text-fs-24">forest</span>
               </div>
               <div className="flex-1 min-w-0">
                 <div className="flex items-center gap-2">

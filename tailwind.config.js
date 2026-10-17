@@ -1,4 +1,8 @@
 /** @type {import('tailwindcss').Config} */
+const rem = (px) => `${px / 16}rem`;
+const sc = (px) => `calc(${rem(px)} * var(--font-scale, 1))`;
+const fs = (px, lh, extra = {}) => [sc(px), lh ? { lineHeight: sc(lh), ...extra } : { ...extra }];
+
 export default {
   content: [
     "./index.html",
@@ -101,20 +105,30 @@ export default {
         "headline-lg-mobile": ["Inter", "sans-serif"]
       },
       fontSize: {
-        "label-sm": ["11px", { lineHeight: "14px", letterSpacing: "0.02em", fontWeight: "600" }],
-        "label-md": ["12px", { lineHeight: "16px", letterSpacing: "0.01em", fontWeight: "500" }],
-        "label-lg": ["14px", { lineHeight: "20px", fontWeight: "500" }],
-        "body-sm": ["13px", { lineHeight: "18px", fontWeight: "400" }],
-        "body-md": ["14px", { lineHeight: "21px", fontWeight: "400" }],
-        "body-lg": ["16px", { lineHeight: "24px", fontWeight: "400" }],
-        "title-md": ["15px", { lineHeight: "21px", fontWeight: "600" }],
-        "title-lg": ["17px", { lineHeight: "23px", fontWeight: "600" }],
-        "headline-sm": ["19px", { lineHeight: "25px", fontWeight: "600" }],
-        "headline-md": ["22px", { lineHeight: "28px", letterSpacing: "-0.01em", fontWeight: "700" }],
-        "headline-lg": ["30px", { lineHeight: "38px", letterSpacing: "-0.015em", fontWeight: "700" }],
-        "headline-lg-mobile": ["24px", { lineHeight: "32px", letterSpacing: "-0.015em", fontWeight: "700" }],
-        "display-lg": ["38px", { lineHeight: "46px", letterSpacing: "-0.02em", fontWeight: "700" }],
-        "display-lg-mobile": ["28px", { lineHeight: "36px", letterSpacing: "-0.02em", fontWeight: "700" }]
+        /* every size follows the user's font-size preference (--font-scale) */
+        ...Object.fromEntries(Array.from({ length: 41 }, (_, i) => [`fs-${i + 8}`, sc(i + 8)])),
+        "xs": fs(12, 16),
+        "sm": fs(14, 20),
+        "base": fs(16, 24),
+        "lg": fs(18, 28),
+        "xl": fs(20, 28),
+        "2xl": fs(24, 32),
+        "3xl": fs(30, 36),
+        "4xl": fs(36, 40),
+        "label-sm": fs(11, 14, { letterSpacing: "0.02em", fontWeight: "600" }),
+        "label-md": fs(12, 16, { letterSpacing: "0.01em", fontWeight: "500" }),
+        "label-lg": fs(14, 20, { fontWeight: "500" }),
+        "body-sm": fs(13, 18, { fontWeight: "400" }),
+        "body-md": fs(14, 21, { fontWeight: "400" }),
+        "body-lg": fs(16, 24, { fontWeight: "400" }),
+        "title-md": fs(15, 21, { fontWeight: "600" }),
+        "title-lg": fs(17, 23, { fontWeight: "600" }),
+        "headline-sm": fs(19, 25, { fontWeight: "600" }),
+        "headline-md": fs(22, 28, { letterSpacing: "-0.01em", fontWeight: "700" }),
+        "headline-lg": fs(30, 38, { letterSpacing: "-0.015em", fontWeight: "700" }),
+        "headline-lg-mobile": fs(24, 32, { letterSpacing: "-0.015em", fontWeight: "700" }),
+        "display-lg": fs(38, 46, { letterSpacing: "-0.02em", fontWeight: "700" }),
+        "display-lg-mobile": fs(28, 36, { letterSpacing: "-0.02em", fontWeight: "700" })
       },
       screens: {
         'sm': '640px',
