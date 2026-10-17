@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useAuth } from '../AuthContext.jsx';
+import { useToast } from '../ToastContext.jsx';
 
 // A QR code must always be dark modules on a light background to stay scannable,
 // regardless of the app theme, so colours are fixed here on purpose.
@@ -49,6 +50,7 @@ const TICKETS = [
 
 export default function TicketsScreen({ openQrRequested = false, onQrHandled }) {
   const { user, isChild } = useAuth();
+  const toast = useToast();
   const fullName = `${user.firstName} ${user.lastName}`;
   const cardNo = `TRN-${new Date().getFullYear()}-${(user.pesel || '00000').slice(-5)}`;
   // Live ticking clock for resident card security
@@ -137,7 +139,7 @@ export default function TicketsScreen({ openQrRequested = false, onQrHandled }) 
             </p>
           </div>
           <button
-            onClick={() => alert('Weryfikacja podatkowa PIT dla m. Toruń jest ważna do 30.04.2025. Uprawnia do toruńskich zniżek.')}
+            onClick={() => toast('Weryfikacja podatkowa PIT dla m. Toruń jest ważna do 30.04.2025. Uprawnia do toruńskich zniżek.', { type: 'info', duration: 4000 })}
             className="font-label-sm text-label-sm text-primary font-semibold shrink-0 cursor-pointer hover:underline"
           >
             Szczegóły
@@ -444,7 +446,7 @@ export default function TicketsScreen({ openQrRequested = false, onQrHandled }) 
               </p>
             </div>
             <button
-              onClick={() => alert('Zniżka -20% w kasie Teatru im. Wilama Horzycy naliczana automatycznie po zeskanowaniu Karty Torunianina.')}
+              onClick={() => toast('Zniżka -20% w kasie Teatru im. Wilama Horzycy naliczana automatycznie po zeskanowaniu Karty Torunianina.', { type: 'info', duration: 4000 })}
               className="mt-2.5 w-full py-1.5 rounded-lg bg-surface-container-low text-primary font-label-md text-label-md hover:bg-surface-container transition-colors text-center font-medium cursor-pointer"
               type="button"
             >
@@ -469,7 +471,7 @@ export default function TicketsScreen({ openQrRequested = false, onQrHandled }) 
               </p>
             </div>
             <button
-              onClick={() => alert('Centrum Nowoczesności Młyn Wiedzy: -30% na bilety ulgowe i normalne dla posiadaczy Karty Torunianina.')}
+              onClick={() => toast('Centrum Nowoczesności Młyn Wiedzy: -30% na bilety ulgowe i normalne dla posiadaczy Karty Torunianina.', { type: 'info', duration: 4000 })}
               className="mt-2.5 w-full py-1.5 rounded-lg bg-surface-container-low text-primary font-label-md text-label-md hover:bg-surface-container transition-colors text-center font-medium cursor-pointer"
               type="button"
             >
@@ -510,7 +512,7 @@ export default function TicketsScreen({ openQrRequested = false, onQrHandled }) 
                 </span>
               </div>
               <button
-                onClick={() => alert('Pobieranie e-biletu PDF...')}
+                onClick={() => toast('Pobieranie e-biletu PDF...', { type: 'info' })}
                 className="w-8 h-8 rounded-lg bg-surface-container-low text-secondary hover:text-on-surface flex items-center justify-center transition-colors cursor-pointer"
                 title="Pobierz bilet PDF"
                 type="button"
@@ -545,7 +547,7 @@ export default function TicketsScreen({ openQrRequested = false, onQrHandled }) 
                 </span>
               </div>
               <button
-                onClick={() => alert('Pobieranie faktury VAT w formacie PDF...')}
+                onClick={() => toast('Pobieranie faktury VAT w formacie PDF...', { type: 'info' })}
                 className="w-8 h-8 rounded-lg bg-surface-container-low text-secondary hover:text-on-surface flex items-center justify-center transition-colors cursor-pointer"
                 title="Pobierz fakturę VAT"
                 type="button"

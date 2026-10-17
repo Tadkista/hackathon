@@ -1,15 +1,20 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { Chip, PageHeader, Segmented } from './ui.jsx';
-import { MZK_LINES, STOPS, TRAIN_STATIONS, nextBusDepartures, nextTrains } from '../data/city.js';
+import { MZK_LINES, STOPS, LINE_STOPS, TRAIN_STATIONS, nextBusDepartures, nextTrains } from '../data/city.js';
 
 const lineOf = (id) => MZK_LINES.find((l) => l.id === id) || { id, type: 'bus', color: '#334155' };
+const stopById = (id) => STOPS.find((s) => s.id === id);
 
-function LineBadge({ id }) {
+const DIACRITICS = { ą: 'a', ć: 'c', ę: 'e', ł: 'l', ń: 'n', ó: 'o', ś: 's', ż: 'z', ź: 'z' };
+const normalize = (s) => s.toLowerCase().replace(/[ąćęłńóśżź]/g, (c) => DIACRITICS[c] || c);
+
+function LineBadge({ id, size = 'md' }) {
   const l = lineOf(id);
   const tram = l.type === 'tram';
+  const dim = size === 'sm' ? 'w-10 h-10' : 'w-14 h-14';
   return (
     <span
-      className="relative inline-flex flex-col items-center justify-center w-14 h-14 rounded-2xl bg-surface-container border border-outline-variant/60 shrink-0 overflow-hidden"
+      className={`relative inline-flex flex-col items-center justify-center ${dim} rounded-2xl bg-surface-container border border-outline-variant/60 shrink-0 overflow-hidden`}
       aria-label={`${tram ? 'Tramwaj' : 'Autobus'} linii ${l.id}`}
     >
       <span aria-hidden="true" className="material-symbols-outlined text-fs-14 text-secondary leading-none" style={{ fontVariationSettings: "'FILL' 1" }}>{tram ? 'tram' : 'directions_bus'}</span>
@@ -28,16 +33,32 @@ function useClock() {
 export default function TimetableScreen() {
   const now = useClock();
   const [mode, setMode] = useState('mzk'); // mzk | train
-  const [stopId, setStopId] = useState('rapackiego');
+  const [browse, setBrowse] = useState('search'); // search | line
+  const [query, setQuery] = useState('');
+  const [stopId, setStopId] = useState('plac-rapackiego');
+  const [lineBrowse, setLineBrowse] = useState(MZK_LINES[0]?.id ?? '');
+  const [dirBrowse, setDirBrowse] = useState('0');
   const [station, setStation] = useState('glowny');
   const [lineFilter, setLineFilter] = useState('all');
   const [fav, setFav] = useState(() => { try { return JSON.parse(localStorage.getItem('mojtorun-fav-stops') || '[]'); } catch (e) { return []; } });
 
-  const stop = STOPS.find((s) => s.id === stopId);
+  const stop = stopById(stopId) || STOPS[0];
   const deps = useMemo(() => nextBusDepartures(stop, now, 4), [stop, now]);
-  const lines = [...new Set(stop.deps.map((d) => d.line))];
+  const lines = [...new Set(stop.lines.map((l) => l.line))];
   const shown = deps.filter((d) => lineFilter === 'all' || d.line === lineFilter);
   const trains = useMemo(() => nextTrains(station, now, 10), [station, now]);
+
+  const filteredStops = useMemo(() => {
+    const q = normalize(query.trim());
+    if (!q) return STOPS;
+    return STOPS.filter((s) => normalize(s.name).includes(q));
+  }, [query]);
+
+  const lineDirs = LINE_STOPS[lineBrowse] || {};
+  const dirIds = Object.keys(lineDirs).sort();
+  const dirStops = (lineDirs[dirBrowse] || []).map(stopById).filter(Boolean);
+
+  const selectStop = (id) => { setStopId(id); setLineFilter('all'); };
 
   const toggleFav = (id) => setFav((f) => {
     const n = f.includes(id) ? f.filter((x) => x !== id) : [...f, id];
@@ -61,24 +82,78 @@ export default function TimetableScreen() {
       {mode === 'mzk' ? (
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
           <aside className="lg:col-span-4 flex flex-col gap-3">
-            <label className="flex flex-col gap-1.5">
-              <span className="text-xs font-semibold text-on-surface-variant">Przystanek</span>
-              <select value={stopId} onChange={(e) => { setStopId(e.target.value); setLineFilter('all'); }} className="h-11 px-3 rounded-xl bg-surface-container-lowest border border-outline-variant/60 text-sm text-on-surface cursor-pointer">
-                {STOPS.map((s) => <option key={s.id} value={s.id}>{s.name}</option>)}
-              </select>
-            </label>
-            <ul className="flex flex-col gap-1.5" aria-label="Przystanki">
-              {STOPS.map((s) => (
-                <li key={s.id} className="flex items-center gap-1">
-                  <button type="button" onClick={() => { setStopId(s.id); setLineFilter('all'); }} className={`flex-1 text-left px-3 py-2.5 rounded-xl border text-sm cursor-pointer transition-colors ${s.id === stopId ? 'bg-surface-container border-outline text-on-surface font-semibold' : 'bg-surface-container-lowest border-outline-variant/60 text-on-surface-variant hover:border-outline'}`}>
-                    {s.name} <span className="text-fs-11 text-secondary">· strefa {s.zone}</span>
-                  </button>
-                  <button type="button" onClick={() => toggleFav(s.id)} aria-pressed={fav.includes(s.id)} aria-label={fav.includes(s.id) ? `Usuń ${s.name} z ulubionych` : `Dodaj ${s.name} do ulubionych`} className="w-10 h-10 rounded-xl flex items-center justify-center text-secondary hover:text-on-surface cursor-pointer">
-                    <span aria-hidden="true" className="material-symbols-outlined text-fs-20" style={fav.includes(s.id) ? { fontVariationSettings: "'FILL' 1", color: '#d97706' } : {}}>star</span>
-                  </button>
-                </li>
-              ))}
-            </ul>
+            <Segmented
+              label="Sposób wyszukiwania przystanku"
+              value={browse}
+              onChange={setBrowse}
+              options={[{ value: 'search', label: 'Szukaj przystanku' }, { value: 'line', label: 'Wg linii' }]}
+            />
+
+            {browse === 'search' ? (
+              <>
+                <label className="flex flex-col gap-1.5">
+                  <span className="text-xs font-semibold text-on-surface-variant">Nazwa przystanku</span>
+                  <div className="relative">
+                    <span aria-hidden="true" className="material-symbols-outlined text-fs-16 text-secondary absolute left-3 top-1/2 -translate-y-1/2">search</span>
+                    <input
+                      type="text"
+                      value={query}
+                      onChange={(e) => setQuery(e.target.value)}
+                      placeholder="np. Uniwersytet, Rubinkowo…"
+                      className="w-full h-11 pl-9 pr-3 rounded-xl bg-surface-container-lowest border border-outline-variant/60 text-sm text-on-surface"
+                    />
+                  </div>
+                </label>
+                <ul className="flex flex-col gap-1.5 max-h-[420px] overflow-y-auto pr-1" aria-label="Przystanki">
+                  {filteredStops.map((s) => (
+                    <li key={s.id} className="flex items-center gap-1">
+                      <button type="button" onClick={() => selectStop(s.id)} className={`flex-1 text-left px-3 py-2.5 rounded-xl border text-sm cursor-pointer transition-colors ${s.id === stopId ? 'bg-surface-container border-outline text-on-surface font-semibold' : 'bg-surface-container-lowest border-outline-variant/60 text-on-surface-variant hover:border-outline'}`}>
+                        {s.name}
+                      </button>
+                      <button type="button" onClick={() => toggleFav(s.id)} aria-pressed={fav.includes(s.id)} aria-label={fav.includes(s.id) ? `Usuń ${s.name} z ulubionych` : `Dodaj ${s.name} do ulubionych`} className="w-10 h-10 rounded-xl flex items-center justify-center text-secondary hover:text-on-surface cursor-pointer shrink-0">
+                        <span aria-hidden="true" className="material-symbols-outlined text-fs-20" style={fav.includes(s.id) ? { fontVariationSettings: "'FILL' 1", color: '#d97706' } : {}}>star</span>
+                      </button>
+                    </li>
+                  ))}
+                  {filteredStops.length === 0 && <li className="p-3 text-sm text-secondary">Brak przystanków dla „{query}”.</li>}
+                </ul>
+              </>
+            ) : (
+              <>
+                <div className="flex flex-wrap gap-1.5" role="group" aria-label="Wybierz linię">
+                  {MZK_LINES.map((l) => (
+                    <button
+                      key={l.id}
+                      type="button"
+                      onClick={() => { setLineBrowse(l.id); setDirBrowse('0'); }}
+                      aria-pressed={lineBrowse === l.id}
+                      className={`w-11 h-11 rounded-xl flex items-center justify-center text-sm font-bold border cursor-pointer transition-colors ${lineBrowse === l.id ? 'bg-primary text-white border-primary' : 'bg-surface-container-lowest border-outline-variant/60 text-on-surface hover:border-outline'}`}
+                    >
+                      {l.id}
+                    </button>
+                  ))}
+                </div>
+                {dirIds.length > 0 && (
+                  <Segmented
+                    label="Kierunek"
+                    value={dirBrowse}
+                    onChange={setDirBrowse}
+                    options={dirIds.map((d) => ({ value: d, label: `→ ${lineDirs[d].map(stopById).filter(Boolean).at(-1)?.name ?? '…'}` }))}
+                  />
+                )}
+                <ul className="flex flex-col gap-1.5 max-h-[380px] overflow-y-auto pr-1" aria-label={`Przystanki linii ${lineBrowse}`}>
+                  {dirStops.map((s, i) => (
+                    <li key={s.id}>
+                      <button type="button" onClick={() => selectStop(s.id)} className={`w-full text-left px-3 py-2.5 rounded-xl border text-sm cursor-pointer transition-colors flex items-center gap-2 ${s.id === stopId ? 'bg-surface-container border-outline text-on-surface font-semibold' : 'bg-surface-container-lowest border-outline-variant/60 text-on-surface-variant hover:border-outline'}`}>
+                        <span className="text-fs-11 text-secondary w-5 text-right shrink-0">{i + 1}.</span>
+                        {s.name}
+                      </button>
+                    </li>
+                  ))}
+                  {dirStops.length === 0 && <li className="p-3 text-sm text-secondary">Brak danych dla tej linii.</li>}
+                </ul>
+              </>
+            )}
           </aside>
 
           <section className="lg:col-span-8 flex flex-col gap-4" aria-live="polite">
@@ -91,11 +166,11 @@ export default function TimetableScreen() {
             </div>
             <ul className="rounded-2xl bg-surface-container-lowest border border-outline-variant/60 shadow-card divide-y divide-outline-variant/60 overflow-hidden">
               {shown.map((d, i) => (
-                <li key={`${d.line}-${i}`} className="px-4 py-3 flex items-center gap-3">
+                <li key={`${d.line}-${d.to}-${i}`} className="px-4 py-3 flex items-center gap-3">
                   <LineBadge id={d.line} />
                   <span className="flex-1 min-w-0">
                     <span className="block text-sm font-semibold text-on-surface truncate">{d.to}</span>
-                    <span className="block text-fs-11 text-secondary">{lineOf(d.line).type === 'tram' ? 'Tramwaj' : 'Autobus'} · co {d.f} min</span>
+                    <span className="block text-fs-11 text-secondary">{lineOf(d.line).type === 'tram' ? 'Tramwaj' : 'Autobus'}</span>
                   </span>
                   <span className="text-right">
                     <span className="block text-base font-bold text-on-surface">{d.inMin <= 0 ? 'teraz' : d.inMin < 60 ? `${d.inMin} min` : hhmm(d.at)}</span>

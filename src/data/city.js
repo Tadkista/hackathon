@@ -1,4 +1,6 @@
 // Toruń city data used by the new sections. Dates are generated relative to "today".
+import mzkData from './mzkData.json';
+
 const DAY = 86400000;
 const startOfToday = () => { const d = new Date(); d.setHours(0, 0, 0, 0); return d; };
 
@@ -96,21 +98,24 @@ export const GUIDES = [
   { id: 'g7', type: 'game', title: 'Mali odkrywcy Starówki', price: 15.0, duration: '60 min', stops: 10, ages: '5–9 lat', difficulty: 'łatwa', rating: 4.8, reviews: 341, desc: 'Prosta gra z obrazkami i zadaniami dla najmłodszych, z rodzicem lub opiekunem.', icon: 'child_care', family: true },
 ];
 
-/* ───────────────────────── Timetable ───────────────────────── */
-export const MZK_LINES = [
-  { id: '1', type: 'tram', color: '#b91c1c' }, { id: '2', type: 'tram', color: '#b91c1c' }, { id: '3', type: 'tram', color: '#b91c1c' }, { id: '4', type: 'tram', color: '#b91c1c' },
-  { id: '10', type: 'bus', color: '#1d4ed8' }, { id: '14', type: 'bus', color: '#1d4ed8' }, { id: '22', type: 'bus', color: '#1d4ed8' }, { id: '25', type: 'bus', color: '#1d4ed8' }, { id: '27', type: 'bus', color: '#1d4ed8' }, { id: 'N1', type: 'bus', color: '#334155' },
-];
+/* ───────────────────────── Timetable (real MZK Toruń GTFS data) ─────────────────────────
+   Source: static GTFS feed published by Mikołaj Kuranowski (mkuran.pl/gtfs/torun.zip, CC0).
+   Stops, lines and per-line service spans/headways are real; exact departure clock-times are
+   simulated from those real spans/headways since MZK Toruń publishes no real-time (GTFS-RT) feed. */
+export const MZK_LINES = mzkData.MZK_LINES; // [{ id, name, type: 'tram'|'bus', color }]
+export const STOPS = mzkData.STOPS; // [{ id, name, lat, lon, lines: [{ line, type, to, weekday, weekend }] }]
+export const LINE_STOPS = mzkData.LINE_STOPS; // { [lineId]: { [directionId]: [stopId, ...] } } – stops in travel order
 
-// at each stop: line, headsign, first departure minute-of-hour offset and frequency in minutes
-export const STOPS = [
-  { id: 'rapackiego', name: 'Plac Rapackiego', zone: 'I', deps: [{ line: '1', to: 'Rubinkowo', off: 4, f: 10 }, { line: '2', to: 'Motoarena', off: 7, f: 12 }, { line: '3', to: 'Wrzosy', off: 2, f: 15 }, { line: '10', to: 'Szosa Lubicka', off: 9, f: 20 }, { line: 'N1', to: 'Dworzec Główny', off: 20, f: 60, night: true }] },
-  { id: 'rynek', name: 'Rynek Staromiejski', zone: 'I', deps: [{ line: '22', to: 'Bielany', off: 3, f: 15 }, { line: '25', to: 'Jordanki', off: 8, f: 20 }, { line: '14', to: 'Rubinkowo – Rynek', off: 11, f: 20 }] },
-  { id: 'glowny', name: 'Toruń Główny (dworzec)', zone: 'I', deps: [{ line: '1', to: 'Rubinkowo', off: 6, f: 10 }, { line: '4', to: 'Plac Rapackiego', off: 12, f: 20 }, { line: '27', to: 'Przysiek', off: 5, f: 30 }, { line: 'N1', to: 'Plac Rapackiego', off: 40, f: 60, night: true }] },
-  { id: 'jordanki', name: 'Jordanki / CKK', zone: 'I', deps: [{ line: '25', to: 'Plac Rapackiego', off: 4, f: 20 }, { line: '10', to: 'Rubinkowo', off: 13, f: 20 }, { line: '2', to: 'Motoarena', off: 9, f: 12 }] },
-  { id: 'olimpijska', name: 'Olimpijska (pętla)', zone: 'II', deps: [{ line: '1', to: 'Plac Rapackiego', off: 1, f: 10 }, { line: '14', to: 'Rynek Staromiejski', off: 15, f: 20 }, { line: '27', to: 'Dworzec Główny', off: 22, f: 30 }] },
-  { id: 'bielany', name: 'Bielany – Rynek', zone: 'II', deps: [{ line: '22', to: 'Plac Rapackiego', off: 6, f: 15 }, { line: '3', to: 'Centrum', off: 10, f: 15 }] },
-];
+const isWeekendDay = (d) => d.getDay() === 0 || d.getDay() === 6;
+
+function depMinutesForLine(sched) {
+  if (!sched) return [];
+  const { first, last, headway } = sched;
+  const count = Math.max(1, Math.round((last - first) / headway) + 1);
+  const out = [];
+  for (let i = 0; i < count; i++) out.push(first + i * headway);
+  return out;
+}
 
 export const TRAIN_STATIONS = [
   { id: 'glowny', name: 'Toruń Główny' },
@@ -138,18 +143,21 @@ export const TRAINS = {
 };
 
 export function nextBusDepartures(stop, now = new Date(), perLine = 3) {
-  const out = [];
+  if (!stop) return [];
   const nowMin = now.getHours() * 60 + now.getMinutes();
-  const isNight = now.getHours() >= 23 || now.getHours() < 4;
-  for (const d of stop.deps) {
-    // night lines run only at night, day lines only by day
-    if (!!d.night !== isNight) continue;
-    let n = 0;
-    for (let m = Math.floor(nowMin / 60) * 60 + d.off; n < perLine && m < nowMin + 24 * 60; m += d.f) {
-      if (m >= nowMin) {
-        out.push({ ...d, inMin: m - nowMin, at: new Date(now.getFullYear(), now.getMonth(), now.getDate(), 0, m) });
-        n += 1;
-      }
+  const tomorrow = new Date(now.getTime() + DAY);
+  const todayBucket = isWeekendDay(now) ? 'weekend' : 'weekday';
+  const tomorrowBucket = isWeekendDay(tomorrow) ? 'weekend' : 'weekday';
+  const out = [];
+  for (const l of stop.lines) {
+    const today = depMinutesForLine(l[todayBucket]).map((m) => ({ m }));
+    const later = depMinutesForLine(l[tomorrowBucket]).map((m) => ({ m: m + 24 * 60 }));
+    const next = [...today, ...later]
+      .filter((c) => c.m >= nowMin)
+      .sort((a, b) => a.m - b.m)
+      .slice(0, perLine);
+    for (const c of next) {
+      out.push({ line: l.line, type: l.type, to: l.to, inMin: c.m - nowMin, at: new Date(now.getFullYear(), now.getMonth(), now.getDate(), 0, c.m) });
     }
   }
   return out.sort((a, b) => a.inMin - b.inMin);

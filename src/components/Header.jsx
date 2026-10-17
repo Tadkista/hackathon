@@ -38,7 +38,7 @@ export default function Header({ currentTab, onNavigate, onOpenNotifications, un
           >
             <span aria-hidden="true" className="material-symbols-outlined text-fs-22">notifications</span>
             {unreadNotificationsCount > 0 && (
-              <span className="absolute top-2.5 right-2.5 w-2 h-2 rounded-full bg-primary ring-2 ring-surface-container-lowest animate-pulse"></span>
+              <span className="absolute top-2.5 right-2.5 w-2 h-2 rounded-full bg-on-surface ring-2 ring-surface-container-lowest animate-pulse"></span>
             )}
           </button>
 

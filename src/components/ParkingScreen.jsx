@@ -140,6 +140,57 @@ export default function ParkingScreen() {
       distance: '5.8 km stąd',
       occupancy: 36,
     },
+    {
+      id: 'dworzec-glowny',
+      name: 'Parking Dworzec Główny PKP Toruń',
+      address: 'ul. Kujawska 1, Podgórz',
+      coords: [18.5894, 53.0048],
+      zone: 'pr',
+      zoneName: 'Park & Ride (P+R)',
+      type: 'Przesiadkowy przy stacji PKP',
+      totalSpots: 140,
+      freeSpots: 52,
+      hourlyRate: '4,00 zł',
+      residentRate: '2,80 zł',
+      isGuarded: true,
+      hasEvCharging: false,
+      distance: '2.1 km stąd',
+      occupancy: 63,
+    },
+    {
+      id: 'ckk-jordanki',
+      name: 'Parking CKK Jordanki',
+      address: 'ul. Fosa Staromiejska 15, Śródmieście',
+      coords: [18.6095, 53.0085],
+      zone: 'strefa-a',
+      zoneName: 'Strefa A (Śródmiejska)',
+      type: 'Kubaturowy / Podziemny',
+      totalSpots: 160,
+      freeSpots: 97,
+      hourlyRate: '6,00 zł',
+      residentRate: '4,20 zł',
+      isGuarded: true,
+      hasEvCharging: true,
+      distance: '0.7 km stąd',
+      occupancy: 39,
+    },
+    {
+      id: 'galeria-copernicus',
+      name: 'Parking Galeria Copernicus',
+      address: 'ul. Broniewskiego 90, Rubinkowo',
+      coords: [18.6230, 53.0188],
+      zone: 'strefa-b',
+      zoneName: 'Strefa B (Obrzeże)',
+      type: 'Parking centrum handlowego',
+      totalSpots: 450,
+      freeSpots: 310,
+      hourlyRate: 'Bezpłatny (3h)',
+      residentRate: 'Bezpłatny (3h)',
+      isGuarded: true,
+      hasEvCharging: true,
+      distance: '3.5 km stąd',
+      occupancy: 31,
+    },
   ];
 
   const [selectedLot, setSelectedLot] = useState(parkingLots[0]);
@@ -213,16 +264,16 @@ export default function ParkingScreen() {
       </div>
 
       {/* Traffic notice regarding Most Piłsudskiego */}
-      <div className="p-3.5 rounded-2xl bg-amber-50/80 dark:bg-amber-950/30 border border-amber-200/80 dark:border-amber-800/40 flex items-center justify-between gap-3 shadow-xs">
+      <div className="p-3.5 rounded-2xl bg-surface-container border border-outline-variant/80 flex items-center justify-between gap-3 shadow-xs">
         <div className="flex items-center gap-3 min-w-0">
-          <div className="w-9 h-9 rounded-xl bg-amber-500/10 text-amber-600 dark:text-amber-400 flex items-center justify-center shrink-0">
+          <div className="w-9 h-9 rounded-xl bg-surface-container-high text-on-surface flex items-center justify-center shrink-0">
             <span aria-hidden="true" className="material-symbols-outlined text-fs-20">warning</span>
           </div>
           <div className="min-w-0">
-            <span className="text-xs font-bold text-amber-950 dark:text-amber-200 block truncate">
+            <span className="text-xs font-bold text-on-surface block truncate">
               Komunikat drogowy: Most im. J. Piłsudskiego (prace serwisowe od 21:00)
             </span>
-            <span className="text-fs-11 text-amber-800/90 dark:text-amber-300/90 block truncate">
+            <span className="text-fs-11 text-secondary block truncate">
               Zalecany dojazd do Strefy A przez Most gen. Elżbiety Zawackiej (Wschodni).
             </span>
           </div>
@@ -434,9 +485,9 @@ export default function ParkingScreen() {
                   <span className="font-bold text-on-surface text-sm mt-0.5">{selectedLot.hourlyRate}</span>
                 </div>
                 {!isGuest && (
-<div className="p-3 rounded-xl bg-rose-50 dark:bg-rose-950/30 border border-rose-200/50 dark:border-rose-900/30 flex flex-col">
-                  <span className="text-primary text-fs-11 font-semibold">Z Kartą Torunianina:</span>
-                  <span className="font-bold text-primary text-sm mt-0.5">{selectedLot.residentRate}</span>
+<div className="p-3 rounded-xl bg-surface-container border border-outline-variant/80 flex flex-col">
+                  <span className="text-on-surface text-fs-11 font-semibold">Z Kartą Torunianina:</span>
+                  <span className="font-bold text-on-surface text-sm mt-0.5">{selectedLot.residentRate}</span>
                 </div>
 )}
               </div>
@@ -584,10 +635,10 @@ export default function ParkingScreen() {
                 </div>
               </div>
 
-              <div className="p-3 rounded-xl bg-rose-50 dark:bg-rose-950/30 border border-rose-200/60 dark:border-rose-900/40 flex items-center justify-between text-xs">
+              <div className="p-3 rounded-xl bg-surface-container border border-outline-variant/80 flex items-center justify-between text-xs">
                 <div>
                   <span className="text-secondary block">Do zapłaty (Karta Torunianina):</span>
-                  <span className="font-bold text-primary text-base">
+                  <span className="font-bold text-on-surface text-base">
                     {parkingDuration === '30min' ? '1,80 zł' : parkingDuration === '1h' ? '3,50 zł' : parkingDuration === '2h' ? '7,00 zł' : '25,00 zł'}
                   </span>
                 </div>

@@ -53,7 +53,7 @@ export default function FuelScreen() {
         </div>
         <div className="flex items-center gap-3 flex-wrap">
           <label className="inline-flex items-center gap-2 text-xs text-on-surface-variant font-medium cursor-pointer">
-            <input type="checkbox" checked={onlyOpen} onChange={(e) => setOnlyOpen(e.target.checked)} className="w-4 h-4 accent-[#841829]" />
+            <input type="checkbox" checked={onlyOpen} onChange={(e) => setOnlyOpen(e.target.checked)} className="w-4 h-4 accent-slate-900 dark:accent-slate-200" />
             Czynne całą dobę
           </label>
           <Segmented

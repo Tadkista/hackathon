@@ -1,21 +1,14 @@
-podczas ekranu logowania, powinny być strzałki aby się cofnąć do tyłu spowrotem do weryfikacji, roli, itp.
-kod qr w karcie torunianina zastępić kodem qr.png w root'cie projektu (przenieść plik jeżeli potrzeba)
-usunąć migającą kropkę pod qr kodem w sekcji bilety
-zakładki rodzajów biletów mają pokazywać inne, adekwatne do sekcji opcje
-zawijanie kafelków kategorii w partycypacji obywatelskiej
-usunąć kafelek "utrudnienia" w parking i mapa
-zmienić kolor kafelka aktualnie wybranego parkingu - tak samo jak w stacjach paliw
-w miarę możliwości usunąć kafelki widoczne pod hoverem na mapie stacji paliw, parkingów i utrudnień
-naprawić podświetlanie kafelka pod hover w wydarzeniach, zmienić wygląd kafelków (wygląda jak ai slop)
-zawijanie kafelków kategorii wydarzeń
-teskt na kafelku audioprzewodnik w "więcej" jest do zawinięcia (wystaje)
-zmienić kafelki z numerem tramwajów i autobusów w rozkładzie jazdy
-zablokować możliwość zmiany osiedla zamieszkania (dzielnicy)
-przycisk w "profil" do historii transakcji i biletów ma scrollować do historii a nie tylko otwierać sekcję karty torunianina
-na samym dole w kategorii pomoc i kontakt w sekcji profil po kliknięciu w kafelek ma się opcja rozwinąć zamiast wyświetlać modal
-na ekranie głównym kafelek z pogodą powinien zajmować całą szerokość (widok mobilny)
-poprawić wygląd opcji banków i m-obywatela podczas logowania, mają się znaleźć rzeczywiste loga/ikonki banków
-+ kupowanie audioprzewodnika na koncie gościa (turysty) wymaga podania maila (akceptuje po 2s bez rzeczywistego wysyłania maili, sam frontend)
-+ wygenerować plik .mp3 do przykładowego audioprzewodnika
-+ możliwość kupowania wielu licencji na audiobooki na raz, możliwość udostepnienia licencji przez kod qr/6digit code (osoba odbierająca taką licencję skanuje ten qr kod w swojej aplikacji)
-+ dodać przycisk w sekcji profil do czyszczenia localstorage
+- dostosować profil seniora, żeby faktycznie był prosty dla osób starszych
+  - ustawienia dostępności powinny być ustawione domyślnie na większe, interfejs trochę uproszczony aby się nie pogubić
++ AI przewodnik - opisujesz wybraną wycieczkę (np. czy chcesz zabytki, lokalne żarcia, muzea, etc. przez API Google Gemini)
+  - podajesz czas wycieczki, jak długo trwa,
+  - czy ma uwzględnić jedzenie, jeśli tak to jaki rodzaj jedzenia
+  - czy ma być przerwa na kawę
+  - ile osób będzie na wycieczce, czy będą dzieci
+  - czy ma być to bardziej intensywna wycieczka, czy bardziej wyluzowana
+  - czy preferuje chodzić po terenach zielonych, czy po ważnych zabytkach/budowach
+  - w miejscu powinny być wpisane dwa klucze API dla gemini - pierwszy próbowany, jeżeli pierwszy nie uda się to drugi, a jeżeli drugi nie zadziała to wyskakuje błąd
+- zmienić fikcyjne parkingi i dane mapy na faktycznie istniejące
+- publiczne przystanki powinny być brane od publicznego API, posortowane w jakiś sposób (np.. liniami jeżeli to możliwe)
+- przycisk "Kosztorys" w zakładce Budżet i inwestycje wypisuje dane przez alert. Zmień to, jak i inne możliwe wywołania alertu.
+- rejony i tematy w zakładce "Budżet i inwestycje" nie filtrują rezultatu

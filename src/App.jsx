@@ -14,6 +14,7 @@ import DisruptionsScreen from './components/DisruptionsScreen.jsx';
 import EventsScreen from './components/EventsScreen.jsx';
 import GuidesScreen from './components/GuidesScreen.jsx';
 import TimetableScreen from './components/TimetableScreen.jsx';
+import AiGuideScreen from './components/AiGuideScreen.jsx';
 import { useAuth } from './AuthContext.jsx';
 import { ROLE_DEFAULT_TAB, allowedTabsFor } from './navConfig.js';
 
@@ -96,6 +97,7 @@ export default function App() {
         {tab === 'disruptions' && <DisruptionsScreen />}
         {tab === 'events' && <EventsScreen />}
         {tab === 'guides' && <GuidesScreen />}
+        {tab === 'aiguide' && <AiGuideScreen />}
         {tab === 'votes' && <VotesScreen isVoteModalOpen={isVoteModalOpen} setIsVoteModalOpen={setIsVoteModalOpen} />}
         {tab === 'profile' && <ProfileScreen onNavigate={handleNavigate} />}
       </main>

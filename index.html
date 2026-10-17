@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover"/>
-    <meta name="theme-color" content="#6b0119"/>
+    <meta name="theme-color" content="#f8fafc"/>
     <meta name="description" content="MójToruń - Miejski Portal Mieszkańca. Bilety MZK, Budżet Obywatelski, zgłoszenia i usługi miejskie w jednym miejscu."/>
     <title>MójToruń - Miejski Portal Mieszkańca</title>
     <link rel="preconnect" href="https://fonts.googleapis.com"/>
@@ -20,7 +20,7 @@
           var dark = t === 'dark' || ((t === null || t === 'system') && window.matchMedia('(prefers-color-scheme: dark)').matches);
           if (dark) {
             r.classList.add('dark');
-            document.querySelector('meta[name="theme-color"]')?.setAttribute('content', '#0d1117');
+            document.querySelector('meta[name="theme-color"]')?.setAttribute('content', '#090d14');
           }
           var p = JSON.parse(localStorage.getItem('mojtorun-prefs') || '{}');
           if (p.hc) r.classList.add('hc');

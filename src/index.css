@@ -13,7 +13,7 @@
     padding: 0;
     min-height: 100vh;
     font-family: 'Inter', system-ui, -apple-system, sans-serif;
-    background-color: #fafafa;
+    background-color: #f8fafc;
     color: #0f172a;
     transition: background-color 0.25s ease, color 0.25s ease;
     -webkit-font-smoothing: antialiased;
@@ -207,16 +207,18 @@ span.rounded-xl[class*="bg-rose-50"] .material-symbols-outlined {
    UNIFORM BUTTONS, NAVIGATION & ACTIONS
    ═══════════════════════════════════════════════ */
 
-/* Primary Action Buttons */
+/* Primary Action Buttons - Monochromatic Slate */
 button.bg-primary:not(.grid.grid-cols-2.sm\:grid-cols-4 > button),
 a.bg-primary:not(.grid.grid-cols-2.sm\:grid-cols-4 > a) {
-  background-color: #e2e8f0 !important;
-  color: #0f172a !important;
-  border: 1px solid #94a3b8 !important;
+  background-color: #0f172a !important;
+  color: #ffffff !important;
+  border: 1px solid #0f172a !important;
+  box-shadow: 0 1px 3px rgba(15, 23, 42, 0.12), 0 1px 2px rgba(15, 23, 42, 0.08) !important;
 }
 button.bg-primary:not(.grid.grid-cols-2.sm\:grid-cols-4 > button):hover,
 a.bg-primary:not(.grid.grid-cols-2.sm\:grid-cols-4 > a):hover {
-  background-color: #cbd5e1 !important;
+  background-color: #1e293b !important;
+  border-color: #1e293b !important;
 }
 
 .dark button.bg-primary:not(.grid.grid-cols-2.sm\:grid-cols-4 > button),
@@ -335,45 +337,47 @@ span.rounded-full.bg-tertiary-fixed:is(.w-1\.5, .w-2, .w-2\.5) {
   border: none !important;
 }
 
-/* 2. Amber / Yellow Badges: Warnings, Traffic Alerts, Deadlines */
-div[class*="bg-amber-50/"],
-div[class*="dark:bg-amber-950/30"] {
-  background-color: rgba(245, 158, 11, 0.08) !important;
-  border: 1px solid rgba(245, 158, 11, 0.28) !important;
+/* 2. Warnings, Traffic Alerts & Notifications (Monochromatic) */
+div[class*="bg-amber-50/"] {
+  background-color: #f1f5f9 !important;
+  border: 1px solid #e2e8f0 !important;
 }
-div[class*="bg-amber-50/"] span.font-semibold {
-  color: #78350f !important;
+div[class*="bg-amber-50/"] span.font-semibold,
+div[class*="bg-amber-50/"] span[class*="text-amber-"] {
+  color: #0f172a !important;
 }
 div[class*="bg-amber-50/"] p {
-  color: #92400e !important;
+  color: #475569 !important;
 }
 div[class*="bg-amber-50/"] .material-symbols-outlined {
-  color: #d97706 !important;
+  color: #0f172a !important;
 }
 div[class*="bg-amber-50/"] button {
-  color: #92400e !important;
+  color: #0f172a !important;
 }
 
 .dark div[class*="bg-amber-50/"],
 .dark div[class*="dark:bg-amber-950/30"] {
-  background-color: rgba(245, 158, 11, 0.14) !important;
-  border: 1px solid rgba(245, 158, 11, 0.35) !important;
+  background-color: #141c2c !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
 }
 .dark div[class*="bg-amber-50/"] span.font-semibold,
-.dark div[class*="dark:bg-amber-950/30"] span.font-semibold {
-  color: #fde68a !important;
+.dark div[class*="dark:bg-amber-950/30"] span.font-semibold,
+.dark div[class*="bg-amber-50/"] span[class*="text-amber-"],
+.dark div[class*="dark:bg-amber-950/30"] span[class*="text-amber-"] {
+  color: #f8fafc !important;
 }
 .dark div[class*="bg-amber-50/"] p,
 .dark div[class*="dark:bg-amber-950/30"] p {
-  color: #fef3c7 !important;
+  color: #cbd5e1 !important;
 }
 .dark div[class*="bg-amber-50/"] .material-symbols-outlined,
 .dark div[class*="dark:bg-amber-950/30"] .material-symbols-outlined {
-  color: #fbbf24 !important;
+  color: #f8fafc !important;
 }
 .dark div[class*="bg-amber-50/"] button,
 .dark div[class*="dark:bg-amber-950/30"] button {
-  color: #fbbf24 !important;
+  color: #f8fafc !important;
 }
 
 /* Remaining days / Countdown badges */
@@ -418,15 +422,15 @@ span.rounded-lg[class*="bg-black/60"] {
 }
 span.rounded-full[class*="bg-primary-fixed"],
 span.rounded-full[class*="bg-primary-container"] {
-  background-color: rgba(99, 102, 241, 0.14) !important;
-  color: #4338ca !important;
-  border: 1px solid rgba(99, 102, 241, 0.34) !important;
+  background-color: #f1f5f9 !important;
+  color: #0f172a !important;
+  border: 1px solid #e2e8f0 !important;
 }
 .dark span.rounded-full[class*="bg-primary-fixed"],
 .dark span.rounded-full[class*="bg-primary-container"] {
-  background-color: rgba(99, 102, 241, 0.2) !important;
-  color: #a5b4fc !important;
-  border: 1px solid rgba(99, 102, 241, 0.35) !important;
+  background-color: #192338 !important;
+  color: #f8fafc !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
 }
 span.rounded-full[class*="bg-primary-container"] .material-symbols-outlined,
 span.rounded-full[class*="bg-primary-fixed"] .material-symbols-outlined {
@@ -610,16 +614,16 @@ button.btn-voted {
 }
 .dark :focus-visible { outline-color: #93c5fd; }
 
-/* Login call-to-action keeps the brand colour (the neutral global primary button looked disabled).
-   The class is repeated on purpose to outrank the :not() based global override. */
+/* Login call-to-action - Monochromatic Slate */
 button.login-cta.login-cta.login-cta.login-cta.login-cta.login-cta.login-cta {
-  background-color: #841829 !important;
+  background-color: #0f172a !important;
   color: #ffffff !important;
-  border: 1px solid #841829 !important;
+  border: 1px solid #0f172a !important;
+  box-shadow: 0 1px 3px rgba(15, 23, 42, 0.12) !important;
 }
-button.login-cta.login-cta.login-cta.login-cta.login-cta.login-cta.login-cta:hover:not(:disabled) { background-color: #6d1322 !important; }
-.dark button.login-cta.login-cta.login-cta.login-cta.login-cta.login-cta.login-cta { background-color: #a31d35 !important; border-color: #a31d35 !important; }
-.dark button.login-cta.login-cta.login-cta.login-cta.login-cta.login-cta.login-cta:hover:not(:disabled) { background-color: #b92540 !important; }
+button.login-cta.login-cta.login-cta.login-cta.login-cta.login-cta.login-cta:hover:not(:disabled) { background-color: #1e293b !important; border-color: #1e293b !important; }
+.dark button.login-cta.login-cta.login-cta.login-cta.login-cta.login-cta.login-cta { background-color: #1e293b !important; border-color: rgba(255, 255, 255, 0.16) !important; color: #f8fafc !important; }
+.dark button.login-cta.login-cta.login-cta.login-cta.login-cta.login-cta.login-cta:hover:not(:disabled) { background-color: #283548 !important; }
 html.hc button.login-cta.login-cta.login-cta.login-cta.login-cta.login-cta.login-cta, html.hc.dark button.login-cta.login-cta.login-cta.login-cta.login-cta.login-cta.login-cta { background-color: var(--hc-fg) !important; color: var(--hc-bg) !important; border: 2px solid var(--hc-fg) !important; }
 
 /* ═══════════════════════════════════════════════

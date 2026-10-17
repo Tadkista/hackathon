@@ -80,11 +80,11 @@ export default function EventsScreen() {
         </div>
         <div className="flex items-center gap-4 flex-wrap">
           <label className="inline-flex items-center gap-2 text-xs text-on-surface-variant font-medium cursor-pointer">
-            <input type="checkbox" checked={free} onChange={(e) => setFree(e.target.checked)} className="w-4 h-4 accent-[#841829]" /> Tylko bezpłatne
+            <input type="checkbox" checked={free} onChange={(e) => setFree(e.target.checked)} className="w-4 h-4 accent-slate-900 dark:accent-slate-200" /> Tylko bezpłatne
           </label>
           {!isChild && (
             <label className="inline-flex items-center gap-2 text-xs text-on-surface-variant font-medium cursor-pointer">
-              <input type="checkbox" checked={kidsOnly} onChange={(e) => setKidsOnly(e.target.checked)} className="w-4 h-4 accent-[#841829]" /> Dla dzieci
+              <input type="checkbox" checked={kidsOnly} onChange={(e) => setKidsOnly(e.target.checked)} className="w-4 h-4 accent-slate-900 dark:accent-slate-200" /> Dla dzieci
             </label>
           )}
         </div>

@@ -1,5 +1,7 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useAuth } from '../AuthContext.jsx';
+import { useToast } from '../ToastContext.jsx';
+import { Modal, ModalHeader } from './ui.jsx';
 
 const GUEST_TILES = [
   { id: 'timetable', icon: 'departure_board', title: 'Rozkład jazdy', sub: 'MZK i pociągi' },
@@ -18,6 +20,8 @@ const CITY_TILES = [
 
 export default function HomeScreen({ onNavigate, onTriggerVoteModal, onOpenQr }) {
   const { user, isGuest } = useAuth();
+  const toast = useToast();
+  const [isWasteScheduleOpen, setIsWasteScheduleOpen] = useState(false);
   const openQr = onOpenQr || (() => onNavigate('tickets'));
   const civicTab = isGuest ? 'events' : 'votes';
 
@@ -125,7 +129,7 @@ export default function HomeScreen({ onNavigate, onTriggerVoteModal, onOpenQr })
                 className="group flex flex-col justify-between p-4 rounded-2xl bg-surface-container-lowest border border-outline-variant/60 shadow-card hover:shadow-card-hover transition-all text-left cursor-pointer active:scale-[0.98]"
               >
                 <div className="flex items-center justify-between w-full">
-                  <div className="w-10 h-10 rounded-xl bg-rose-50 dark:bg-rose-950/40 text-primary flex items-center justify-center">
+                  <div className="w-10 h-10 rounded-xl bg-surface-container text-on-surface flex items-center justify-center">
                     <span aria-hidden="true" className="material-symbols-outlined text-fs-22">qr_code_2</span>
                   </div>
                   <span aria-hidden="true" className="material-symbols-outlined text-fs-18 text-secondary group-hover:translate-x-0.5 transition-transform">
@@ -350,7 +354,7 @@ export default function HomeScreen({ onNavigate, onTriggerVoteModal, onOpenQr })
 
               {/* News 2 */}
               <div
-                onClick={() => alert('Święto Miasta Torunia 2025:\nProgram koncertów plenerowych na Rynku Nowomiejskim oraz bezpłatne wejściówki na koncerty teatrów światła będą dostępne w czerwcu.')}
+                onClick={() => toast('Święto Miasta Torunia 2025: program koncertów plenerowych na Rynku Nowomiejskim oraz bezpłatne wejściówki na koncerty teatrów światła będą dostępne w czerwcu.', { type: 'info', duration: 4500 })}
                 className="p-4 rounded-2xl bg-surface-container-lowest border border-outline-variant/60 shadow-card hover:shadow-card-hover transition-all flex flex-col justify-between cursor-pointer group"
               >
                 <div className="w-full h-36 rounded-xl overflow-hidden bg-surface-container mb-3.5">
@@ -412,21 +416,21 @@ export default function HomeScreen({ onNavigate, onTriggerVoteModal, onOpenQr })
               </div>
             </div>
 
-            {/* City Traffic Alert - Refined, elegant tone */}
-            <div className="p-3.5 rounded-xl bg-amber-50/70 dark:bg-amber-950/30 border border-amber-200/60 dark:border-amber-800/40 flex items-start gap-3">
-              <span aria-hidden="true" className="material-symbols-outlined text-fs-20 text-amber-600 dark:text-amber-400 shrink-0 mt-0.5">
+            {/* City Traffic Alert - Monochromatic clean tone */}
+            <div className="p-3.5 rounded-xl bg-surface-container border border-outline-variant/80 flex items-start gap-3">
+              <span aria-hidden="true" className="material-symbols-outlined text-fs-20 text-on-surface shrink-0 mt-0.5">
                 info
               </span>
               <div className="flex flex-col min-w-0 flex-1">
-                <span className="text-xs font-semibold text-amber-900 dark:text-amber-200">
+                <span className="text-xs font-semibold text-on-surface">
                   Prace drogowe: Most im. J. Piłsudskiego
                 </span>
-                <p className="text-fs-12 text-amber-800/90 dark:text-amber-300/90 mt-0.5 leading-snug">
+                <p className="text-fs-12 text-secondary mt-0.5 leading-snug">
                   Wymiana oświetlenia dziś od godz. 21:00. Zwężenie do jednego pasa.
                 </p>
                 <button
                   onClick={() => onNavigate('disruptions')}
-                  className="mt-2 text-fs-11 font-semibold text-amber-900 dark:text-amber-300 hover:underline self-start flex items-center gap-0.5 cursor-pointer"
+                  className="mt-2 text-fs-11 font-semibold text-on-surface hover:underline self-start flex items-center gap-0.5 cursor-pointer"
                 >
                   <span>Mapa utrudnień drogowych</span>
                   <span aria-hidden="true" className="material-symbols-outlined text-fs-13">arrow_forward</span>
@@ -525,13 +529,31 @@ export default function HomeScreen({ onNavigate, onTriggerVoteModal, onOpenQr })
             </div>
 
             <button
-              onClick={() => alert('Harmonogram Rejonu 4 (Stare Miasto):\n• Poniedziałek: Papier i Bioodpady\n• Środa: Metale i Tworzywa sztuczne\n• Piątek: Odpady zmieszane')}
+              onClick={() => setIsWasteScheduleOpen(true)}
               className="w-full py-2 rounded-xl bg-surface-container hover:bg-surface-container-high text-xs font-semibold text-on-surface transition-colors cursor-pointer text-center"
             >
               Zobacz pełny harmonogram rejonu
             </button>
           </div>
 )}
+
+          {isWasteScheduleOpen && (
+            <Modal onClose={() => setIsWasteScheduleOpen(false)} labelledBy="waste-schedule-title">
+              <ModalHeader title="Harmonogram Rejonu 4 (Stare Miasto)" icon="delete_outline" onClose={() => setIsWasteScheduleOpen(false)} id="waste-schedule-title" />
+              <div className="flex flex-col gap-2">
+                {[
+                  ['Poniedziałek', 'Papier i Bioodpady'],
+                  ['Środa', 'Metale i Tworzywa sztuczne'],
+                  ['Piątek', 'Odpady zmieszane'],
+                ].map(([day, type]) => (
+                  <div key={day} className="flex items-center justify-between bg-surface-container-low rounded-lg p-3">
+                    <span className="font-body-sm text-body-sm text-on-surface font-medium">{day}</span>
+                    <span className="font-body-sm text-body-sm text-secondary">{type}</span>
+                  </div>
+                ))}
+              </div>
+            </Modal>
+          )}
 
           {/* Municipal Stats Summary */}
           {!isGuest && (

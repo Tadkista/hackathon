@@ -45,7 +45,7 @@ export default function NotificationsModal({ isOpen, onClose, onNavigate }) {
         <div className="w-12 h-1 bg-surface-container-high rounded-full mx-auto sm:hidden mb-2"></div>
         <div className="flex items-center justify-between pb-3 border-b border-surface-container">
           <div className="flex items-center gap-2">
-            <span aria-hidden="true" className="material-symbols-outlined text-on-surface-variant text-fs-24">notifications</span>
+            <span aria-hidden="true" className="material-symbols-outlined text-on-surface text-fs-24">notifications</span>
             <h2 className="font-title-lg text-title-lg text-on-surface font-semibold">Powiadomienia miejskie</h2>
           </div>
           <button
@@ -60,7 +60,7 @@ export default function NotificationsModal({ isOpen, onClose, onNavigate }) {
           {notifications.map((item) => (
             <div key={item.id} className="p-3 rounded-xl bg-surface-container-low flex flex-col gap-2 hover:bg-surface-container transition-colors">
               <div className="flex items-start gap-3">
-                <div className={`w-9 h-9 rounded-lg flex items-center justify-center shrink-0 ${item.color}`}>
+                <div className="w-9 h-9 rounded-xl bg-surface-container text-on-surface flex items-center justify-center shrink-0">
                   <span aria-hidden="true" className="material-symbols-outlined text-fs-20">{item.icon}</span>
                 </div>
                 <div className="flex-1 min-w-0">
@@ -82,9 +82,10 @@ export default function NotificationsModal({ isOpen, onClose, onNavigate }) {
                   onClose();
                   onNavigate(item.actionTab);
                 }}
-                className="self-end px-3 py-1 rounded-lg bg-surface-container-lowest text-primary font-label-sm text-label-sm font-semibold hover:bg-primary hover:text-on-primary transition-colors cursor-pointer"
+                className="self-end px-3 py-1.5 rounded-lg bg-surface-container hover:bg-surface-container-high text-on-surface border border-outline-variant/70 font-label-sm text-label-sm font-semibold transition-colors cursor-pointer flex items-center gap-1"
               >
-                {item.actionText} →
+                <span>{item.actionText}</span>
+                <span aria-hidden="true" className="material-symbols-outlined text-fs-14">arrow_forward</span>
               </button>
             </div>
           ))}
@@ -92,7 +93,7 @@ export default function NotificationsModal({ isOpen, onClose, onNavigate }) {
 
         <button
           onClick={onClose}
-          className="mt-2 w-full py-2.5 rounded-xl bg-surface-container text-on-surface font-label-md text-label-md hover:bg-surface-container-high transition-colors font-semibold"
+          className="mt-2 w-full py-2.5 rounded-xl bg-surface-container text-on-surface font-label-md text-label-md hover:bg-surface-container-high transition-colors font-semibold cursor-pointer"
         >
           Zamknij
         </button>

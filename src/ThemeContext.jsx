@@ -23,7 +23,7 @@ export function ThemeProvider({ children }) {
   useEffect(() => {
     const root = document.documentElement;
     root.classList.toggle('dark', isDark);
-    document.querySelector('meta[name="theme-color"]')?.setAttribute('content', isDark ? '#0d1117' : '#6b0119');
+    document.querySelector('meta[name="theme-color"]')?.setAttribute('content', isDark ? '#090d14' : '#f8fafc');
   }, [isDark]);
 
   useEffect(() => {

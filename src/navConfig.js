@@ -9,22 +9,25 @@ export const NAV = {
   events: { label: 'Wydarzenia', short: 'Wydarzenia', icon: 'event' },
   guides: { label: 'Audioprzewodniki i gry', short: 'Przewodniki', icon: 'headphones' },
   votes: { label: 'Budżet i Inwestycje', short: 'Budżet', icon: 'how_to_vote' },
+  aiguide: { label: 'AI Przewodnik', short: 'AI Przewodnik', icon: 'auto_awesome' },
   profile: { label: 'Profil', short: 'Profil', icon: 'person' },
 };
 
-const RESIDENT = ['home', 'parking', 'tickets', 'timetable', 'fuel', 'disruptions', 'events', 'guides', 'votes'];
+const RESIDENT = ['home', 'parking', 'tickets', 'timetable', 'fuel', 'disruptions', 'events', 'guides', 'aiguide', 'votes'];
+// Simplified set for seniors: only the most essential, least complex functions.
+const SENIOR = ['home', 'tickets', 'timetable', 'events', 'guides', 'votes'];
 
 export const ROLE_NAV = {
   adult: RESIDENT,
-  senior: RESIDENT,
+  senior: SENIOR,
   child: ['tickets', 'timetable', 'events'],
-  guest: ['home', 'parking', 'timetable', 'fuel', 'disruptions', 'events', 'guides'],
+  guest: ['home', 'parking', 'timetable', 'fuel', 'disruptions', 'events', 'aiguide', 'guides'],
 };
 
 // the few items kept in the mobile bottom bar (the rest go to the "Więcej" sheet)
 export const ROLE_MOBILE_PRIMARY = {
   adult: ['home', 'parking', 'tickets'],
-  senior: ['home', 'parking', 'tickets'],
+  senior: ['home', 'tickets', 'timetable'],
   child: ['tickets', 'timetable', 'events'],
   guest: ['home', 'parking', 'events'],
 };

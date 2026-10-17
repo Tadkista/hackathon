@@ -12,18 +12,18 @@ export default {
   theme: {
     extend: {
       colors: {
-        /* ── Elegant Toruń Royal Palette (Light Mode defaults) ── */
-        "primary": "#841829",
-        "primary-container": "#841829",
+        /* ── Modern Monochromatic Slate/Zinc Palette (Light Mode) ── */
+        "primary": "#0f172a",
+        "primary-container": "#0f172a",
         "on-primary": "#ffffff",
-        "on-primary-container": "#fecdd3",
-        "primary-fixed": "#ffe4e6",
-        "primary-fixed-dim": "#fecdd3",
-        "on-primary-fixed": "#4c0519",
-        "on-primary-fixed-variant": "#841829",
+        "on-primary-container": "#f8fafc",
+        "primary-fixed": "#f1f5f9",
+        "primary-fixed-dim": "#e2e8f0",
+        "on-primary-fixed": "#0f172a",
+        "on-primary-fixed-variant": "#334155",
 
-        "surface": "#fafafa",
-        "background": "#fafafa",
+        "surface": "#ffffff",
+        "background": "#f8fafc",
         "surface-container-lowest": "#ffffff",
         "surface-container-low": "#f8fafc",
         "surface-container": "#f1f5f9",
@@ -32,20 +32,20 @@ export default {
         "surface-bright": "#ffffff",
         "surface-dim": "#f1f5f9",
         "surface-variant": "#f1f5f9",
-        "surface-tint": "#841829",
+        "surface-tint": "#0f172a",
 
         "on-surface": "#0f172a",
         "on-background": "#0f172a",
         "on-surface-variant": "#475569",
 
-        "secondary": "#526071",
+        "secondary": "#64748b",
         "on-secondary": "#ffffff",
         "secondary-container": "#f1f5f9",
-        "on-secondary-container": "#334155",
+        "on-secondary-container": "#1e293b",
         "secondary-fixed": "#e2e8f0",
         "secondary-fixed-dim": "#cbd5e1",
-        "on-secondary-fixed": "#1e293b",
-        "on-secondary-fixed-variant": "#475569",
+        "on-secondary-fixed": "#0f172a",
+        "on-secondary-fixed-variant": "#334155",
 
         "tertiary": "#059669",
         "on-tertiary": "#ffffff",
@@ -56,7 +56,7 @@ export default {
         "on-tertiary-fixed": "#064e3b",
         "on-tertiary-fixed-variant": "#065f46",
 
-        "error": "#b91c1c",
+        "error": "#ef4444",
         "on-error": "#ffffff",
         "error-container": "#fef2f2",
         "on-error-container": "#991b1b",
@@ -66,7 +66,7 @@ export default {
 
         "inverse-surface": "#0f172a",
         "inverse-on-surface": "#f8fafc",
-        "inverse-primary": "#fda4af",
+        "inverse-primary": "#f8fafc",
       },
       borderRadius: {
         "DEFAULT": "0.375rem",

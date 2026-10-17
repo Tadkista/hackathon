@@ -479,7 +479,7 @@ function ParentApproval({ code, expired, onClose, onApprove, onReject }) {
           <Field id="c-pesel" label="PESEL dziecka" value={pesel} onChange={(v) => setPesel(v.replace(/\D/g, '').slice(0, 11))} error={errors.pesel} inputMode="numeric" maxLength={11} autoComplete="off" />
           <Field id="c-addr" label="Adres zamieszkania" value={address} onChange={setAddress} error={errors.address} autoComplete="off" />
           <label className="flex items-start gap-2.5 text-sm text-on-surface-variant cursor-pointer">
-            <input type="checkbox" checked={agree} onChange={(e) => setAgree(e.target.checked)} className="mt-0.5 w-4 h-4 accent-[#841829]" />
+            <input type="checkbox" checked={agree} onChange={(e) => setAgree(e.target.checked)} className="mt-0.5 w-4 h-4 accent-slate-900 dark:accent-slate-200" />
             <span>Oświadczam, że jestem rodzicem lub opiekunem prawnym dziecka i zatwierdzam utworzenie konta.</span>
           </label>
           {errors.agree && <span className="text-xs text-error font-medium" role="alert">{errors.agree}</span>}
@@ -596,6 +596,13 @@ function PersonalizeStep({ onFinish, role }) {
   const { prefs, setPref } = usePrefs();
   const [twoFaOpen, setTwoFaOpen] = useState(false);
 
+  useEffect(() => {
+    if (role !== 'senior') return;
+    setPref('font', 'xlarge');
+    setPref('ui', 'large');
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [role]);
+
   return (
     <div className="flex flex-col gap-5">
       <div>
@@ -644,7 +651,7 @@ function PersonalizeStep({ onFinish, role }) {
       </div>
 
       {role === 'senior' && (
-        <p className="text-xs text-secondary flex items-center gap-2"><span aria-hidden="true" className="material-symbols-outlined text-fs-16">info</span>Większą czcionkę i wysoki kontrast włączysz w Profilu → Personalizacja.</p>
+        <p className="text-xs text-secondary flex items-center gap-2"><span aria-hidden="true" className="material-symbols-outlined text-fs-16">info</span>Włączyliśmy dla Ciebie większą czcionkę i powiększony interfejs. Możesz to zmienić w Profilu → Personalizacja.</p>
       )}
 
       <PrimaryButton onClick={onFinish} icon="rocket_launch">Zakończ i przejdź do aplikacji</PrimaryButton>

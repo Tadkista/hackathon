@@ -37,11 +37,11 @@ export default function Sidebar({ currentTab, onNavigate, onOpenNotifications })
               aria-current={isActive ? 'page' : undefined}
               className={`w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl transition-all cursor-pointer text-left group ${
                 isActive
-                  ? 'bg-rose-50 text-primary dark:bg-rose-950/40 dark:text-rose-300 font-semibold shadow-xs ring-1 ring-primary/10 dark:ring-rose-500/20'
-                  : 'text-on-surface hover:bg-surface-container-low hover:text-primary transition-colors'
+                  ? 'bg-surface-container text-on-surface dark:bg-surface-container-high dark:text-white font-semibold shadow-xs ring-1 ring-outline-variant/80 dark:ring-white/10'
+                  : 'text-on-surface hover:bg-surface-container-low hover:text-on-surface transition-colors'
               }`}
             >
-              <span aria-hidden="true" className={`material-symbols-outlined text-fs-21 transition-transform ${isActive ? 'scale-105 text-primary dark:text-rose-300' : 'text-secondary group-hover:text-primary'}`}
+              <span aria-hidden="true" className={`material-symbols-outlined text-fs-21 transition-transform ${isActive ? 'scale-105 text-on-surface dark:text-white' : 'text-secondary group-hover:text-on-surface'}`}
                 style={isActive ? { fontVariationSettings: "'FILL' 1" } : {}}
               >
                 {item.icon}
@@ -57,13 +57,13 @@ export default function Sidebar({ currentTab, onNavigate, onOpenNotifications })
 
       <div className="px-3.5 pb-5 flex flex-col space-y-2 border-t border-outline-variant/60 pt-4">
         <button onClick={onOpenNotifications} type="button" className="w-full flex items-center gap-3 px-3.5 py-2 rounded-xl text-on-surface hover:bg-surface-container-low transition-all cursor-pointer text-left group">
-          <span aria-hidden="true" className="material-symbols-outlined text-fs-20 text-secondary group-hover:text-primary">notifications</span>
+          <span aria-hidden="true" className="material-symbols-outlined text-fs-20 text-secondary group-hover:text-on-surface">notifications</span>
           <span className="text-xs text-secondary font-medium group-hover:text-on-surface">Powiadomienia</span>
-          <span className="ml-auto w-2 h-2 rounded-full bg-primary animate-pulse"></span>
+          <span className="ml-auto w-2 h-2 rounded-full bg-on-surface animate-pulse"></span>
         </button>
 
         <button onClick={toggleTheme} type="button" className="w-full flex items-center gap-3 px-3.5 py-2 rounded-xl text-on-surface hover:bg-surface-container-low transition-all cursor-pointer text-left group">
-          <span aria-hidden="true" className="material-symbols-outlined text-fs-20 text-secondary group-hover:text-primary">{isDark ? 'light_mode' : 'dark_mode'}</span>
+          <span aria-hidden="true" className="material-symbols-outlined text-fs-20 text-secondary group-hover:text-on-surface">{isDark ? 'light_mode' : 'dark_mode'}</span>
           <span className="text-xs text-secondary font-medium group-hover:text-on-surface">{isDark ? 'Motyw jasny' : 'Motyw ciemny'}</span>
           <div className="ml-auto">
             <div className={`w-9 h-5 rounded-full transition-colors relative p-0.5 ${isDark ? 'bg-primary' : 'bg-surface-container-high'}`}>

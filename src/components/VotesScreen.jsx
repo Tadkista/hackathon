@@ -1,10 +1,13 @@
 import React, { useState } from 'react';
 import confetti from 'canvas-confetti';
+import { Modal, ModalHeader } from './ui.jsx';
+import { useToast } from '../ToastContext.jsx';
 
 export default function VotesScreen({ isVoteModalOpen, setIsVoteModalOpen }) {
+  const toast = useToast();
   const [activeTab, setActiveTab] = useState('glosowania');
   const [selectedDistrict, setSelectedDistrict] = useState('Wszystkie dzielnice');
-  const [selectedTopic, setSelectedTopic] = useState('Zieleń miejska');
+  const [selectedTopic, setSelectedTopic] = useState('Wszystkie tematy');
   const [hasVoted, setHasVoted] = useState(false);
   const [isSubmittingVote, setIsSubmittingVote] = useState(false);
   const [voteCount, setVoteCount] = useState(3240);
@@ -12,6 +15,8 @@ export default function VotesScreen({ isVoteModalOpen, setIsVoteModalOpen }) {
   const [newReportText, setNewReportText] = useState('');
   const [reportCategory, setReportCategory] = useState('Infrastruktura');
   const [reportSuccess, setReportSuccess] = useState(false);
+  const [isCostModalOpen, setIsCostModalOpen] = useState(false);
+  const [isLogModalOpen, setIsLogModalOpen] = useState(false);
 
   const districts = [
     'Wszystkie dzielnice',
@@ -22,11 +27,69 @@ export default function VotesScreen({ isVoteModalOpen, setIsVoteModalOpen }) {
   ];
 
   const topics = [
+    { name: 'Wszystkie tematy', color: 'bg-surface-container-high' },
     { name: 'Zieleń miejska', color: 'bg-tertiary' },
     { name: 'Transport & MPK', color: 'bg-secondary' },
     { name: 'Infrastruktura', color: 'bg-primary' },
     { name: 'Kultura & Sport', color: 'bg-secondary-container' },
   ];
+
+  const investmentProjects = [
+    {
+      id: 'tramwaj-jar',
+      district: 'Rubinkowo',
+      topic: 'Transport & MPK',
+      budget: '214 mln zł',
+      title: 'Budowa nowej trasy tramwajowej na osiedle Jar',
+      desc: 'Trasa o długości 5,5 km toru pojedynczego wraz z węzłem przesiadkowym i zielonym torowiskiem.',
+      progress: 78,
+      progressColor: 'bg-primary',
+      progressTextColor: 'text-on-surface',
+      note: 'Planowane oddanie: IV kwartał 2025',
+    },
+    {
+      id: 'bulwar-filadelfijski',
+      district: 'Stare Miasto',
+      topic: 'Zieleń miejska',
+      budget: '46 mln zł',
+      title: 'Rewitalizacja Bulwaru Filadelfijskiego',
+      desc: 'Promenada nadrzeczna, schody terenowe, zieleń nadrzeczna i oświetlenie historyczne wzdłuż Wisły.',
+      progress: 92,
+      progressColor: 'bg-emerald-600',
+      progressTextColor: 'text-emerald-600 dark:text-emerald-400',
+      note: 'Etap odbiorów technicznych',
+    },
+    {
+      id: 'szkola-strzalowa',
+      district: 'Mokre',
+      topic: 'Infrastruktura',
+      budget: '76 mln zł',
+      title: 'Budowa Szkoły Podstawowej przy ul. Strzałowej',
+      desc: 'Nowoczesny kompleks oświatowy na lewobrzeżu z basenem, salami gimnastycznymi i przedszkolem.',
+      progress: 44,
+      progressColor: 'bg-primary',
+      progressTextColor: 'text-on-surface',
+      note: 'Stan surowy otwarty',
+    },
+    {
+      id: 'camerimage',
+      district: 'Bydgoskie Przedmieście',
+      topic: 'Kultura & Sport',
+      budget: '38 mln zł',
+      title: 'Europejskie Centrum Filmowe Camerimage',
+      desc: 'Budowa studia filmowego i przestrzeni wystawienniczych na toruńskich Jordankach.',
+      progress: 31,
+      progressColor: 'bg-primary',
+      progressTextColor: 'text-on-surface',
+      note: 'Prace fundamentowe i konstrukcyjne',
+    },
+  ];
+
+  const filteredInvestmentProjects = investmentProjects.filter(
+    (p) =>
+      (selectedDistrict === 'Wszystkie dzielnice' || p.district === selectedDistrict) &&
+      (selectedTopic === 'Wszystkie tematy' || p.topic === selectedTopic)
+  );
 
   const handleConfirmVote = () => {
     setIsSubmittingVote(true);
@@ -62,7 +125,7 @@ export default function VotesScreen({ isVoteModalOpen, setIsVoteModalOpen }) {
     <div className="flex flex-col w-full max-w-7xl mx-auto space-y-6 pb-10">
       {/* Title */}
       <div className="flex items-center gap-2 pt-1 pb-1">
-        <span className="inline-flex items-center justify-center w-8 h-8 rounded-xl bg-rose-50 dark:bg-rose-950/40 text-primary">
+        <span className="inline-flex items-center justify-center w-8 h-8 rounded-xl bg-surface-container text-on-surface">
           <span aria-hidden="true" className="material-symbols-outlined text-fs-20">how_to_vote</span>
         </span>
         <h1 className="text-2xl sm:text-3xl font-bold text-on-surface tracking-tight">
@@ -279,9 +342,7 @@ export default function VotesScreen({ isVoteModalOpen, setIsVoteModalOpen }) {
                   </button>
 
                   <button
-                    onClick={() =>
-                      alert('Kosztorys projektu:\n• Rekultywacja stawu: 180 000 zł\n• Oświetlenie parkowe LED: 120 000 zł\n• Ławki, hamaki i mała architektura: 90 000 zł\n• Łąki kwietne i nasadzenia: 60 000 zł\nSuma: 450 000 zł')
-                    }
+                    onClick={() => setIsCostModalOpen(true)}
                     className="px-3.5 h-11 bg-surface-container-low hover:bg-surface-container text-on-surface rounded-lg font-title-md text-title-md flex items-center justify-center gap-1 transition-colors cursor-pointer"
                     title="Szczegóły i kosztorys"
                     type="button"
@@ -323,7 +384,7 @@ export default function VotesScreen({ isVoteModalOpen, setIsVoteModalOpen }) {
               </div>
               <div className="flex items-center gap-2 self-start sm:self-auto">
                 <button
-                  onClick={() => alert('Pobieranie oficjalnego sprawozdania z wykonania budżetu m. Torunia (PDF z Biuletynu BIP)...')}
+                  onClick={() => toast('Pobieranie oficjalnego sprawozdania z wykonania budżetu m. Torunia (PDF z Biuletynu BIP)...', { type: 'info' })}
                   className="px-3.5 py-2 rounded-xl bg-surface-container hover:bg-surface-container-high text-on-surface text-xs font-semibold flex items-center gap-1.5 transition-colors cursor-pointer"
                 >
                   <span aria-hidden="true" className="material-symbols-outlined text-fs-16">picture_as_pdf</span>
@@ -333,107 +394,39 @@ export default function VotesScreen({ isVoteModalOpen, setIsVoteModalOpen }) {
             </div>
 
             {/* Key Investment Projects */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              {/* Project 1 */}
-              <div className="p-5 rounded-2xl bg-surface-container-lowest border border-outline-variant/60 shadow-card flex flex-col justify-between space-y-3">
-                <div>
-                  <div className="flex items-center justify-between mb-2">
-                    <span className="text-xs font-semibold text-secondary">214 mln zł</span>
+            {filteredInvestmentProjects.length > 0 ? (
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                {filteredInvestmentProjects.map((p) => (
+                  <div key={p.id} className="p-5 rounded-2xl bg-surface-container-lowest border border-outline-variant/60 shadow-card flex flex-col justify-between space-y-3">
+                    <div>
+                      <div className="flex items-center justify-between mb-2">
+                        <span className="text-xs font-semibold text-secondary">{p.budget}</span>
+                        <span className="text-fs-11 text-secondary flex items-center gap-0.5">
+                          <span aria-hidden="true" className="material-symbols-outlined text-fs-13">pin_drop</span>
+                          {p.district}
+                        </span>
+                      </div>
+                      <h3 className="font-bold text-base text-on-surface">{p.title}</h3>
+                      <p className="text-secondary text-xs mt-1">{p.desc}</p>
+                    </div>
+                    <div className="space-y-1.5 pt-2 border-t border-outline-variant/40">
+                      <div className="flex justify-between text-xs">
+                        <span className="text-secondary">Zaawansowanie prac:</span>
+                        <span className={`font-bold ${p.progressTextColor}`}>{p.progress}%</span>
+                      </div>
+                      <div className="w-full h-2 rounded-full bg-surface-container overflow-hidden">
+                        <div className={`h-full ${p.progressColor} rounded-full`} style={{ width: `${p.progress}%` }}></div>
+                      </div>
+                      <span className="text-fs-11 text-secondary">{p.note}</span>
+                    </div>
                   </div>
-                  <h3 className="font-bold text-base text-on-surface">
-                    Budowa nowej trasy tramwajowej na osiedle Jar
-                  </h3>
-                  <p className="text-secondary text-xs mt-1">
-                    Trasa o długości 5,5 km toru pojedynczego wraz z węzłem przesiadkowym i zielonym torowiskiem.
-                  </p>
-                </div>
-                <div className="space-y-1.5 pt-2 border-t border-outline-variant/40">
-                  <div className="flex justify-between text-xs">
-                    <span className="text-secondary">Zaawansowanie prac:</span>
-                    <span className="font-bold text-on-surface">78%</span>
-                  </div>
-                  <div className="w-full h-2 rounded-full bg-surface-container overflow-hidden">
-                    <div className="h-full bg-primary rounded-full" style={{ width: '78%' }}></div>
-                  </div>
-                  <span className="text-fs-11 text-secondary">Planowane oddanie: IV kwartał 2025</span>
-                </div>
+                ))}
               </div>
-
-              {/* Project 2 */}
-              <div className="p-5 rounded-2xl bg-surface-container-lowest border border-outline-variant/60 shadow-card flex flex-col justify-between space-y-3">
-                <div>
-                  <div className="flex items-center justify-between mb-2">
-                    <span className="text-xs font-semibold text-secondary">46 mln zł</span>
-                  </div>
-                  <h3 className="font-bold text-base text-on-surface">
-                    Rewitalizacja Bulwaru Filadelfijskiego
-                  </h3>
-                  <p className="text-secondary text-xs mt-1">
-                    Promenada nadrzeczna, schody terenowe, zieleń nadrzeczna i oświetlenie historyczne wzdłuż Wisły.
-                  </p>
-                </div>
-                <div className="space-y-1.5 pt-2 border-t border-outline-variant/40">
-                  <div className="flex justify-between text-xs">
-                    <span className="text-secondary">Zaawansowanie prac:</span>
-                    <span className="font-bold text-emerald-600 dark:text-emerald-400">92%</span>
-                  </div>
-                  <div className="w-full h-2 rounded-full bg-surface-container overflow-hidden">
-                    <div className="h-full bg-emerald-600 rounded-full" style={{ width: '92%' }}></div>
-                  </div>
-                  <span className="text-fs-11 text-secondary">Etap odbiorów technicznych</span>
-                </div>
+            ) : (
+              <div className="p-6 rounded-2xl bg-surface-container-lowest border border-outline-variant/60 text-center text-secondary text-sm">
+                Brak inwestycji spełniających wybrane filtry (rejon / temat).
               </div>
-
-              {/* Project 3 */}
-              <div className="p-5 rounded-2xl bg-surface-container-lowest border border-outline-variant/60 shadow-card flex flex-col justify-between space-y-3">
-                <div>
-                  <div className="flex items-center justify-between mb-2">
-                    <span className="text-xs font-semibold text-secondary">76 mln zł</span>
-                  </div>
-                  <h3 className="font-bold text-base text-on-surface">
-                    Budowa Szkoły Podstawowej przy ul. Strzałowej
-                  </h3>
-                  <p className="text-secondary text-xs mt-1">
-                    Nowoczesny kompleks oświatowy na lewobrzeżu z basenem, salami gimnastycznymi i przedszkolem.
-                  </p>
-                </div>
-                <div className="space-y-1.5 pt-2 border-t border-outline-variant/40">
-                  <div className="flex justify-between text-xs">
-                    <span className="text-secondary">Zaawansowanie prac:</span>
-                    <span className="font-bold text-on-surface">44%</span>
-                  </div>
-                  <div className="w-full h-2 rounded-full bg-surface-container overflow-hidden">
-                    <div className="h-full bg-primary rounded-full" style={{ width: '44%' }}></div>
-                  </div>
-                  <span className="text-fs-11 text-secondary">Stan surowy otwarty</span>
-                </div>
-              </div>
-
-              {/* Project 4 */}
-              <div className="p-5 rounded-2xl bg-surface-container-lowest border border-outline-variant/60 shadow-card flex flex-col justify-between space-y-3">
-                <div>
-                  <div className="flex items-center justify-between mb-2">
-                    <span className="text-xs font-semibold text-secondary">38 mln zł</span>
-                  </div>
-                  <h3 className="font-bold text-base text-on-surface">
-                    Europejskie Centrum Filmowe Camerimage
-                  </h3>
-                  <p className="text-secondary text-xs mt-1">
-                    Budowa studia filmowego i przestrzeni wystawienniczych na toruńskich Jordankach.
-                  </p>
-                </div>
-                <div className="space-y-1.5 pt-2 border-t border-outline-variant/40">
-                  <div className="flex justify-between text-xs">
-                    <span className="text-secondary">Zaawansowanie prac:</span>
-                    <span className="font-bold text-on-surface">31%</span>
-                  </div>
-                  <div className="w-full h-2 rounded-full bg-surface-container overflow-hidden">
-                    <div className="h-full bg-primary rounded-full" style={{ width: '31%' }}></div>
-                  </div>
-                  <span className="text-fs-11 text-secondary">Prace fundamentowe i konstrukcyjne</span>
-                </div>
-              </div>
-            </div>
+            )}
 
             {/* Budget Structure Percentages */}
             <div className="p-5 rounded-2xl bg-surface-container-lowest border border-outline shadow-card flex flex-col space-y-3">
@@ -508,7 +501,7 @@ export default function VotesScreen({ isVoteModalOpen, setIsVoteModalOpen }) {
                   <span className="font-label-sm text-label-sm text-secondary">842 odpowiedzi</span>
                 </div>
                 <button
-                  onClick={() => alert('Ankieta konsultacyjna dot. linii MZK Jar:\nFormularz otwiera się w miejskim systemie konsultacji.')}
+                  onClick={() => toast('Ankieta konsultacyjna dot. linii MZK Jar: formularz otwiera się w miejskim systemie konsultacji.', { type: 'info' })}
                   className="h-9 px-3.5 bg-surface-container-high hover:bg-surface-container text-on-surface rounded-lg font-label-lg text-label-lg flex items-center gap-1.5 transition-colors cursor-pointer font-medium"
                   type="button"
                 >
@@ -563,7 +556,7 @@ export default function VotesScreen({ isVoteModalOpen, setIsVoteModalOpen }) {
                   </span>
                 </div>
                 <button
-                  onClick={() => alert('Dziennik prac zgłoszenia #TRN-ZGL-4912:\n• 15.10: Przyjęcie zgłoszenia\n• 16.10: Wizja lokalna MZD\n• Status: Zakup opraw doświetlających')}
+                  onClick={() => setIsLogModalOpen(true)}
                   className="text-primary font-label-sm text-label-sm font-semibold hover:underline flex items-center cursor-pointer"
                   type="button"
                 >
@@ -731,6 +724,58 @@ export default function VotesScreen({ isVoteModalOpen, setIsVoteModalOpen }) {
             )}
           </div>
         </div>
+      )}
+
+      {/* Cost Breakdown Modal */}
+      {isCostModalOpen && (
+        <Modal onClose={() => setIsCostModalOpen(false)} labelledBy="cost-modal-title">
+          <ModalHeader title="Kosztorys projektu" icon="description" onClose={() => setIsCostModalOpen(false)} id="cost-modal-title" />
+          <p className="font-body-sm text-body-sm text-secondary">
+            Modernizacja Parku na Bydgoskim Przedmieściu – strefa rekreacji i bioróżnorodności
+          </p>
+          <div className="flex flex-col gap-2">
+            {[
+              ['Rekultywacja stawu', '180 000 zł'],
+              ['Oświetlenie parkowe LED', '120 000 zł'],
+              ['Ławki, hamaki i mała architektura', '90 000 zł'],
+              ['Łąki kwietne i nasadzenia', '60 000 zł'],
+            ].map(([label, value]) => (
+              <div key={label} className="flex items-center justify-between bg-surface-container-low rounded-lg p-3">
+                <span className="font-body-sm text-body-sm text-on-surface">{label}</span>
+                <span className="font-title-sm text-title-sm text-on-surface font-semibold">{value}</span>
+              </div>
+            ))}
+            <div className="flex items-center justify-between bg-primary-fixed rounded-lg p-3 mt-1">
+              <span className="font-title-sm text-title-sm text-on-primary-fixed-variant font-semibold">Suma</span>
+              <span className="font-title-md text-title-md text-on-primary-fixed-variant font-bold">450 000 zł</span>
+            </div>
+          </div>
+        </Modal>
+      )}
+
+      {/* Work Log Modal */}
+      {isLogModalOpen && (
+        <Modal onClose={() => setIsLogModalOpen(false)} labelledBy="log-modal-title">
+          <ModalHeader title="Dziennik prac" icon="build_circle" onClose={() => setIsLogModalOpen(false)} id="log-modal-title" />
+          <p className="font-body-sm text-body-sm text-secondary">
+            Zgłoszenie #TRN-ZGL-4912 — Uzupełnienie doświetlenia przejścia dla pieszych ul. Grudziądzka
+          </p>
+          <div className="flex flex-col gap-2">
+            {[
+              { date: '15.10', text: 'Przyjęcie zgłoszenia', done: true },
+              { date: '16.10', text: 'Wizja lokalna MZD', done: true },
+              { date: 'w toku', text: 'Zakup opraw doświetlających', done: false },
+            ].map((step, i) => (
+              <div key={i} className="flex items-center gap-3 bg-surface-container-low rounded-lg p-3">
+                <span aria-hidden="true" className={`material-symbols-outlined text-fs-18 ${step.done ? 'text-emerald-600' : 'text-secondary'}`}>
+                  {step.done ? 'check_circle' : 'pending'}
+                </span>
+                <span className="font-label-sm text-label-sm text-secondary shrink-0">{step.date}</span>
+                <span className="font-body-sm text-body-sm text-on-surface">{step.text}</span>
+              </div>
+            ))}
+          </div>
+        </Modal>
       )}
     </div>
   );
