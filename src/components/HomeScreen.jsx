@@ -1,5 +1,7 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useAuth } from '../AuthContext.jsx';
+import { useWeather } from '../WeatherContext.jsx';
+import WeatherModal from './WeatherModal.jsx';
 
 const GUEST_TILES = [
   { id: 'timetable', icon: 'departure_board', title: 'Rozkład jazdy', sub: 'MZK i pociągi' },
@@ -18,6 +20,8 @@ const CITY_TILES = [
 
 export default function HomeScreen({ onNavigate, onTriggerVoteModal, onOpenQr }) {
   const { user, isGuest } = useAuth();
+  const { weather } = useWeather();
+  const [isWeatherModalOpen, setIsWeatherModalOpen] = useState(false);
   const openQr = onOpenQr || (() => onNavigate('tickets'));
   const civicTab = isGuest ? 'events' : 'votes';
 
@@ -41,21 +45,31 @@ export default function HomeScreen({ onNavigate, onTriggerVoteModal, onOpenQr })
         </div>
 
         {/* Live Weather Compact Badge */}
-        <div className="flex w-full sm:w-auto items-center gap-3 px-4 py-2.5 rounded-2xl bg-surface-container-lowest border border-outline-variant/60 shadow-card sm:self-auto">
-          <div className="w-9 h-9 rounded-xl bg-amber-500/10 text-amber-600 dark:text-amber-400 flex items-center justify-center shrink-0">
-            <span aria-hidden="true" className="material-symbols-outlined text-fs-20">wb_sunny</span>
+        <button
+          type="button"
+          onClick={() => setIsWeatherModalOpen(true)}
+          className="group flex w-full sm:w-auto items-center gap-3 px-4 py-2.5 rounded-2xl bg-surface-container-lowest border border-outline-variant/60 shadow-card hover:border-outline hover:shadow-card-hover transition-all text-left cursor-pointer sm:self-auto focus:outline-none"
+          title="Kliknij, aby wyświetlić szczegółową prognozę pogody dla Torunia"
+        >
+          <div className={`w-9 h-9 rounded-xl ${weather.iconBgColor || 'bg-amber-500/10'} flex items-center justify-center shrink-0 transition-transform group-hover:scale-105`}>
+            <span aria-hidden="true" className={`material-symbols-outlined text-fs-20 ${weather.iconColor || 'text-amber-500'}`}>
+              {weather.icon}
+            </span>
           </div>
-          <div className="flex flex-col">
+          <div className="flex flex-col min-w-0">
             <div className="flex items-center gap-1.5">
-              <span className="font-bold text-on-surface text-body-md">18°C</span>
-              <span className="text-xs text-secondary">Słonecznie</span>
+              <span className="font-bold text-on-surface text-body-md">{weather.temperature}°C</span>
+              <span className="text-xs text-secondary truncate">{weather.conditionText}</span>
+              <span aria-hidden="true" className="material-symbols-outlined text-fs-14 text-secondary/60 opacity-0 group-hover:opacity-100 transition-opacity">
+                open_in_new
+              </span>
             </div>
-            <div className="flex items-center gap-1 text-fs-11 text-tertiary font-medium">
-              <span className="w-1.5 h-1.5 rounded-full bg-tertiary"></span>
-              <span>AQI 22 • Czyste powietrze</span>
+            <div className="flex items-center gap-1.5 text-fs-11 text-secondary font-medium">
+              <span className={`w-1.5 h-1.5 rounded-full ${weather.aqiDotClass || 'bg-emerald-500'} shrink-0`}></span>
+              <span className="truncate">AQI {weather.aqi} • {weather.aqiLabel}</span>
             </div>
           </div>
-        </div>
+        </button>
       </section>
 
       {/* ── Main Dashboard Responsive Grid ── */}
@@ -397,20 +411,34 @@ export default function HomeScreen({ onNavigate, onTriggerVoteModal, onOpenQr })
             </div>
 
             {/* Weather & Air Quality row */}
-            <div className="p-3.5 rounded-xl bg-surface-container-low flex items-center justify-between">
-              <div className="flex items-center gap-3">
-                <span aria-hidden="true" className="material-symbols-outlined text-fs-24 text-amber-500">wb_sunny</span>
-                <div>
-                  <div className="text-xs font-semibold text-on-surface">18°C, Słonecznie</div>
-                  <div className="text-fs-11 text-secondary">Stacja pomiarowa: Wały gen. Sikorskiego</div>
+            <button
+              type="button"
+              onClick={() => setIsWeatherModalOpen(true)}
+              className="group w-full p-3.5 rounded-xl bg-surface-container-low hover:bg-surface-container border border-transparent hover:border-outline-variant/60 transition-all flex items-center justify-between text-left cursor-pointer focus:outline-none"
+              title="Kliknij, aby wyświetlić pełny raport stacji meteorologicznej"
+            >
+              <div className="flex items-center gap-3 min-w-0">
+                <span aria-hidden="true" className={`material-symbols-outlined text-fs-24 ${weather.iconColor || 'text-amber-500'} shrink-0 transition-transform group-hover:scale-110`}>
+                  {weather.icon}
+                </span>
+                <div className="min-w-0">
+                  <div className="text-xs font-semibold text-on-surface flex items-center gap-1">
+                    <span>{weather.temperature}°C, {weather.conditionText}</span>
+                    <span aria-hidden="true" className="material-symbols-outlined text-fs-13 text-secondary/60 opacity-0 group-hover:opacity-100 transition-opacity">
+                      info
+                    </span>
+                  </div>
+                  <div className="text-fs-11 text-secondary truncate">
+                    {weather.stationName}
+                  </div>
                 </div>
               </div>
-              <div className="text-right">
-                <span className="inline-block px-2 py-0.5 rounded-md bg-emerald-50 dark:bg-emerald-950/40 text-emerald-700 dark:text-emerald-400 font-semibold text-fs-11">
-                  AQI 22 • Dobre
+              <div className="text-right shrink-0 ml-2">
+                <span className={`inline-block px-2 py-0.5 rounded-md font-semibold text-fs-11 ${weather.aqiBadgeClass}`}>
+                  AQI {weather.aqi} • {weather.aqiLabel}
                 </span>
               </div>
-            </div>
+            </button>
 
             {/* City Traffic Alert - Monochromatic clean tone */}
             <div className="p-3.5 rounded-xl bg-surface-container border border-outline-variant/80 flex items-start gap-3">
@@ -565,6 +593,12 @@ export default function HomeScreen({ onNavigate, onTriggerVoteModal, onOpenQr })
         </div>
 
       </div>
+
+      {/* ── Weather & Air Quality Modal ── */}
+      <WeatherModal
+        isOpen={isWeatherModalOpen}
+        onClose={() => setIsWeatherModalOpen(false)}
+      />
     </div>
   );
 }

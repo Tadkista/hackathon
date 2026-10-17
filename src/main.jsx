@@ -4,6 +4,7 @@ import App from './App.jsx';
 import { ThemeProvider } from './ThemeContext.jsx';
 import { PrefsProvider } from './PrefsContext.jsx';
 import { AuthProvider } from './AuthContext.jsx';
+import { WeatherProvider } from './WeatherContext.jsx';
 import './index.css';
 
 ReactDOM.createRoot(document.getElementById('root')).render(
@@ -11,7 +12,9 @@ ReactDOM.createRoot(document.getElementById('root')).render(
     <ThemeProvider>
       <PrefsProvider>
         <AuthProvider>
-          <App />
+          <WeatherProvider>
+            <App />
+          </WeatherProvider>
         </AuthProvider>
       </PrefsProvider>
     </ThemeProvider>
