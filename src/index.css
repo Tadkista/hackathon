@@ -1,0 +1,713 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    font-size: calc(100% * var(--ui-scale, 1));
+  }
+
+  html, body {
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    background-color: #f8fafc;
+    color: #0f172a;
+    transition: background-color 0.25s ease, color 0.25s ease;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  body {
+    overscroll-behavior-y: none;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .dark {
+    --tw-bg-opacity: 1;
+    color-scheme: dark;
+  }
+
+  .dark html, .dark body {
+    background-color: #090d14;
+    color: #f8fafc;
+  }
+
+  .pb-safe {
+    padding-bottom: calc(env(safe-area-inset-bottom, 0px) + 0.5rem);
+  }
+  .pt-safe {
+    padding-top: env(safe-area-inset-top, 0px);
+  }
+}
+
+/* ═══════════════════════════════════════════════
+   UNIFORM SURFACE & TEXT HIERARCHY (NO NEON COLORS)
+   ═══════════════════════════════════════════════ */
+
+/* Dark Mode Surfaces */
+.dark .bg-surface { background-color: #090d14 !important; }
+.dark .bg-background { background-color: #090d14 !important; }
+.dark .bg-surface-container-lowest { background-color: #101623 !important; }
+.dark .bg-surface-container-low { background-color: #141c2c !important; }
+.dark .bg-surface-container { background-color: #192338 !important; }
+.dark .bg-surface-container-high { background-color: #212d46 !important; }
+.dark .bg-surface-container-highest { background-color: #293856 !important; }
+.dark .bg-surface-bright { background-color: #151d2e !important; }
+.dark .bg-surface-dim { background-color: #070a0f !important; }
+.dark .bg-surface-variant { background-color: #192338 !important; }
+
+/* Surface with opacity / backdrop */
+.dark .bg-surface-container-lowest\/80 { background-color: rgba(16, 22, 35, 0.85) !important; }
+.dark .bg-surface-container-lowest\/90 { background-color: rgba(16, 22, 35, 0.92) !important; }
+.dark .bg-surface-container-lowest\/95 { background-color: rgba(16, 22, 35, 0.96) !important; }
+.dark .bg-surface\/80 { background-color: rgba(9, 13, 20, 0.85) !important; }
+
+/* Dark Mode Text Colors - Clean Neutral Palette */
+.dark .text-on-surface { color: #f8fafc !important; }
+.dark .text-on-background { color: #f8fafc !important; }
+.dark .text-secondary { color: #94a3b8 !important; }
+.dark .text-on-surface-variant { color: #cbd5e1 !important; }
+.dark .text-primary { color: #f8fafc !important; }
+
+/* Outlines & Borders */
+.dark .text-outline { color: #64748b !important; }
+.dark .border-outline-variant { border-color: rgba(255, 255, 255, 0.08) !important; }
+.dark .border-surface-container { border-color: rgba(255, 255, 255, 0.08) !important; }
+.dark .border-surface-container-high { border-color: rgba(255, 255, 255, 0.12) !important; }
+.dark .divide-surface-container > * + * { border-color: rgba(255, 255, 255, 0.08) !important; }
+
+/* Rings & Shadows (neutral, no neon glow) */
+.dark .ring-primary { --tw-ring-color: rgba(255, 255, 255, 0.2) !important; }
+.dark .ring-primary\/10 { --tw-ring-color: rgba(255, 255, 255, 0.08) !important; }
+.dark .ring-primary\/20 { --tw-ring-color: rgba(255, 255, 255, 0.15) !important; }
+.dark .ring-offset-2 { --tw-ring-offset-color: #090d14 !important; }
+
+.dark .shadow-sm { box-shadow: 0 1px 3px rgba(0, 0, 0, 0.5) !important; }
+.dark .shadow-md { box-shadow: 0 4px 14px rgba(0, 0, 0, 0.6) !important; }
+.dark .shadow-lg { box-shadow: 0 8px 24px rgba(0, 0, 0, 0.65) !important; }
+.dark .shadow-xl { box-shadow: 0 12px 36px rgba(0, 0, 0, 0.7) !important; }
+
+/* Form inputs */
+.dark select,
+.dark input,
+.dark textarea {
+  background-color: #141c2c !important;
+  color: #f8fafc !important;
+  border-color: rgba(255, 255, 255, 0.12) !important;
+}
+.dark select option {
+  background-color: #101623;
+  color: #f8fafc;
+}
+
+/* ═══════════════════════════════════════════════
+   UNIFORM TILES & CARDS (WSZYSTKO MA BYĆ JEDNAKOWE)
+   All tiles on the dashboard share identical styling
+   ═══════════════════════════════════════════════ */
+
+/* 1. Quick Access 4 Tiles in Grid: ensure 100% uniformity */
+.grid.grid-cols-2.sm\:grid-cols-4 > button,
+.grid.grid-cols-2.sm\:grid-cols-4 > a {
+  background-color: #ffffff !important;
+  border: 1px solid rgba(226, 232, 240, 0.8) !important;
+  color: #0f172a !important;
+  box-shadow: 0 1px 3px rgba(15, 23, 42, 0.04), 0 4px 12px rgba(15, 23, 42, 0.03) !important;
+}
+.grid.grid-cols-2.sm\:grid-cols-4 > button:hover,
+.grid.grid-cols-2.sm\:grid-cols-4 > a:hover {
+  border-color: rgba(203, 213, 225, 0.9) !important;
+  box-shadow: 0 6px 18px rgba(15, 23, 42, 0.06) !important;
+}
+.grid.grid-cols-2.sm\:grid-cols-4 > button span.font-semibold {
+  color: #0f172a !important;
+}
+.grid.grid-cols-2.sm\:grid-cols-4 > button span.text-fs-11,
+.grid.grid-cols-2.sm\:grid-cols-4 > button div > span:last-child {
+  color: #526071 !important;
+}
+.grid.grid-cols-2.sm\:grid-cols-4 > button .material-symbols-outlined:not(.text-fs-22) {
+  color: #526071 !important;
+}
+.grid.grid-cols-2.sm\:grid-cols-4 > button div.w-10.h-10 {
+  background-color: #f1f5f9 !important;
+  color: #334155 !important;
+}
+.grid.grid-cols-2.sm\:grid-cols-4 > button div.w-10.h-10 .material-symbols-outlined {
+  color: #334155 !important;
+}
+
+/* Dark Mode: Quick Access Tiles */
+.dark .grid.grid-cols-2.sm\:grid-cols-4 > button,
+.dark .grid.grid-cols-2.sm\:grid-cols-4 > a {
+  background-color: #101623 !important;
+  border-color: rgba(255, 255, 255, 0.08) !important;
+  color: #f8fafc !important;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4) !important;
+}
+.dark .grid.grid-cols-2.sm\:grid-cols-4 > button:hover,
+.dark .grid.grid-cols-2.sm\:grid-cols-4 > a:hover {
+  border-color: rgba(255, 255, 255, 0.16) !important;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.55) !important;
+}
+.dark .grid.grid-cols-2.sm\:grid-cols-4 > button span.font-semibold {
+  color: #f8fafc !important;
+}
+.dark .grid.grid-cols-2.sm\:grid-cols-4 > button span.text-fs-11,
+.dark .grid.grid-cols-2.sm\:grid-cols-4 > button div > span:last-child {
+  color: #94a3b8 !important;
+}
+.dark .grid.grid-cols-2.sm\:grid-cols-4 > button .material-symbols-outlined:not(.text-fs-22) {
+  color: #94a3b8 !important;
+}
+.dark .grid.grid-cols-2.sm\:grid-cols-4 > button div.w-10.h-10 {
+  background-color: #192338 !important;
+  color: #f8fafc !important;
+}
+.dark .grid.grid-cols-2.sm\:grid-cols-4 > button div.w-10.h-10 .material-symbols-outlined {
+  color: #f8fafc !important;
+}
+
+/* 3. Card Icon Containers: neutral and uniform (no random color boxes) */
+.rounded-xl.bg-amber-500\/10,
+.rounded-xl.bg-emerald-50,
+.rounded-xl.bg-rose-50,
+span.rounded-xl[class*="bg-rose-50"] {
+  background-color: #f1f5f9 !important;
+  color: #334155 !important;
+}
+.rounded-xl.bg-amber-500\/10 .material-symbols-outlined,
+.rounded-xl.bg-emerald-50 .material-symbols-outlined,
+.rounded-xl.bg-rose-50 .material-symbols-outlined,
+span.rounded-xl[class*="bg-rose-50"] .material-symbols-outlined {
+  color: #334155 !important;
+}
+
+.dark .rounded-xl.bg-amber-500\/10,
+.dark .rounded-xl.bg-emerald-50,
+.dark .rounded-xl.bg-rose-50,
+.dark div[class*="dark:bg-emerald-950"],
+.dark span.rounded-xl[class*="dark:bg-rose-950"] {
+  background-color: #192338 !important;
+  color: #f8fafc !important;
+}
+.dark .rounded-xl.bg-amber-500\/10 .material-symbols-outlined,
+.dark .rounded-xl.bg-emerald-50 .material-symbols-outlined,
+.dark .rounded-xl.bg-rose-50 .material-symbols-outlined,
+.dark div[class*="dark:bg-emerald-950"] .material-symbols-outlined,
+.dark span.rounded-xl[class*="dark:bg-rose-950"] .material-symbols-outlined,
+.dark .rounded-xl .material-symbols-outlined.text-amber-500,
+.dark .rounded-xl .material-symbols-outlined.text-amber-600 {
+  color: #cbd5e1 !important;
+}
+
+/* ═══════════════════════════════════════════════
+   UNIFORM BUTTONS, NAVIGATION & ACTIONS
+   ═══════════════════════════════════════════════ */
+
+/* Primary Action Buttons - Monochromatic Slate */
+button.bg-primary:not(.grid.grid-cols-2.sm\:grid-cols-4 > button),
+a.bg-primary:not(.grid.grid-cols-2.sm\:grid-cols-4 > a) {
+  background-color: #0f172a !important;
+  color: #ffffff !important;
+  border: 1px solid #0f172a !important;
+  box-shadow: 0 1px 3px rgba(15, 23, 42, 0.12), 0 1px 2px rgba(15, 23, 42, 0.08) !important;
+}
+button.bg-primary:not(.grid.grid-cols-2.sm\:grid-cols-4 > button):hover,
+a.bg-primary:not(.grid.grid-cols-2.sm\:grid-cols-4 > a):hover {
+  background-color: #1e293b !important;
+  border-color: #1e293b !important;
+}
+
+.dark button.bg-primary:not(.grid.grid-cols-2.sm\:grid-cols-4 > button),
+.dark a.bg-primary:not(.grid.grid-cols-2.sm\:grid-cols-4 > a),
+.dark .bg-primary {
+  background-color: #1e293b !important;
+  border: 1px solid rgba(255, 255, 255, 0.12) !important;
+  color: #f8fafc !important;
+}
+.dark button.bg-primary:not(.grid.grid-cols-2.sm\:grid-cols-4 > button):hover,
+.dark a.bg-primary:not(.grid.grid-cols-2.sm\:grid-cols-4 > a):hover,
+.dark .bg-primary:hover {
+  background-color: #283548 !important;
+}
+
+.dark .bg-primary-container { background-color: #192338 !important; }
+.dark .text-on-primary { color: #ffffff !important; }
+.dark .text-on-primary-container { color: #f8fafc !important; }
+.dark .bg-primary-fixed { background-color: #192338 !important; }
+.dark .text-on-primary-fixed { color: #f8fafc !important; }
+.dark .text-on-primary-fixed-variant { color: #cbd5e1 !important; }
+.dark .text-primary-container { color: #cbd5e1 !important; }
+.dark .bg-primary-fixed-dim { background-color: #141c2c !important; }
+
+/* Uniform Sidebar Navigation Items */
+.desktop-sidebar button.bg-rose-50,
+.desktop-sidebar button[class*="dark:bg-rose-950"] {
+  background-color: #f1f5f9 !important;
+  color: #0f172a !important;
+  box-shadow: none !important;
+}
+.desktop-sidebar button.bg-rose-50 .material-symbols-outlined,
+.desktop-sidebar button[class*="dark:bg-rose-950"] .material-symbols-outlined {
+  color: #0f172a !important;
+}
+
+.dark .desktop-sidebar button.bg-rose-50,
+.dark .desktop-sidebar button[class*="dark:bg-rose-950"] {
+  background-color: #192338 !important;
+  color: #f8fafc !important;
+  box-shadow: none !important;
+}
+.dark .desktop-sidebar button.bg-rose-50 .material-symbols-outlined,
+.dark .desktop-sidebar button[class*="dark:bg-rose-950"] .material-symbols-outlined {
+  color: #f8fafc !important;
+}
+
+/* Sidebar MIASTO Brand Tag: neutral */
+span.rounded[class*="bg-rose-100"],
+span.rounded[class*="dark:bg-rose-950"] {
+  background-color: #e2e8f0 !important;
+  color: #334155 !important;
+}
+.dark span.rounded[class*="bg-rose-100"],
+.dark span.rounded[class*="dark:bg-rose-950"] {
+  background-color: #192338 !important;
+  color: #cbd5e1 !important;
+}
+
+/* Uniform Neutral Progress Bar */
+div.h-full.bg-primary.rounded-full {
+  background-color: #64748b !important;
+}
+.dark div.h-full.bg-primary.rounded-full {
+  background-color: #475569 !important;
+}
+
+/* Secondary & Tertiary General Overrides */
+.dark .bg-secondary { background-color: #64748b !important; }
+.dark .text-secondary { color: #94a3b8 !important; }
+.dark .bg-secondary-container { background-color: #192338 !important; }
+.dark .text-on-secondary { color: #ffffff !important; }
+.dark .text-on-secondary-container { color: #cbd5e1 !important; }
+.dark .text-on-secondary-fixed { color: #cbd5e1 !important; }
+.dark .text-on-secondary-fixed-variant { color: #94a3b8 !important; }
+
+/* ═══════════════════════════════════════════════
+   INFORMATIONAL BADGES ON TILES & CARDS
+   (JEDYNIE BADGE INFORMACYJNE MAJĄ KOLORY)
+   ═══════════════════════════════════════════════ */
+
+/* 1. Green / Emerald Badges: Eco, Air Quality, Active Status */
+span.rounded-md[class*="bg-emerald-50"],
+span.rounded-md[class*="dark:bg-emerald-950"],
+span.rounded-full[class*="bg-tertiary"] {
+  background-color: rgba(16, 185, 129, 0.16) !important;
+  color: #065f46 !important;
+  border: 1px solid rgba(16, 185, 129, 0.28) !important;
+}
+.dark span.rounded-md[class*="bg-emerald-50"],
+.dark span.rounded-md[class*="dark:bg-emerald-950"],
+.dark span.rounded-full[class*="bg-tertiary"] {
+  background-color: rgba(16, 185, 129, 0.18) !important;
+  color: #34d399 !important;
+  border: 1px solid rgba(16, 185, 129, 0.35) !important;
+}
+
+/* Status text on badges */
+div.flex.items-center.gap-1.text-tertiary,
+span.inline-flex.items-center.text-tertiary,
+span[class*="text-emerald-700"] {
+  color: #047857 !important;
+}
+.dark div.flex.items-center.gap-1.text-tertiary,
+.dark span.inline-flex.items-center.text-tertiary,
+.dark span[class*="dark:text-emerald-400"],
+.dark span[class*="text-tertiary-container"] {
+  color: #34d399 !important;
+}
+
+/* Status indicator dots */
+span.rounded-full.bg-tertiary:is(.w-1\.5, .w-2, .w-2\.5),
+span.rounded-full[class*="bg-emerald-500"]:is(.w-1\.5, .w-2, .w-2\.5),
+span.rounded-full.bg-tertiary-fixed:is(.w-1\.5, .w-2, .w-2\.5) {
+  background-color: #10b981 !important;
+  border: none !important;
+}
+
+/* 2. Warnings, Traffic Alerts & Notifications (Monochromatic) */
+div[class*="bg-amber-50/"] {
+  background-color: #f1f5f9 !important;
+  border: 1px solid #e2e8f0 !important;
+}
+div[class*="bg-amber-50/"] span.font-semibold,
+div[class*="bg-amber-50/"] span[class*="text-amber-"] {
+  color: #0f172a !important;
+}
+div[class*="bg-amber-50/"] p {
+  color: #475569 !important;
+}
+div[class*="bg-amber-50/"] .material-symbols-outlined {
+  color: #0f172a !important;
+}
+div[class*="bg-amber-50/"] button {
+  color: #0f172a !important;
+}
+
+.dark div[class*="bg-amber-50/"],
+.dark div[class*="dark:bg-amber-950/30"] {
+  background-color: #141c2c !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+}
+.dark div[class*="bg-amber-50/"] span.font-semibold,
+.dark div[class*="dark:bg-amber-950/30"] span.font-semibold,
+.dark div[class*="bg-amber-50/"] span[class*="text-amber-"],
+.dark div[class*="dark:bg-amber-950/30"] span[class*="text-amber-"] {
+  color: #f8fafc !important;
+}
+.dark div[class*="bg-amber-50/"] p,
+.dark div[class*="dark:bg-amber-950/30"] p {
+  color: #cbd5e1 !important;
+}
+.dark div[class*="bg-amber-50/"] .material-symbols-outlined,
+.dark div[class*="dark:bg-amber-950/30"] .material-symbols-outlined {
+  color: #f8fafc !important;
+}
+.dark div[class*="bg-amber-50/"] button,
+.dark div[class*="dark:bg-amber-950/30"] button {
+  color: #f8fafc !important;
+}
+
+/* Remaining days / Countdown badges */
+span.rounded-full[class*="bg-white/20"],
+span[class*="bg-black/40"] {
+  background-color: rgba(245, 158, 11, 0.22) !important;
+  color: #fef3c7 !important;
+  border: 1px solid rgba(245, 158, 11, 0.38) !important;
+}
+
+/* 3. Category Badge: Kultura (Purple Accent) */
+span.rounded-md[class*="bg-rose-50"],
+span.rounded-md[class*="dark:bg-rose-950"] {
+  background-color: rgba(168, 85, 247, 0.12) !important;
+  color: #7e22ce !important;
+  border: 1px solid rgba(168, 85, 247, 0.25) !important;
+}
+.dark span.rounded-md[class*="bg-rose-50"],
+.dark span.rounded-md[class*="dark:bg-rose-950"] {
+  background-color: rgba(168, 85, 247, 0.18) !important;
+  color: #c084fc !important;
+  border: 1px solid rgba(168, 85, 247, 0.32) !important;
+}
+
+/* 4. Category Badge: Inwestycje / Rejon (Blue Accent) */
+span.rounded-md.bg-surface-container {
+  background-color: rgba(59, 130, 246, 0.1) !important;
+  color: #2563eb !important;
+  border: 1px solid rgba(59, 130, 246, 0.22) !important;
+}
+.dark span.rounded-md.bg-surface-container {
+  background-color: rgba(59, 130, 246, 0.16) !important;
+  color: #60a5fa !important;
+  border: 1px solid rgba(59, 130, 246, 0.3) !important;
+}
+
+/* 5. Civic Badges: PROJEKT OGÓLNOMIEJSKI, Budżet Obywatelski, Głos wiążący (Indigo Accent) */
+span.rounded-lg[class*="bg-black/60"] {
+  background-color: rgba(15, 23, 42, 0.8) !important;
+  color: #ffffff !important;
+  border: 1px solid rgba(255, 255, 255, 0.2) !important;
+}
+span.rounded-full[class*="bg-primary-fixed"],
+span.rounded-full[class*="bg-primary-container"] {
+  background-color: #f1f5f9 !important;
+  color: #0f172a !important;
+  border: 1px solid #e2e8f0 !important;
+}
+.dark span.rounded-full[class*="bg-primary-fixed"],
+.dark span.rounded-full[class*="bg-primary-container"] {
+  background-color: #192338 !important;
+  color: #f8fafc !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+}
+span.rounded-full[class*="bg-primary-container"] .material-symbols-outlined,
+span.rounded-full[class*="bg-primary-fixed"] .material-symbols-outlined {
+  color: inherit !important;
+}
+
+/* 6. Voting Topic Badges */
+span.w-1\.5.h-1\.5.rounded-full.bg-primary {
+  background-color: #f59e0b !important;
+}
+span.w-1\.5.h-1\.5.rounded-full.bg-secondary {
+  background-color: #3b82f6 !important;
+}
+span.w-1\.5.h-1\.5.rounded-full.bg-secondary-container {
+  background-color: #a855f7 !important;
+}
+
+/* ═══════════════════════════════════════════════
+   DESKTOP RESPONSIVE LAYOUT & BREATHING ROOM
+   ═══════════════════════════════════════════════ */
+@media (min-width: 768px) {
+  .desktop-layout {
+    display: flex;
+    flex-direction: row;
+    min-height: 100vh;
+    background-color: inherit;
+  }
+
+  .desktop-sidebar {
+    position: fixed;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 16.875rem;
+    z-index: 40;
+    display: flex;
+    flex-direction: column;
+    padding: 0;
+    overflow-y: auto;
+    border-right-width: 1px;
+  }
+
+  .desktop-main {
+    margin-left: 16.875rem;
+    flex: 1;
+    width: calc(100% - 16.875rem);
+    max-width: 1380px;
+    padding: 2.25rem 2.5rem !important;
+    min-height: 100vh;
+  }
+
+  .desktop-main > div {
+    max-width: 100% !important;
+    margin: 0 !important;
+  }
+
+  .desktop-header {
+    display: none !important;
+  }
+
+  .mobile-bottom-nav {
+    display: none !important;
+  }
+}
+
+@media (max-width: 767px) {
+  .desktop-sidebar {
+    display: none !important;
+  }
+
+  .desktop-header {
+    display: block;
+  }
+
+  .desktop-main {
+    margin-left: 0;
+    padding-top: 4.5rem !important;
+    padding-bottom: 5.5rem !important;
+    padding-left: 1rem !important;
+    padding-right: 1rem !important;
+  }
+}
+
+/* ═══════════════════════════════════════════════
+   PREMIUM CARD & HOVER STYLES
+   ═══════════════════════════════════════════════ */
+.card-clean {
+  background-color: #ffffff;
+  border: 1px solid rgba(226, 232, 240, 0.8);
+  border-radius: 1rem;
+  box-shadow: 0 1px 3px rgba(15, 23, 42, 0.03), 0 4px 12px rgba(15, 23, 42, 0.02);
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.card-clean:hover {
+  border-color: rgba(203, 213, 225, 0.9);
+  box-shadow: 0 6px 18px rgba(15, 23, 42, 0.05);
+}
+
+.dark .card-clean {
+  background-color: #101623;
+  border-color: rgba(255, 255, 255, 0.07);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+}
+
+.dark .card-clean:hover {
+  border-color: rgba(255, 255, 255, 0.14);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.55);
+}
+
+/* Hide scrollbar cleanly */
+::-webkit-scrollbar {
+  display: none;
+}
+* {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* ═══════════════════════════════════════════════
+   THEME CONSISTENCY FIXES
+   ═══════════════════════════════════════════════ */
+
+/* Tailwind hover: variants are separate classes, so the .dark surface overrides
+   above do not cover them. Without these, hovering turns dark rows white. */
+.dark .hover\:bg-surface-container-lowest:hover { background-color: #101623 !important; }
+.dark .hover\:bg-surface-container-low:hover { background-color: #141c2c !important; }
+.dark .hover\:bg-surface-container:hover { background-color: #192338 !important; }
+.dark .hover\:bg-surface-container-high:hover { background-color: #212d46 !important; }
+.dark .hover\:bg-secondary-container:hover { background-color: #212d46 !important; }
+.dark .hover\:bg-error-container:hover { background-color: rgba(239, 68, 68, 0.18) !important; }
+.dark .hover\:text-on-error-container:hover { color: #fecaca !important; }
+
+/* Borders written with an opacity suffix (border-outline-variant/60 ...) are
+   different classes than the plain ones overridden earlier. */
+.dark [class*="border-outline"]:not([class*="border-transparent"]) {
+  border-color: rgba(255, 255, 255, 0.08) !important;
+}
+
+/* Plain border-outline is used for emphasised blocks, keep it clearer than the subtle variants */
+.dark [class~="border-outline"]:not([class*="border-transparent"]) {
+  border-color: rgba(255, 255, 255, 0.16) !important;
+}
+
+/* Semantic tokens that had no dark-mode counterpart */
+.dark .bg-tertiary-fixed { background-color: rgba(16, 185, 129, 0.16) !important; }
+.dark .bg-tertiary-container { background-color: #10b981 !important; }
+.dark .text-tertiary,
+.dark .text-tertiary-container { color: #34d399 !important; }
+.dark .text-on-tertiary-fixed { color: #6ee7b7 !important; }
+.dark .bg-error-container { background-color: rgba(239, 68, 68, 0.16) !important; }
+.dark .text-error { color: #f87171 !important; }
+.dark .text-on-error-container { color: #fecaca !important; }
+
+/* Tiny status dots with a tertiary background are solid green, not pale pills */
+span.rounded-full[class*="bg-tertiary"]:is(.w-1\.5, .w-2, .w-2\.5),
+.dark span.rounded-full[class*="bg-tertiary"]:is(.w-1\.5, .w-2, .w-2\.5) {
+  background-color: #10b981 !important;
+  border: none !important;
+}
+
+/* "Głos oddany" button: distinct tint per theme */
+button.btn-voted {
+  background-color: rgba(16, 185, 129, 0.14) !important;
+  color: #047857 !important;
+  border: 1px solid rgba(16, 185, 129, 0.4) !important;
+  box-shadow: none !important;
+}
+.dark button.btn-voted {
+  background-color: rgba(16, 185, 129, 0.2) !important;
+  color: #34d399 !important;
+  border-color: rgba(16, 185, 129, 0.4) !important;
+}
+
+/* ═══════════════════════════════════════════════
+   KEYBOARD FOCUS (always visible)
+   ═══════════════════════════════════════════════ */
+:focus-visible {
+  outline: 2px solid #3b82f6;
+  outline-offset: 2px;
+}
+.dark :focus-visible { outline-color: #93c5fd; }
+
+/* Login call-to-action - Monochromatic Slate */
+button.login-cta.login-cta.login-cta.login-cta.login-cta.login-cta.login-cta {
+  background-color: #0f172a !important;
+  color: #ffffff !important;
+  border: 1px solid #0f172a !important;
+  box-shadow: 0 1px 3px rgba(15, 23, 42, 0.12) !important;
+}
+button.login-cta.login-cta.login-cta.login-cta.login-cta.login-cta.login-cta:hover:not(:disabled) { background-color: #1e293b !important; border-color: #1e293b !important; }
+.dark button.login-cta.login-cta.login-cta.login-cta.login-cta.login-cta.login-cta { background-color: #1e293b !important; border-color: rgba(255, 255, 255, 0.16) !important; color: #f8fafc !important; }
+.dark button.login-cta.login-cta.login-cta.login-cta.login-cta.login-cta.login-cta:hover:not(:disabled) { background-color: #283548 !important; }
+html.hc button.login-cta.login-cta.login-cta.login-cta.login-cta.login-cta.login-cta, html.hc.dark button.login-cta.login-cta.login-cta.login-cta.login-cta.login-cta.login-cta { background-color: var(--hc-fg) !important; color: var(--hc-bg) !important; border: 2px solid var(--hc-fg) !important; }
+
+/* ═══════════════════════════════════════════════
+   HIGH CONTRAST (Personalizacja → Wysoki kontrast)
+   html.hc.dark has higher specificity than the .dark rules above
+   ═══════════════════════════════════════════════ */
+html.hc { --hc-fg: #000000; --hc-bg: #ffffff; --hc-mute: #1f2937; --hc-line: #0f172a; }
+html.hc.dark { --hc-fg: #ffffff; --hc-bg: #000000; --hc-mute: #e5e7eb; --hc-line: #f8fafc; }
+
+html.hc, html.hc body, html.hc.dark, html.hc.dark body { background-color: var(--hc-bg) !important; color: var(--hc-fg) !important; }
+html.hc .bg-surface, html.hc .bg-background, html.hc.dark .bg-surface, html.hc.dark .bg-background,
+html.hc .bg-surface-container-lowest, html.hc.dark .bg-surface-container-lowest,
+html.hc .bg-surface-container-low, html.hc.dark .bg-surface-container-low { background-color: var(--hc-bg) !important; }
+html.hc .bg-surface-container, html.hc.dark .bg-surface-container { background-color: var(--hc-bg) !important; box-shadow: inset 0 0 0 1px var(--hc-line); }
+html.hc .bg-surface-container-high, html.hc.dark .bg-surface-container-high,
+html.hc .bg-surface-container-highest, html.hc.dark .bg-surface-container-highest { background-color: var(--hc-bg) !important; box-shadow: inset 0 0 0 2px var(--hc-line); }
+
+html.hc .text-on-surface, html.hc.dark .text-on-surface,
+html.hc .text-on-surface-variant, html.hc.dark .text-on-surface-variant,
+html.hc .text-on-background, html.hc.dark .text-on-background { color: var(--hc-fg) !important; }
+html.hc .text-secondary, html.hc.dark .text-secondary,
+html.hc .text-outline, html.hc.dark .text-outline { color: var(--hc-mute) !important; }
+html.hc .text-primary, html.hc.dark .text-primary { color: var(--hc-fg) !important; text-decoration: underline; text-underline-offset: 3px; }
+
+html.hc [class*='border-outline'], html.hc.dark [class*='border-outline'],
+html.hc [class*='border-surface-container'], html.hc.dark [class*='border-surface-container'] { border-color: var(--hc-line) !important; }
+html.hc .shadow-card, html.hc .shadow-sm, html.hc .shadow-md { box-shadow: 0 0 0 1px var(--hc-line) !important; }
+
+/* primary actions: solid inverted blocks */
+html.hc .bg-primary, html.hc.dark .bg-primary,
+html.hc button.bg-primary:not(.grid > button), html.hc.dark button.bg-primary:not(.grid > button),
+html.hc a.bg-primary, html.hc.dark a.bg-primary {
+  background-color: var(--hc-fg) !important; color: var(--hc-bg) !important; border: 2px solid var(--hc-fg) !important;
+}
+html.hc .bg-primary *, html.hc.dark .bg-primary * { color: var(--hc-bg) !important; }
+
+/* status colours keep their meaning but gain a border and stronger text */
+html.hc .text-emerald-700, html.hc .text-emerald-400, html.hc.dark .text-emerald-400 { color: var(--hc-fg) !important; font-weight: 700; }
+html.hc [class*='bg-emerald-500/'], html.hc [class*='bg-amber-500/'], html.hc [class*='bg-red-500/'], html.hc [class*='bg-blue-500/'] { box-shadow: inset 0 0 0 1px var(--hc-line); }
+
+html.hc input, html.hc select, html.hc textarea, html.hc.dark input, html.hc.dark select, html.hc.dark textarea {
+  background-color: var(--hc-bg) !important; color: var(--hc-fg) !important; border: 2px solid var(--hc-line) !important;
+}
+html.hc :focus-visible { outline: 3px solid var(--hc-fg); outline-offset: 3px; }
+html.hc a, html.hc button { text-decoration-thickness: 2px; }
+html.hc [class*='backdrop-blur'] { backdrop-filter: none !important; }
+
+/* ───────── HIGH CONTRAST: outrank the neutral global button + tile + badge rules ───────── */
+html.hc.hc.hc button.bg-primary.bg-primary.bg-primary.bg-primary,
+html.hc.hc.hc a.bg-primary.bg-primary.bg-primary.bg-primary {
+  background-color: var(--hc-fg) !important;
+  color: var(--hc-bg) !important;
+  border: 2px solid var(--hc-fg) !important;
+}
+html.hc.hc.hc button.bg-primary.bg-primary.bg-primary.bg-primary *,
+html.hc.hc.hc a.bg-primary.bg-primary.bg-primary.bg-primary * { color: var(--hc-bg) !important; }
+html.hc .grid.grid-cols-2.sm\:grid-cols-4 > button span.text-fs-11,
+html.hc .grid.grid-cols-2.sm\:grid-cols-4 > button div > span:last-child,
+html.hc .grid.grid-cols-2.sm\:grid-cols-4 > button .material-symbols-outlined:not(.text-fs-22) { color: var(--hc-mute) !important; }
+html.hc [class*="text-red-"], html.hc [class*="text-amber-"], html.hc [class*="text-blue-"],
+html.hc [class*="text-emerald-"], html.hc [class*="text-rose-"], html.hc [class*="text-green-"],
+html.hc .text-tertiary, html.hc .text-error { color: var(--hc-fg) !important; }
+html.hc span.rounded-full[class*="bg-primary-fixed"], html.hc span.rounded-full[class*="bg-primary-container"] {
+  background-color: var(--hc-bg) !important; color: var(--hc-fg) !important; border: 2px solid var(--hc-fg) !important;
+}
+
+/* badge laid over a photo: opaque plate + white text in every theme (wins over the indigo civic badge rule) */
+span[data-photo-badge].rounded-full[class*="bg-primary-container"] {
+  background-color: rgba(15, 23, 42, 0.88) !important;
+  color: #ffffff !important;
+  border: 1px solid rgba(255, 255, 255, 0.28) !important;
+}
+span[data-photo-badge].rounded-full[class*="bg-primary-container"] .material-symbols-outlined { color: #ffffff !important; }
+html.hc span[data-photo-badge].rounded-full[class*="bg-primary-container"] { background-color: #000000 !important; color: #ffffff !important; border: 2px solid #ffffff !important; }
+
+/* HIGH CONTRAST: coloured map pills keep their meaning (green / amber / red) but use darker fills so white text reaches AAA */
+html.hc .maplibregl-marker [style*="rgb(21, 128, 61)"], html.hc .maplibregl-marker .bg-emerald-700 { background-color: #14532d !important; border-color: #ffffff !important; }
+html.hc .maplibregl-marker [style*="rgb(180, 83, 9)"], html.hc .maplibregl-marker .bg-amber-700 { background-color: #78350f !important; border-color: #ffffff !important; }
+html.hc .maplibregl-marker [style*="rgb(185, 28, 28)"], html.hc .maplibregl-marker .bg-rose-700 { background-color: #7f1d1d !important; border-color: #ffffff !important; }
+
+/* HIGH CONTRAST: inline-coloured price text and blue category badges fall back to full-contrast foreground */
+html.hc li button span.text-sm.font-bold[style*="color"] { color: var(--hc-fg) !important; }
+html.hc span.rounded-md.bg-surface-container, html.hc.dark span.rounded-md.bg-surface-container { color: var(--hc-fg) !important; background-color: var(--hc-bg) !important; border: 1px solid var(--hc-fg) !important; }
+html.hc span.rounded-full[class*="bg-white/20"], html.hc span[class*="bg-black/40"] { background-color: #000000 !important; color: #ffffff !important; border: 1px solid #ffffff !important; }
+
+html.hc .text-tertiary, html.hc div.text-tertiary, html.hc span.text-tertiary, html.hc div.flex.items-center.gap-1.text-tertiary { color: var(--hc-fg) !important; }
+html.hc button span.rounded-full.bg-amber-700, html.hc.dark button span.rounded-full.bg-amber-700 { background-color: #000000 !important; color: #ffffff !important; border: 1px solid #ffffff !important; }

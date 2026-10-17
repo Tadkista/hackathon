@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 240" width="200" height="240">
+  <!-- Shield shape -->
+  <path d="M10,10 L190,10 L190,160 Q100,230 10,160 Z" fill="#CC0000" stroke="#8B0000" stroke-width="3"/>
+  <!-- Angel/figure silhouette - simplified coat of arms of Torun (angel with keys) -->
+  <!-- Body -->
+  <ellipse cx="100" cy="95" rx="22" ry="30" fill="#FFD700"/>
+  <!-- Head -->
+  <circle cx="100" cy="58" r="16" fill="#FFD700"/>
+  <!-- Wings -->
+  <path d="M78,80 Q50,60 48,90 Q60,95 78,100 Z" fill="#FFD700"/>
+  <path d="M122,80 Q150,60 152,90 Q140,95 122,100 Z" fill="#FFD700"/>
+  <!-- Halo -->
+  <circle cx="100" cy="58" r="20" fill="none" stroke="#FFD700" stroke-width="3"/>
+  <!-- Keys -->
+  <line x1="85" y1="115" x2="85" y2="155" stroke="#FFD700" stroke-width="4"/>
+  <circle cx="85" cy="118" r="7" fill="none" stroke="#FFD700" stroke-width="3"/>
+  <line x1="85" y1="135" x2="92" y2="135" stroke="#FFD700" stroke-width="3"/>
+  <line x1="85" y1="145" x2="90" y2="145" stroke="#FFD700" stroke-width="3"/>
+  <line x1="115" y1="115" x2="115" y2="155" stroke="#FFD700" stroke-width="4"/>
+  <circle cx="115" cy="118" r="7" fill="none" stroke="#FFD700" stroke-width="3"/>
+  <line x1="115" y1="135" x2="122" y2="135" stroke="#FFD700" stroke-width="3"/>
+  <line x1="115" y1="145" x2="120" y2="145" stroke="#FFD700" stroke-width="3"/>
+  <!-- Shield border -->
+  <path d="M10,10 L190,10 L190,160 Q100,230 10,160 Z" fill="none" stroke="#8B0000" stroke-width="4"/>
+</svg>
