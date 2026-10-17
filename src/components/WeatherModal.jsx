@@ -18,17 +18,10 @@ export default function WeatherModal({ isOpen, onClose }) {
 
       <div className="flex flex-col space-y-4 text-on-surface">
         {/* ── Hero Weather Card ── */}
-        <div className="relative overflow-hidden rounded-2xl p-5 bg-gradient-to-br from-surface-container-low via-surface-container to-surface-container-high border border-outline-variant/70 shadow-sm">
-          {/* Subtle top decoration */}
-          <div className="flex items-center justify-between mb-3">
-            <div className="flex items-center gap-1.5 text-xs text-secondary font-medium">
-              <span aria-hidden="true" className="material-symbols-outlined text-fs-16 text-primary">location_on</span>
-              <span>Toruń • Stare Miasto</span>
-            </div>
-            <div className="flex items-center gap-1.5 text-fs-11 font-semibold text-emerald-600 dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-950/40 px-2 py-0.5 rounded-full border border-emerald-500/20">
-              <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
-              <span>Na żywo</span>
-            </div>
+        <div className="relative overflow-hidden rounded-2xl p-5 bg-surface-container-low border border-outline-variant/60">
+          <div className="flex items-center gap-1.5 mb-3 text-xs text-secondary font-medium">
+            <span aria-hidden="true" className="material-symbols-outlined text-fs-16 text-primary">location_on</span>
+            <span>Toruń • Stare Miasto</span>
           </div>
 
           <div className="flex items-center justify-between gap-4">
@@ -135,7 +128,7 @@ export default function WeatherModal({ isOpen, onClose }) {
           <div className="space-y-1.5">
             <div className="w-full h-2 rounded-full bg-gradient-to-r from-emerald-500 via-yellow-400 to-rose-500 relative">
               <div
-                className="absolute top-1/2 -translate-y-1/2 w-3.5 h-3.5 rounded-full bg-white border-2 border-primary shadow-sm -ml-1.5 transition-all duration-300"
+                className="absolute top-1/2 -translate-y-1/2 w-3.5 h-3.5 rounded-full bg-white border-2 border-primary dark:border-[#090d14] shadow-sm -ml-1.5 transition-all duration-300"
                 style={{ left: `${Math.min(100, Math.max(5, (weather.aqi / 100) * 100))}%` }}
                 title={`AQI: ${weather.aqi}`}
               ></div>
@@ -148,7 +141,7 @@ export default function WeatherModal({ isOpen, onClose }) {
           </div>
 
           {/* PM values */}
-          <div className="grid grid-cols-2 gap-2 pt-1 border-t border-outline-variant/40 text-xs">
+          <div className="grid grid-cols-2 gap-2 pt-1 border-t border-outline-variant/40 dark:border-white/10 text-xs">
             <div className="flex items-center justify-between px-2 py-1.5 rounded-lg bg-surface-container">
               <span className="text-secondary">Pył PM2.5:</span>
               <span className="font-semibold text-on-surface">{weather.pm25} µg/m³</span>
@@ -188,7 +181,7 @@ export default function WeatherModal({ isOpen, onClose }) {
         {weather.daily && weather.daily.length > 0 && (
           <div className="flex flex-col space-y-2">
             <span className="text-xs font-semibold text-secondary">Prognoza 3-dniowa dla Torunia</span>
-            <div className="flex flex-col divide-y divide-outline-variant/40 rounded-xl bg-surface-container-low border border-outline-variant/60 overflow-hidden">
+            <div className="flex flex-col divide-y divide-outline-variant/40 dark:divide-white/10 rounded-xl bg-surface-container-low border border-outline-variant/60 overflow-hidden">
               {weather.daily.map((d, idx) => (
                 <div key={idx} className="flex items-center justify-between px-3.5 py-2.5 text-xs">
                   <div className="flex items-center gap-2.5 min-w-[120px]">
@@ -209,7 +202,7 @@ export default function WeatherModal({ isOpen, onClose }) {
         )}
 
         {/* ── Footer: Update Info & Refresh Button ── */}
-        <div className="flex items-center justify-between pt-2 border-t border-outline-variant/60 text-xs">
+        <div className="flex items-center justify-between pt-2 border-t border-outline-variant/60 dark:border-white/10 text-xs">
           <div className="flex items-center gap-1.5 text-secondary">
             <span aria-hidden="true" className="material-symbols-outlined text-fs-16">schedule</span>
             <span>Aktualizacja: {weather.updatedAt || 'teraz'}</span>
