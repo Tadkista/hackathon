@@ -14,6 +14,7 @@ import DisruptionsScreen from './components/DisruptionsScreen.jsx';
 import EventsScreen from './components/EventsScreen.jsx';
 import GuidesScreen from './components/GuidesScreen.jsx';
 import TimetableScreen from './components/TimetableScreen.jsx';
+import SeniorScreen from './components/SeniorScreen.jsx';
 import { useAuth } from './AuthContext.jsx';
 import { ROLE_DEFAULT_TAB, allowedTabsFor } from './navConfig.js';
 
@@ -52,6 +53,7 @@ export default function App() {
   }, [pendingAnchor, currentTab]);
 
   if (!session) return <LoginScreen />;
+  if (role === 'senior') return <SeniorScreen />;
 
   const allowed = allowedTabsFor(role);
   const handleNavigate = (tabWithAnchor) => {

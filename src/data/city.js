@@ -87,7 +87,7 @@ export const eventDate = (e) => dateIn(e.day, e.time);
 
 /* ───────────────────────── Audio guides & city games ───────────────────────── */
 export const GUIDES = [
-  { id: 'g1', type: 'audio', title: 'Stare Miasto – szlak gotyku', price: 14.9, duration: '75 min', stops: 18, langs: ['PL', 'EN', 'DE'], rating: 4.8, reviews: 412, desc: 'Od Rynku Staromiejskiego, przez Krzywą Wieżę, po Katedrę św. Janów. Narracja z anegdotami i legendami.', icon: 'castle', audio: '/audio/stare-miasto-probka.mp3' },
+  { id: 'g1', type: 'audio', title: 'Stare Miasto – szlak gotyku', price: 14.9, duration: '75 min', stops: 18, langs: ['PL'], rating: 4.8, reviews: 412, desc: 'Od Rynku Staromiejskiego, przez Krzywą Wieżę, po Katedrę św. Janów. Narracja z anegdotami i legendami.', icon: 'castle', audio: '/audio/demo.wav' },
   { id: 'g2', type: 'audio', title: 'Śladami Kopernika', price: 12.9, duration: '55 min', stops: 12, langs: ['PL', 'EN'], rating: 4.7, reviews: 268, desc: 'Dom Kopernika, Ratusz, Kościół św. Janów i miejsca związane z życiem astronoma.', icon: 'public' },
   { id: 'g3', type: 'audio', title: 'Toruń podziemny – legendy i lochy', price: 9.9, duration: '40 min', stops: 9, langs: ['PL', 'EN'], rating: 4.6, reviews: 187, desc: 'Mroczne opowieści o podziemiach, lochach i miejskich widmach.', icon: 'nightlight' },
   { id: 'g4', type: 'audio', title: 'Bulwar i Wisła – spacer widokowy', price: 7.9, duration: '35 min', stops: 8, langs: ['PL', 'EN', 'DE'], rating: 4.5, reviews: 96, desc: 'Panorama Starówki z drugiej strony Wisły, historia mostów i portu.', icon: 'sailing' },
